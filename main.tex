@@ -1,0 +1,44 @@
+\documentclass{hfu_article}
+
+\usepackage[ngerman]{babel}
+
+\usepackage[left = \glqq{}, right = \grqq{}, leftsub = \glq{}, rightsub = \grq{}]{dirtytalk}
+
+\usepackage{tikz}
+\usetikzlibrary{mindmap}
+\tikzset{every concept/.style={minimum size=2cm, text width=2cm}}
+
+\bibliography{biblio.bib}
+
+\title{HFU-Article Class for \LaTeX{}}
+\author{Valentin~Weber}
+\date{\today}
+\course{Allgemeine Informatik}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\clearpage
+
+\input{Kapitel/01_Einleitung}
+\clearpage
+\input{Kapitel/02_Grundlagen}
+\clearpage
+\input{Kapitel/03_RAG}
+\clearpage
+\input{Kapitel/04_Fine_Tuning}
+\clearpage
+\input{Kapitel/05_Vergleichende_Analyse}
+\clearpage
+\input{Kapitel/06_Entscheidungsmatrix}
+\clearpage
+\input{Kapitel/07_Diskussion}
+\clearpage
+\input{Kapitel/08_Fazit}
+\clearpage
+
+\printbibliography{}
+
+\end{document}
