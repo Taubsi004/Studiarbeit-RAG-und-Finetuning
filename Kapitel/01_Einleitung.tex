@@ -1,13 +1,29 @@
 \section{Einleitung}
+In dieser Arbeit wird die Effektivität von Retrieval-Augmented Generation (RAG) \parencite{Lewis.2020} untersucht.
 \subsection{Problemstellung}
-% Wissensintensive Aufgaben in Unternehmen und die Grenzen generischer LLMs (Halluzinationen, Knowledge Cut-off, fehlende Domänenexpertise)
+% Wissensintensive Aufgaben in Unternehmen und die Grenzen generischer LLMs (Halluzinationen, Knowledge Cut-off, fehlende DomÃ¤nenexpertise)
+Große Sprachmodelle (engl. Large Language Models, LLMs) haben sich innerhalb weniger Jahre von experimentellen Forschungsartefakten zu einer technologischen Plattform entwickelt, die das Fundament für eine neue Generation von Anwendungen und Diensten bildet. Insbesondere im Bereich des Corporate Learnings und Informationsbeschaffung fungieren sie als Katalysator für eine Wiedergeburt des betrieblichen Wissensmanagements (enterprise knowledge management), indem sie Routineaufgaben automatisieren und datenbasierte Entscheidungen unterstützen. \autocite{OLeary.2024}. 
+Empirische Erhebungen zeigen jedoch, dass sich ein Großteil der Unternehmensimplementierungen weiterhin in einer experimentellen Phase befindet und ein signifikanter Abstand zwischen akademischen Prototypen und produktiven Unternehmenssystemen besteht (\textit{lab-to-market gap}) \autocite{Karakurt.2025}.
+Damit verbunden ist die Erwartung, organisationsinternes Wissen, das bislang in heterogenen Dokumenten, Wikis, Tickets und Datenbanken verteilt ist, über natürliche Sprache zugänglich und nutzbar zu machen.
+
+Diese Erwartung steht jedoch in Spannung zu den strukturellen Eigenschaften vortrainierter LLMs. Erstens leiden Sprachmodelle systematisch unter sogenannten Halluzinationen, also der Erzeugung sprachlich plausibler, aber faktisch unzutreffender oder erfundener Aussagen \autocite{Huang.2024}. Diese Eigenschaft ist nicht nur ein praktisches Qualitätsproblem, sondern auch ein theoretisches: \textcite{Xu.2025} zeigen formal, dass Halluzinationen eine \textit{innate limitation} von LLMs darstellen und sich nicht vollständig eliminieren lassen. Für Unternehmen sind unvollständige oder fabrizierte Antworten insbesondere in regulierten Kontexten ein erhebliches Governance- und Compliance-Risiko.
+
+Zweitens verfügen LLMs lediglich über parametrisches Wissen, das durch den Zeitpunkt ihres Trainings begrenzt ist (\textit{knowledge cut-off}). \textcite{Cheng.2024} belegen empirisch, dass Modelle systematisch veraltete Informationen wiedergeben, ohne dies kenntlich zu machen, und dass selbst Modelle mit jüngerem Trainingsende bevorzugt auf älteres Wissen zurückgreifen. Für Unternehmen, deren interne Wissensbestände kontinuierlich evolvieren -- etwa durch neue Produkte, geänderte Prozesse oder regulatorische Anpassungen -- ist diese statische Wissensbasis unzureichend.
+
+Drittens enthalten allgemein vortrainierte LLMs definitionsgemäß kein proprietäres oder organisationsspezifisches Wissen. Interne Dokumentationen, Kundeninformationen, technische Spezifikationen oder Compliance-Richtlinien sind nicht Teil der öffentlichen Trainingsdaten und müssen daher auf anderem Wege in den Antwortprozess integriert werden \autocite{Balaguer.2024}. Hinzu kommt, dass organisationsinternes Wissen in der Regel besonderen Anforderungen an Vertraulichkeit, Datenschutz und Auditierbarkeit unterliegt, die einer unkontrollierten Übertragung an externe Modellanbieter entgegenstehen.
+
+Zur Adressierung dieser Defizite haben sich in Forschung und Praxis zwei dominante Architekturansätze etabliert. \textit{Retrieval-Augmented Generation} (RAG) verbindet das parametrische Wissen eines LLM mit einem nicht-parametrischen, externen Wissensspeicher, dessen relevante Inhalte zur Antwortzeit dynamisch in den Eingabekontext eingespeist werden \autocite{Lewis.2020,Gao.2024}. \textit{Fine-Tuning}, insbesondere in seinen parametereffizienten Varianten wie LoRA \autocite{Hu.2022}, integriert zusätzliches Wissen oder spezifische Verhaltensmuster hingegen direkt in die Modellparameter \autocite{Song.2025}. Beide Ansätze verfolgen das Ziel der Wissensanreicherung, unterscheiden sich jedoch grundlegend in ihren technischen, organisatorischen und ökonomischen Implikationen \autocite{Balaguer.2024,Ovadia.2024}.
+
+Trotz einer wachsenden Zahl vergleichender Studien fehlt in der Literatur eine konsolidierte, kriteriengeleitete Entscheidungsgrundlage, die es Praktikerinnen und Praktikern erlaubt, für einen konkreten Anwendungsfall des internen Wissensmanagements systematisch zwischen RAG, Fine-Tuning oder hybriden Ansätzen zu wählen. Bestehende Vergleiche fokussieren häufig auf einzelne Domänen \autocite{Balaguer.2024,Soudani.2024} oder einzelne Dimensionen wie Genauigkeit \autocite{Ovadia.2024} und vernachlässigen organisatorische, regulatorische und wirtschaftliche Kriterien. Gleichzeitig zeigt die Enterprise-Forschung, dass viele Implementierungen sich noch in einem experimentellen Stadium befinden und ein Übergang von Pilot- zu Produktivsystemen häufig an unklaren Auswahlkriterien scheitert \autocite{Karakurt.2025}.
+
+Aus dieser Lücke ergibt sich der Bedarf nach einem konzeptionellen Kriterienkatalog, der die relevanten Bewertungsdimensionen aus der wissenschaftlichen Literatur ableitet und in eine praxistaugliche Entscheidungsmatrix überführt. Eine solche Matrix soll keine universelle Antwort liefern, sondern den Entscheidungsprozess strukturieren und damit dazu beitragen, dass Unternehmen ihre internen Wissensressourcen architektonisch fundiert und ressourcenschonend für den Einsatz mit LLMs nutzbar machen können.
 
 \subsection{Zielsetzung der Arbeit}
 % Entwicklung eines konzeptionellen Kriterienkatalogs
 
 \subsection{Forschungsfrage(n)}
-% F1: Welche Kriterien sind bei der Architekturauswahl zwischen RAG und Fine-Tuning für internes Unternehmenswissen relevant?
-% F2: Wie lassen sich diese Kriterien in eine praxistaugliche Entscheidungsmatrix überführen?
+% F1: Welche Kriterien sind bei der Architekturauswahl zwischen RAG und Fine-Tuning fÃ¼r internes Unternehmenswissen relevant?
+% F2: Wie lassen sich diese Kriterien in eine praxistaugliche Entscheidungsmatrix Ã¼berfÃ¼hren?
 
 \subsection{Methodisches Vorgehen}
 % Systematische Literaturanalyse -> Kriterienableitung -> Synthese in Matrix
