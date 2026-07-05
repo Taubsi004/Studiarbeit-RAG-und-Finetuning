@@ -1,6 +1,4 @@
 \section{Einleitung}
-In dieser Arbeit wird die Effektivität von Retrieval-Augmented Generation (RAG) \parencite{Lewis.2020} untersucht.
-\subsection{Problemstellung}
 % Wissensintensive Aufgaben in Unternehmen und die Grenzen generischer LLMs (Halluzinationen, Knowledge Cut-off, fehlende DomÃ¤nenexpertise)
 Große Sprachmodelle (engl.\ \textit{Large Language Models}, LLMs) haben sich innerhalb weniger 
 Jahre von experimentellen Forschungsartefakten zu einer technologischen Plattform entwickelt, 
@@ -29,24 +27,73 @@ die im Bereich des \textit{Natural Language Processing} definiert werden als ein
  erhebliches Risiko, da sie unmittelbar Entscheidungen beeinflussen und Schaden 
  verursachen können \autocite[1:2]{Huang.2024}.
 
-Zweitens verfügen LLMs lediglich über parametrisches Wissen, das durch den Zeitpunkt ihres Trainings begrenzt ist (\textit{knowledge cut-off}). \textcite[1]{Cheng.2024} zeigen empirisch, dass der von Modellanbietern angegebene Cut-off nur an der Oberfläche greift und der tatsächliche, sogenannte \textit{effective cutoff} zwischen einzelnen Wissensressourcen abweichen kann. Die Autoren belegen zudem, dass selbst bei aktuelleren Trainingsdaten ein erheblicher Anteil des Modellwissens auf ältere Versionen zurückgeht: In einem untersuchten Fall stammten über 80\,\% der aus Wikipedia gelernten Dokumente aus Versionen vor 2023 \autocite[9]{Cheng.2024}. Für Unternehmen, deren interne Wissensbestände kontinuierlich evolvieren -- etwa durch neue Produkte, geänderte Prozesse oder regulatorische Anpassungen -- ist diese statische Wissensbasis unzureichend.
+Zweitens verfügen LLMs lediglich über parametrisches Wissen, das durch den Zeitpunkt ihres 
+Trainings begrenzt ist (\textit{knowledge cut-off}). \textcite[1]{Cheng.2024} zeigen 
+empirisch, dass der von Modellanbietern angegebene Cut-off nur an der Oberfläche 
+greift und der tatsächliche, sogenannte \textit{effective cutoff} zwischen einzelnen 
+Wissensressourcen abweichen kann. Die Autoren belegen zudem, dass selbst bei 
+aktuelleren Trainingsdaten ein erheblicher Anteil des Modellwissens auf ältere 
+Versionen zurückgeht: In einem untersuchten Fall stammten über 80\,\% der aus Wikipedia
+ gelernten Dokumente aus Versionen vor 2023 \autocite[9 f.]{Cheng.2024}. Für Unternehmen, deren interne Wissensbestände kontinuierlich evolvieren -- etwa durch neue Produkte, geänderte Prozesse oder regulatorische Anpassungen -- ist diese statische Wissensbasis unzureichend.
 
-Drittens enthalten allgemein vortrainierte LLMs definitionsgemäß kein proprietäres oder organisationsspezifisches Wissen. Interne Dokumentationen, Kundeninformationen, technische Spezifikationen oder Compliance-Richtlinien sind nicht Teil der öffentlichen Trainingsdaten und müssen daher über gesonderte Verfahren in den Antwortprozess integriert werden \autocite[1]{Balaguer.2024}. Hinzu kommt, dass organisationsinternes Wissen in der Regel besonderen Anforderungen an Vertraulichkeit, Datenschutz und Auditierbarkeit unterliegt, die einer unkontrollierten Übertragung an externe Modellanbieter entgegenstehen.
+Drittens sind allgemein vortrainierte LLMs aufgrund ihrer Konzeption primär auf 
+öffentlich zugängliche Daten beschränkt. Proprietäre, stark domänenspezifische 
+oder organisationsinterne Wissensbestände sind in der standardmäßigen Wissensbasis meist 
+nicht abgebildet. 
+Um solche spezialisierten Informationen verlässlich in den Antwortprozess einzubinden, 
+bedarf es gesonderter technischer Anpassungsverfahren wie Fine-Tuning oder 
+Retrieval-Augmented Generation (RAG). 
+Dies betrifft beispielsweise interne Prozessrichtlinien oder standortspezifische Fachdaten. \autocite[vgl.][1]{Balaguer.2024}. 
+Hinzu kommt, dass organisationsinternes Wissen in der 
+Regel besonderen Anforderungen an Vertraulichkeit, Datenschutz und Auditierbarkeit 
+unterliegt, die einer unkontrollierten Übertragung an externe Modellanbieter entgegenstehen.
 
-Zur Adressierung dieser Defizite haben sich in Forschung und Praxis zwei dominante Architekturansätze etabliert. \textit{Retrieval-Augmented Generation} (RAG) verbindet ein parametrisches Sprachmodell mit einem nicht-parametrischen, externen Wissensspeicher, dessen relevante Inhalte zur Antwortzeit dynamisch abgerufen und in den Eingabekontext eingespeist werden \autocite[2]{Lewis.2020}; das Retrieval kombiniert dabei ,,LLMs' intrinsic knowledge with the vast, dynamic repositories of external databases'' \autocite[1]{Gao.2024}. \textit{Fine-Tuning}, insbesondere in parametereffizienten Varianten wie LoRA, das ,,freezes the pre-trained model weights and injects trainable rank decomposition matrices into each layer of the Transformer architecture'' \autocite[1]{Hu.2022}, integriert zusätzliches Wissen oder spezifische Verhaltensmuster hingegen direkt in die Modellparameter \autocite{Song.2025}. Wie \textcite[1]{Balaguer.2024} zusammenfassen: ,,RAG augments the prompt with the external data, while fine-Tuning incorporates the additional knowledge into the model itself''. Beide Ansätze verfolgen das Ziel der Wissensanreicherung, unterscheiden sich jedoch grundlegend in ihren technischen, organisatorischen und ökonomischen Implikationen \autocite[29]{Balaguer.2024}.
+Zur Adressierung dieser Defizite haben sich in Forschung und Praxis zwei dominante 
+Architekturansätze etabliert: \textit{Retrieval-Augmented Generation} (RAG) 
+und \textit{Fine-Tuning}. RAG verknüpft das interne Wissen eines 
+Sprachmodells mit externen Datenbanken, indem zur Laufzeit relevante Inhalte 
+abgerufen und dynamisch in den Eingabekontext integriert 
+werden \autocites[vgl.][2]{Lewis.2020}[vgl.][1]{Gao.2024}. 
+Im Gegensatz dazu verankert das Fine-Tuning, häufig realisiert über 
+parametereffiziente Methoden wie LoRA, zusätzliches Wissen und spezifische 
+Verhaltensmuster direkt in den Parametern des 
+Modells \autocites[vgl.][1]{Hu.2022}[vgl.]{Song.2025}. 
+Während RAG folglich auf die Anreicherung der Eingabedaten setzt, 
+passt Fine-Tuning das Modell selbst an \autocite[vgl.][1]{Balaguer.2024}. 
+Beide Ansätze verfolgen das Ziel der Wissensanreicherung, unterscheiden sich 
+jedoch grundlegend in ihren technischen, organisatorischen und ökonomischen 
+Implikationen \autocite[vgl.][29]{Balaguer.2024}.
 
-Trotz einer wachsenden Zahl vergleichender Studien fehlt in der Literatur eine konsolidierte, kriteriengeleitete Entscheidungsgrundlage, die es Praktikerinnen und Praktikern erlaubt, für einen konkreten Anwendungsfall des internen Wissensmanagements systematisch zwischen RAG, Fine-Tuning oder hybriden Ansätzen zu wählen. Bestehende Vergleiche fokussieren häufig auf einzelne Domänen \autocite[1]{Balaguer.2024,Soudani.2024} oder auf einzelne Dimensionen wie die reine Antwortgenauigkeit \autocite[2]{Ovadia.2024} und vernachlässigen organisatorische, regulatorische und wirtschaftliche Kriterien. Gleichzeitig zeigt die Enterprise-Forschung, dass viele Implementierungen sich noch in einem experimentellen Stadium befinden und der Übergang von Prototypen zu produktiven Systemen an einer Vielzahl technischer wie organisatorischer Hürden scheitert \autocite[1]{Karakurt.2025}.
+Trotz einer wachsenden Zahl vergleichender Studien fehlt in der Literatur eine 
+konsolidierte Entscheidungsgrundlage, die es der Praxis erlaubt, für das interne 
+Wissensmanagement systematisch zwischen RAG, Fine-Tuning oder hybriden Ansätzen 
+zu wählen. Bisherige Arbeiten fokussieren meist auf technische Einzelaspekte: So 
+evaluieren \textcite{Soudani.2024} die Modelle primär empirisch anhand seltener 
+Entitäten, während sich andere die reine Antwortgenauigkeit fokussieren. \autocite[vgl.][2]{Ovadia.2024}
+Es bleiben 
+organisatorische, wirtschaftliche und insbesondere juristische Dimensionen weitgehend 
+unbeachtet.
 
-Aus dieser Lücke ergibt sich der Bedarf nach einem konzeptionellen Kriterienkatalog, der die relevanten Bewertungsdimensionen aus der wissenschaftlichen Literatur ableitet und in eine praxistaugliche Entscheidungsmatrix überführt. Eine solche Matrix soll keine universelle Antwort liefern, sondern den Entscheidungsprozess strukturieren und damit dazu beitragen, dass Unternehmen ihre internen Wissensressourcen architektonisch fundiert und ressourcenschonend für den Einsatz mit LLMs nutzbar machen können.
+Aus dieser Lücke ergibt sich der Bedarf nach einem konzeptionellen Kriterienkatalog, 
+der die relevanten Bewertungsdimensionen aus der wissenschaftlichen Literatur ableitet 
+und in eine praxistaugliche Entscheidungsmatrix überführt. Eine solche Matrix soll keine 
+universelle Antwort liefern, sondern den Entscheidungsprozess strukturieren und damit dazu 
+beitragen, dass Unternehmen ihre internen Wissensressourcen architektonisch fundiert und 
+ressourcenschonend für den Einsatz mit LLMs nutzbar machen können.
 
-\subsection{Zielsetzung der Arbeit}
-% Entwicklung eines konzeptionellen Kriterienkatalogs
+Um dieses Ziel zu erreichen, geht die Arbeit der zentralen Forschungsfrage nach, 
+anhand welcher technischen, organisatorischen und speziell durch den neuen EU AI 
+Act geprägten juristischen Kriterien Unternehmen fundiert zwischen RAG und Fine-Tuning 
+für ihr internes Wissensmanagement abwägen können.
 
-\subsection{Forschungsfrage(n)}
-% F1: Welche Kriterien sind bei der Architekturauswahl zwischen RAG und Fine-Tuning fÃ¼r internes Unternehmenswissen relevant?
-% F2: Wie lassen sich diese Kriterien in eine praxistaugliche Entscheidungsmatrix Ã¼berfÃ¼hren?
-
-\subsection{Methodisches Vorgehen}
-% Systematische Literaturanalyse -> Kriterienableitung -> Synthese in Matrix
-
-\subsection{Aufbau der Arbeit}
+Methodisch nähert sich die Arbeit dieser Fragestellung durch eine theoriegeleitete 
+konzeptionelle Analyse. Zunächst werden in Kapitel 2-4 die technischen Grundlagen von LLMs,
+RAG und Fine-Tuning sowie deren jeweilige Funktionsweisen zur Wissensintegration skizziert. 
+Darauf aufbauend erfolgt in Kapitel 5 eine systematische Literatur- und Anforderungsanalyse, 
+um die relevanten Vergleichsdimensionen zu identifizieren, wobei der Fokus gezielt um die 
+bislang vernachlässigten regulatorischen Rahmenbedingungen erweitert wird. In Kapitel 6 
+werden diese Dimensionen synthetisiert und in die finale Entscheidungsmatrix überführt. 
+Die Arbeit reflektiert sich in Kapitel 7 und stellt die Limitationen der Methodik und einen 
+Ausblick auf zukünftige Forschungsfragen dar.
+In Kapitel 8 wird ein Fazit gezogen, das die zentralen Ergebnisse zusammenfasst 
+und die Implikationen für Forschung und Praxis aufzeigt.
