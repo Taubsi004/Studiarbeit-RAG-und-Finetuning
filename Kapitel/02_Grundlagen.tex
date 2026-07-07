@@ -1,20 +1,186 @@
+% =====================================================================
+% Kapitel 2 Grundlagen
+% Studienarbeit: RAG vs. Fine-Tuning - Ein konzeptioneller Kriterienkatalog
+% Autor: Tobias Weigold
+%
+% Zielumfang: 3-4 Seiten
+% Zitierkonvention: \autocite[Seite]{Name.Jahr} am Satzende;
+%                    \textcite[Seite]{Name.Jahr} nur bei aktiver
+%                    Autorennennung im Satz.
+% =====================================================================
+
 \section{Grundlagen}
+\label{sec:grundlagen}
+
 \subsection{Large Language Models (LLMs)}
-% Architektur, Training, parametrisches Wissen
+\label{sec:llms}
+
+Aus technischer Sicht basieren große Sprachmodelle auf der von \textcite[1]{Vaswani.2017} eingeführten Transformer-Architektur, die vollständig auf rekurrente und konvolutionale Netzstrukturen verzichtet und stattdessen ausschließlich Attention-Mechanismen nutzt. Ihr Training folgt einem mittlerweile etablierten zweistufigen Paradigma: Während der Pre-Training-Phase eignen sich die LLMs durch die autoregressive Vorhersage des jeweils nächsten Tokens auf Basis riesiger, allgemeiner Textkorpora ein grundlegendes sprachliches, faktisches und logisches Wissen an \autocite[1:4]{Huang.2024}. Anschließend werden sie in einer Adaptionsphase an konkrete Aufgaben oder Domänen angepasst, wobei gerade bei großen Modellen ein vollständiges Fine-Tuning aller Parameter zunehmend unpraktikabel wird \autocite[1]{Hu.2022}.
+
+Das im Pre-Training erworbene Wissen wird nicht in einer expliziten Wissensbasis abgelegt, sondern implizit in den Gewichten des Modells kodiert. Es handelt sich also um eine ,,parameterized implicit knowledge base'' \autocite[1]{Lewis.2020}. Diese Speicherform wird üblicherweise als \textit{parametrisches Wissen} bezeichnet und von \textit{nicht-parametrischem} Wissen abgegrenzt, das in externen Indizes oder Datenbanken vorgehalten und erst zur Antwortzeit an das Modell übergeben wird \autocite[1]{Lewis.2020}. Neben der Adaption über Parameteränderungen können LLMs zusätzlich zur Inferenzzeit über den Prompt gesteuert werden: Beim sogenannten \textit{In-Context Learning} nutzt das Modell die bereits erlernten Fähigkeiten, um sich innerhalb einer einzelnen Anfrage anhand mitgegebener Beispiele oder Instruktionen an eine Aufgabe anzupassen, ohne dass die Modellparameter verändert würden \autocite[3]{Brown.2020}. Für die vorliegende Arbeit sind damit drei Ebenen der Wissensintegration relevant: parametrisches Modellwissen, externes nicht-parametrisches Wissen und Prompt-basierte Steuerung.
 
 \subsection{Das Problem des Wissens in LLMs}
+\label{sec:wissensproblem}
+
+Aus Sicht des unternehmerischen Wissensmanagements bringt die parametrische 
+Wissensrepräsentation drei strukturelle Probleme mit sich, die im Folgenden 
+differenziert werden.
+
 \subsubsection{Halluzinationen}
-% Definition nach Huang et al. 2024
+\label{sec:halluzinationen}
+
+Als Halluzination wird im Bereich des Natural Language Processing ein Phänomen 
+bezeichnet, ,,in which the generated content appears nonsensical or unfaithful to the 
+provided source content'' \autocite[1:5]{Huang.2024}. Der Survey von \textcite[1:2]{Huang.2024}
+ systematisiert Halluzinationen entlang zweier Grundtypen: \textit{Factuality Hallucinations} 
+ bezeichnen Widersprüche zu überprüfbaren Fakten der realen Welt, während 
+ \textit{Faithfulness Hallucinations} Abweichungen vom Nutzer-Input oder interne 
+ Inkonsistenzen der Ausgabe erfassen und weiter in Instruktions-, Kontext- und logische 
+ Inkonsistenz unterteilt werden. Diese Systematik ist für die vorliegende Arbeit deshalb 
+ relevant, weil beide Halluzinationstypen unterschiedlich stark auf externe 
+ Wissensanreicherung reagieren -- ein Aspekt, der bei der Ableitung von Auswahlkriterien in 
+ Kapitel~5 aufgegriffen wird.
+
+Über den empirisch-praktischen Befund hinaus zeigen \textcite[1]{Xu.2025} formal, dass Halluzinationen eine inhärente Eigenschaft von LLMs sind: ,,it is impossible to eliminate hallucination in LLMs'', unabhängig von Modellarchitektur, Trainingsverfahren oder Prompting-Techniken. Für den unternehmerischen Einsatz bedeutet dies, dass Halluzinationen nicht als vorübergehendes Qualitätsproblem, sondern als dauerhaft mitzugestaltendes Risiko behandelt werden müssen. Entsprechend berichten \textcite[20]{Karakurt.2025} in ihrem systematischen Literaturüberblick, dass Halluzinationskontrolle mit 48{,}1\,\% die am häufigsten adressierte Herausforderung bei Enterprise-RAG-/LLM-Implementierungen ist -- noch vor Datenschutz und Latenz.
 
 \subsubsection{Knowledge Cut-off und Aktualität}
+\label{sec:cutoff}
 
-\subsubsection{Domänenspezifisches vs. Allgemeinwissen}
+Ein zweites strukturelles Problem ergibt sich aus dem statischen Charakter 
+parametrischen Wissens: Das Modellwissen ist durch den Zeitpunkt des Pre-Trainings 
+begrenzt (\textit{knowledge cut-off}). \textcite[1]{Cheng.2024} zeigen jedoch, dass 
+dieser Cut-off nicht monolithisch ist. Sie führen den Begriff des \textit{effective cutoff} 
+ein, definiert als ,,the date of the version of the resource that is most closely aligned 
+with the model'' \autocite[3]{Cheng.2024}, und weisen empirisch nach, dass der tatsächliche 
+Wissensstand eines Modells zwischen einzelnen Ressourcen erheblich abweichen kann und 
+typischerweise vor dem offiziell berichteten Cut-off-Datum liegt \autocite[1]{Cheng.2024}.
+
+Für Unternehmen ist diese Eigenschaft doppelt relevant. Erstens sind interne Wissensbestände 
+in der Regel nicht Bestandteil der Trainingsdaten und daher unabhängig von jedem Cut-off 
+nachträglich einzubringen. Zweitens verändern sich diese Bestände kontinuierlich, etwa durch 
+neue Produkte, geänderte Prozesse oder regulatorische Anpassungen. Ein Fine-Tuning-basierter 
+Ansatz ist gegenüber solchen Veränderungen strukturell benachteiligt, da er ,,static, 
+requiring retraining for updates'' ist und ,,significant computational resources for dataset 
+preparation and training'' erfordert \autocite[5]{Gao.2024}. \textcite[3]{Karakurt.2025} 
+bringen diesen Gegensatz auf den Punkt, indem sie RAG als Ansatz beschreiben, der 
+,,decoupl[es] the knowledge base from the model weights, allowing the generative component 
+to access up-to-date, proprietary information via a retrieval mechanism''.
+
+\subsubsection{Domänenspezifisches vs.\ Allgemeinwissen}
+\label{sec:domaenenwissen}
+
+Drittens sind LLMs überwiegend auf allgemeinen Domänenkorpora trainiert und weisen daher 
+systematische Defizite bei domänenspezifischem Wissen auf: ,,they may exhibit deficits in 
+domain-specific knowledge. This limitation becomes particularly evident when LLMs are 
+confronted with tasks that require domain-specific expertise, such as medical [\ldots] and 
+legal [\ldots] questions'' \autocite[1:9]{Huang.2024}. Ursächlich ist 
+die inhärent ungleiche Wissensverteilung in den Trainingskorpora: Die Modellgenauigkeit 
+korreliert stark mit der Häufigkeit eines Sachverhalts oder einer Entität im 
+Pre-Training-Material \autocite[1:9]{Huang.2024}. \textcite[1]{Soudani.2024} 
+operationalisieren diesen Effekt als Problem des \textit{less-popular} bzw. 
+\textit{low-frequency} Wissens und weisen empirisch nach, dass RAG in diesem Segment 
+,,substantially outperforms fine-tuning'' \autocite[2]{Soudani.2024}.
+
+Für internes Unternehmenswissen ist dieser Befund von besonderer Bedeutung, 
+da proprietäre Terminologie, spezifische Produktbezeichnungen und interne 
+Prozessdokumentation per Definition \textit{Long-Tail}-Wissen darstellen: Sie sind im 
+öffentlichen Pre-Training-Korpus entweder gar nicht oder nur marginal vertreten.
 
 \subsection{Internes Unternehmenswissen: Charakteristika}
-\subsubsection{Strukturiertes vs. unstrukturiertes Wissen}
+\label{sec:unternehmenswissen}
 
-\subsubsection{Statisches vs. dynamisches Wissen}
+Bevor die beiden Architekturansätze in Kapitel~3 und~4 im Detail dargestellt und in Kapitel~5 gegen Kriterien geprüft werden, sind drei Charakteristika internen Unternehmenswissens zu präzisieren, weil sie direkt in die Bewertungsmatrix einfließen.
 
-\subsubsection{Vertraulichkeit, Zugriffsrechte, Compliance (DSGVO)}
+\subsubsection{Strukturiertes vs.\ unstrukturiertes Wissen}
+\label{sec:strukturiertes-wissen}
+
+Unternehmen sind mit ,,vast amounts of unstructured information, from technical manuals, 
+regulatory policies, and customer support transcripts to internal wikis and multimedia logs'' 
+konfrontiert \autocite[1]{Karakurt.2025}. Diese unstrukturierten 
+Quellen bilden das dominierende, aber nicht das einzige Format: Strukturierte 
+Repräsentationen wie Wissensgraphen oder relationale Datenbanken ergänzen unstrukturierte 
+Bestände insbesondere dort, wo hierarchische Zusammenhänge oder eindeutig referenzierbare 
+Entitäten wichtig sind. \textcite[17]{Karakurt.2025} zeigen empirisch, dass ,,structured 
+knowledge effectively complements unstructured retrieval in abstractive summarization tasks''. 
+Für stärker strukturierte Aufgaben wie die Zusammenfassung von Richtlinien liefern hybride 
+Retrieval-Strategien aus dichten Vektoren und Wissensgraphen 
+,,noticeable gains'' \autocite[18]{Karakurt.2025}. Für die Architekturauswahl folgt daraus, 
+dass das Strukturformat der Wissensbasis ein eigenständiges Kriterium darstellt.
+
+\subsubsection{Statisches vs.\ dynamisches Wissen}
+\label{sec:dynamisches-wissen}
+
+Ein zweites Unterscheidungsmerkmal betrifft die zeitliche 
+Stabilität des Wissens. Statisches Wissen -- etwa historisch 
+stabile Fachterminologie oder Grundprinzipien -- lässt sich prinzipiell 
+in den Modellparametern verankern. Dynamisches Wissen -- Produkt-Roadmaps, Preise, 
+Prozessvorgaben, regulatorische Auflagen -- verändert sich hingegen so häufig, 
+dass es außerhalb des Modells vorgehalten werden muss. \textcite[4]{Song.2025} 
+formalisieren diesen Gegensatz in ihrer Taxonomie: ,,Dynamic Knowledge Injection 
+retrieves external knowledge during inference. [\ldots] Static Knowledge Injection 
+embeds external knowledge into model parameters during fine-tuning.'' Die Update-Frequenz 
+des Wissens wird damit zu einem der zentralen Auswahlkriterien.
+
+\subsubsection{Vertraulichkeit, Zugriffsrechte, Compliance}
+\label{sec:compliance}
+
+Ein drittes und im Enterprise-Kontext besonders folgenreiches Charakteristikum ist der 
+regulatorisch-organisatorische Rahmen. Internes Wissen ist typischerweise vertraulich, 
+zugriffsrechtebehaftet und unterliegt gesetzlichen Vorgaben zum 
+Datenschutz. \textcite[2]{Karakurt.2025} identifizieren die Wahrung der 
+Datenprivatsphäre bei der Integration von LLMs mit proprietären 
+Korpora ,,--particularly in regulated sectors--'' als eine Kernherausforderung. 
+Konkret nennen sie ,,GDPR, CCPA, and HIPAA'' als relevante regulatorische Rahmen und 
+empfehlen ,,privacy-preserving retrieval mechanisms such as encrypted embeddings, 
+access-controlled vector stores, or federated retrieval'' \autocite[20]{Karakurt.2025}. 
+Gleichzeitig zeigt der Literaturüberblick, dass Datenschutz mit 37{,}7\,\% die 
+zweithäufigste in der Forschungsliteratur adressierte Herausforderung bildet, aber nur ein 
+entsprechend kleiner Anteil der Studien konkrete Schutzmechanismen 
+implementiert \autocite[20,22]{Karakurt.2025}. Für die Kriterienableitung folgt daraus, 
+dass Vertraulichkeit und Auditierbarkeit -- neben der reinen Leistungsfähigkeit -- 
+eigenständige Dimensionen der Architekturbewertung darstellen.
 
 \subsection{Begriffsabgrenzung: Adaption, Knowledge Injection, Domain Specialization}
+\label{sec:begriffsabgrenzung}
+
+Die in dieser Arbeit verglichenen Architekturansätze werden in der Literatur teils unter 
+unterschiedlichen Bezeichnungen geführt. \textcite[1]{Song.2025} fassen sie unter dem 
+Oberbegriff \textit{Knowledge Injection} zusammen und definieren diesen als 
+Methoden, ,,to enhance LLMs through external or embedded domain expertise, [\ldots] to 
+bridge the gap between general-purpose language understanding and the stringent requirements 
+of domain-specific tasks''. Sie kategorisieren die einschlägigen Verfahren in vier 
+Paradigmen \autocite[4]{Song.2025}:
+
+\begin{itemize}
+  \item \textit{Dynamic Knowledge Injection} ruft externes Wissen zur Inferenzzeit ab und 
+  speist es in den Modellkontext ein -- das Paradigma, dem RAG angehört \autocite[4]{Song.2025}.
+  \item \textit{Static Knowledge Injection} integriert externes Wissen bereits während des 
+  Fine-Tunings in die Modellparameter \autocite[4]{Song.2025}.
+  \item \textit{Modular Knowledge Adapters} nutzen ,,plug-and-play modules to dynamically 
+  adapt to tasks'' \autocite[4]{Song.2025}; hierzu zählen parametereffiziente Verfahren wie 
+  LoRA \autocite[1]{Hu.2022}.
+  \item \textit{Prompt Optimization} steuert das Modellverhalten ausschließlich über präzise 
+  formulierte Prompts, ,,without altering its parameters'' \autocite[4]{Song.2025}.
+\end{itemize}
+
+Die zentrale Abgrenzung zwischen den Paradigmen verläuft entlang zweier 
+Dimensionen: dem \textit{Zeitpunkt} der Wissensintegration (vor der Inferenz vs. zur 
+Inferenzzeit) und der Frage, ob dabei \textit{Modellparameter verändert} werden. \textcite[3]{Song.2025} 
+formulieren dies wie folgt: ,,Static Knowledge Injection and Modular Knowledge Adapters 
+integrate knowledge prior to inference and involve parameter updates -- through either full 
+fine-tuning or adapter-based tuning. In contrast, Dynamic Knowledge Injection and Prompt 
+Optimization inject knowledge at inference time.''
+
+Für die vorliegende Arbeit werden die beiden praktisch dominanten Ansätze -- RAG als 
+Vertreter der \textit{Dynamic Knowledge Injection} und Fine-Tuning (inklusive 
+parametereffizienter Varianten wie LoRA) als Vertreter der \textit{Static Knowledge Injection} 
+bzw. der \textit{Modular Knowledge Adapters} -- kontrastiert. Diese Fokussierung folgt der 
+Rahmung von \textcite[1]{Balaguer.2024}: ,,There are two common ways in which developers are 
+incorporating proprietary and domain-specific data when building applications of Large 
+Language Models (LLMs): Retrieval-Augmented Generation (RAG) and Fine-Tuning. RAG augments 
+the prompt with the external data, while fine-Tuning incorporates the additional 
+knowledge into the model itself.'' Fine-Tuning selbst wird dabei im Sinne von \textcite[1]{Ovadia.2024} 
+verstanden als ein Verfahren, bei dem ,,we continue the model's training process and adapt 
+it using task-specific data'', sodass sich die Modellgewichte an die neue Wissensbasis 
+anpassen. Prompt Optimization und Modular Adapters werden im weiteren Verlauf dort 
+berücksichtigt, wo sie als hybride Ergänzung praktisch relevant sind.
