@@ -75,44 +75,15 @@ Ein drittes und im Enterprise-Kontext besonders folgenreiches Charakteristikum i
 \subsection{Begriffsabgrenzung: Adaption, Knowledge Injection, Domain Specialization}
 \label{sec:begriffsabgrenzung}
 
-Die in dieser Arbeit verglichenen Architekturansätze werden in der Literatur teils unter 
-unterschiedlichen Bezeichnungen geführt. \textcite[1]{Song.2025} fassen sie unter dem 
-Oberbegriff \textit{Knowledge Injection} zusammen und definieren diesen als 
-Methoden, ,,to enhance LLMs through external or embedded domain expertise, [\ldots] to 
-bridge the gap between general-purpose language understanding and the stringent requirements 
-of domain-specific tasks''. Sie kategorisieren die einschlägigen Verfahren in vier 
-Paradigmen \autocite[4]{Song.2025}:
+Die in dieser Arbeit verglichenen Architekturansätze werden in der Literatur teils unter unterschiedlichen Bezeichnungen geführt. \textcite[1]{Song.2025} fassen sie unter dem Oberbegriff \textit{Knowledge Injection} zusammen und definieren diesen als Methoden, um LLMs durch externe oder eingebettete Fachexpertise zu erweitern und auf diese Weise die Lücke zwischen allgemeinem Sprachverständnis und den strengen Anforderungen domänenspezifischer Aufgaben zu schließen. Die einschlägigen Verfahren unterteilen sie dabei in vier verschiedene Paradigmen:
 
 \begin{itemize}
-  \item \textit{Dynamic Knowledge Injection} ruft externes Wissen zur Inferenzzeit ab und 
-  speist es in den Modellkontext ein -- das Paradigma, dem RAG angehört \autocite[4]{Song.2025}.
-  \item \textit{Static Knowledge Injection} integriert externes Wissen bereits während des 
-  Fine-Tunings in die Modellparameter \autocite[4]{Song.2025}.
-  \item \textit{Modular Knowledge Adapters} nutzen ,,plug-and-play modules to dynamically 
-  adapt to tasks'' \autocite[4]{Song.2025}; hierzu zählen parametereffiziente Verfahren wie 
-  LoRA \autocite[1]{Hu.2022}.
-  \item \textit{Prompt Optimization} steuert das Modellverhalten ausschließlich über präzise 
-  formulierte Prompts, ,,without altering its parameters'' \autocite[4]{Song.2025}.
+    \item \textit{Dynamic Knowledge Injection} ruft externes Wissen zur Inferenzzeit ab und speist es in den Modellkontext ein. Hier lässt sich RAG einordnen \autocite[3]{Song.2025}.
+    \item \textit{Static Knowledge Injection} integriert externes Wissen bereits während des Fine-Tunings in die Modellparameter \autocite[4]{Song.2025}.
+    \item \textit{Modular Knowledge Adapters} nutzen flexibel austauschbare Module, um Modelle dynamisch an spezifische Aufgaben anzupassen \autocite[4]{Song.2025}. Zu dieser Kategorie zählen parametereffiziente Verfahren wie LoRA \autocite[1]{Hu.2022}.
+    \item \textit{Prompt Optimization} steuert das Modellverhalten ausschließlich über präzise formulierte Prompts, ohne Paramenter zu ändern \autocite[4]{Song.2025}.
 \end{itemize}
 
-Die zentrale Abgrenzung zwischen den Paradigmen verläuft entlang zweier 
-Dimensionen: dem \textit{Zeitpunkt} der Wissensintegration (vor der Inferenz vs. zur 
-Inferenzzeit) und der Frage, ob dabei \textit{Modellparameter verändert} werden. \textcite[3]{Song.2025} 
-formulieren dies wie folgt: ,,Static Knowledge Injection and Modular Knowledge Adapters 
-integrate knowledge prior to inference and involve parameter updates -- through either full 
-fine-tuning or adapter-based tuning. In contrast, Dynamic Knowledge Injection and Prompt 
-Optimization inject knowledge at inference time.''
+Die zentrale Abgrenzung zwischen den Paradigmen verläuft entlang zweier Dimensionen: dem \textit{Zeitpunkt} der Wissensintegration (vor der Inferenz vs. zur  Inferenzzeit) und der Frage, ob dabei \textit{Modellparameter verändert} werden. \textcite[3]{Song.2025} veranschaulichen diesen Sachverhalt, indem sie darlegen, dass die \textit{Static Knowledge Injection} und \textit{Modular Knowledge Adapters} das Wissen bereits vor der Inferenz integrieren und eine Aktualisierung der Parameter erfordern. Diese Anpassungen erfolgen entweder durch ein vollständiges Fine-Tuning oder ein adapterbasiertes Tuning. Im Gegensatz dazu speisen die \textit{Dynamic Knowledge Injection} und die \textit{Prompt Optimization} das benötigte Wissen erst zur Inferenzzeit ein.
 
-Für die vorliegende Arbeit werden die beiden praktisch dominanten Ansätze -- RAG als 
-Vertreter der \textit{Dynamic Knowledge Injection} und Fine-Tuning (inklusive 
-parametereffizienter Varianten wie LoRA) als Vertreter der \textit{Static Knowledge Injection} 
-bzw. der \textit{Modular Knowledge Adapters} -- kontrastiert. Diese Fokussierung folgt der 
-Rahmung von \textcite[1]{Balaguer.2024}: ,,There are two common ways in which developers are 
-incorporating proprietary and domain-specific data when building applications of Large 
-Language Models (LLMs): Retrieval-Augmented Generation (RAG) and Fine-Tuning. RAG augments 
-the prompt with the external data, while fine-Tuning incorporates the additional 
-knowledge into the model itself.'' Fine-Tuning selbst wird dabei im Sinne von \textcite[1]{Ovadia.2024} 
-verstanden als ein Verfahren, bei dem ,,we continue the model's training process and adapt 
-it using task-specific data'', sodass sich die Modellgewichte an die neue Wissensbasis 
-anpassen. Prompt Optimization und Modular Adapters werden im weiteren Verlauf dort 
-berücksichtigt, wo sie als hybride Ergänzung praktisch relevant sind.
+Für die vorliegende Arbeit werden die beiden in der Praxis dominierenden Ansätze entgegengestellt. Dies sind einerseits RAG als Vertreter der \textit{Dynamic Knowledge Injection} und andererseits das Fine-Tuning, einschließlich parametereffizienter Varianten wie LoRA, als Vertreter der \textit{Static Knowledge Injection} beziehungsweise der \textit{Modular Knowledge Adapters}. Diese Fokussierung folgt der Rahmung von \textcite[1]{Balaguer.2024}, die darlegen, dass Entwickler bei der Konstruktion von LLM-Anwendungen primär auf zwei Wege zurückgreifen, um proprietäre und domänenspezifische Daten einzubinden. Während RAG den Prompt um externe Daten ergänzt, integriert das Fine-Tuning das zusätzliche Wissen direkt in das Modell. Fine-Tuning selbst wird dabei im Sinne von \textcite[1]{Ovadia.2024} als ein Verfahren verstanden, bei dem der Trainingsprozess des Modells fortgesetzt und mit aufgabenspezifischen Daten adaptiert wird, sodass sich die Modellgewichte an die neue Wissensbasis anpassen. \textit{Prompt Optimization} und \textit{Modular Adapters} werden im weiteren Verlauf dort berücksichtigt, wo sie als hybride Ergänzung praktisch relevant sind.
