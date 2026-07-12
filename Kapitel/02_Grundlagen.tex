@@ -44,17 +44,8 @@ RAG ist also ein Ansatz, der die Wissensbasis von den Modellgewichten entkoppelt
 \subsubsection{Domänenspezifisches vs.\ Allgemeinwissen}
 \label{sec:domaenenwissen}
 
-Drittens sind LLMs überwiegend auf allgemeinen Domänenkorpora trainiert und weisen daher 
-systematische Defizite bei domänenspezifischem Wissen auf: ,,they may exhibit deficits in 
-domain-specific knowledge. This limitation becomes particularly evident when LLMs are 
-confronted with tasks that require domain-specific expertise, such as medical [\ldots] and 
-legal [\ldots] questions'' \autocite[1:9]{Huang.2024}. Ursächlich ist 
-die inhärent ungleiche Wissensverteilung in den Trainingskorpora: Die Modellgenauigkeit 
-korreliert stark mit der Häufigkeit eines Sachverhalts oder einer Entität im 
-Pre-Training-Material \autocite[1:9]{Huang.2024}. \textcite[1]{Soudani.2024} 
-operationalisieren diesen Effekt als Problem des \textit{less-popular} bzw. 
-\textit{low-frequency} Wissens und weisen empirisch nach, dass RAG in diesem Segment 
-,,substantially outperforms fine-tuning'' \autocite[2]{Soudani.2024}.
+Drittens sind LLMs überwiegend auf allgemeinen Textdaten trainiert und weisen daher systematische Defizite bei domänenspezifischem Wissen auf. Diese Einschränkung wird besonders dann offensichtlich, wenn die Modelle mit Aufgaben konfrontiert werden, die spezielles Fachwissen erfordern, wie beispielsweise bei medizinischen oder juristischen Fragestellungen. \autocite[1:9]{Huang.2024}. Ursächlich ist die inhärent ungleiche Wissensverteilung in den Trainingskorpora, denn die Modellgenauigkeit korreliert stark mit der Häufigkeit eines Sachverhalts. Informationen, die in den Datenmengen nur selten auftauchen, werden unter dem Begriff des \textit{Long-tail Knowledge} zusammengefasst. Gerade bei diesem Randwissen weisen die Modelle systematische Erinnerungslücken auf, was ihre Zuverlässigkeit bei spezifischen Fragestellungen deutlich einschränkt. \autocite[1:9]{Huang.2024}. 
+\textcite[1]{Soudani.2024} operationalisieren diesen Effekt als Problem von niederfrequentem beziehungsweise seltener vorkommendem Wissen und weisen empirisch nach, dass RAG das Fine-Tuning in diesem Segment signifikant übertrifft \autocite[2]{Soudani.2024}.
 
 Für internes Unternehmenswissen ist dieser Befund von besonderer Bedeutung, 
 da proprietäre Terminologie, spezifische Produktbezeichnungen und interne 
