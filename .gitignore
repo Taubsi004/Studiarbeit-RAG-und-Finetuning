@@ -11,6 +11,7 @@
 *.synctex.gz
 *.toc
 *.pdf
+main.synctex(busy)
 
 # VS Code
 .vscode/
