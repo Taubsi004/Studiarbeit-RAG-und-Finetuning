@@ -60,32 +60,12 @@ Bevor die beiden Architekturansätze in Kapitel~3 und~4 im Detail dargestellt un
 \subsubsection{Strukturiertes vs.\ unstrukturiertes Wissen}
 \label{sec:strukturiertes-wissen}
 
-Unternehmen sind mit ,,vast amounts of unstructured information, from technical manuals, 
-regulatory policies, and customer support transcripts to internal wikis and multimedia logs'' 
-konfrontiert \autocite[1]{Karakurt.2025}. Diese unstrukturierten 
-Quellen bilden das dominierende, aber nicht das einzige Format: Strukturierte 
-Repräsentationen wie Wissensgraphen oder relationale Datenbanken ergänzen unstrukturierte 
-Bestände insbesondere dort, wo hierarchische Zusammenhänge oder eindeutig referenzierbare 
-Entitäten wichtig sind. \textcite[17]{Karakurt.2025} zeigen empirisch, dass ,,structured 
-knowledge effectively complements unstructured retrieval in abstractive summarization tasks''. 
-Für stärker strukturierte Aufgaben wie die Zusammenfassung von Richtlinien liefern hybride 
-Retrieval-Strategien aus dichten Vektoren und Wissensgraphen 
-,,noticeable gains'' \autocite[18]{Karakurt.2025}. Für die Architekturauswahl folgt daraus, 
-dass das Strukturformat der Wissensbasis ein eigenständiges Kriterium darstellt.
+. Diese unstrukturierten Quellen bilden das dominierende, jedoch nicht das einzige Format. Strukturierte Repräsentationen wie Wissensgraphen oder relationale Datenbanken ergänzen unstrukturierte Bestände insbesondere dort, wo hierarchische Zusammenhänge oder eindeutig referenzierbare Entitäten wichtig sind. \textcite[17]{Karakurt.2025} zeigen empirisch, dass strukturiertes Wissen den unstrukturierten Abruf bei abstrahierenden Zusammenfassungen wirkungsvoll ergänzt. Zudem erzielen hybride Retrieval-Strategien aus dichten Vektoren und Wissensgraphen bei stärker strukturierten Aufgaben wie der Zusammenfassung von Richtlinien spürbare Leistungssteigerungen \autocite[18]{Karakurt.2025}. Für die Architekturauswahl folgt daraus, dass das Strukturformat der Wissensbasis ein eigenständiges Kriterium darstellt.
 
 \subsubsection{Statisches vs.\ dynamisches Wissen}
 \label{sec:dynamisches-wissen}
 
-Ein zweites Unterscheidungsmerkmal betrifft die zeitliche 
-Stabilität des Wissens. Statisches Wissen -- etwa historisch 
-stabile Fachterminologie oder Grundprinzipien -- lässt sich prinzipiell 
-in den Modellparametern verankern. Dynamisches Wissen -- Produkt-Roadmaps, Preise, 
-Prozessvorgaben, regulatorische Auflagen -- verändert sich hingegen so häufig, 
-dass es außerhalb des Modells vorgehalten werden muss. \textcite[4]{Song.2025} 
-formalisieren diesen Gegensatz in ihrer Taxonomie: ,,Dynamic Knowledge Injection 
-retrieves external knowledge during inference. [\ldots] Static Knowledge Injection 
-embeds external knowledge into model parameters during fine-tuning.'' Die Update-Frequenz 
-des Wissens wird damit zu einem der zentralen Auswahlkriterien.
+Ein zweites Unterscheidungsmerkmal betrifft die zeitliche Stabilität des Wissens. Statisches Wissen wie beispielsweise historisch stabile Fachterminologie oder Grundprinzipien lässt sich prinzipiell in den Modellparametern verankern. Dynamisches Wissen wie Produkt-Roadmaps, Preise, Prozessvorgaben oder regulatorische Auflagen verändert sich hingegen so häufig, dass es außerhalb des Modells vorgehalten werden muss. \textcite[3]{Song.2025} formalisieren diesen Gegensatz in ihrer Taxonomie und beschreiben, dass die \textit{Dynamic Knowledge Injection} externes Wissen während der Inferenz abruft, wohingegen die \textit{Static Knowledge Injection} das externe Wissen im Zuge des Fine-Tunings in die Modellparameter einbettet. Die Update-Frequenz des Wissens wird damit zu einem der zentralen Auswahlkriterien.
 
 \subsubsection{Vertraulichkeit, Zugriffsrechte, Compliance}
 \label{sec:compliance}
