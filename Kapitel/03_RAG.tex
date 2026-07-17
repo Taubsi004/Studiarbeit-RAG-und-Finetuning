@@ -16,22 +16,22 @@
 \subsection{Definition und Ursprung}
 \label{sec:rag-definition}
 
-Der Begriff \textit{Retrieval-Augmented Generation} geht auf \textcite[1]{Lewis.2020} zurück, die ein allgemeines Fine-Tuning-Verfahren einführen, das vortrainiertes parametrisches Wissen mit einem nicht-parametrischen Speicher zur Sprachgenerierung kombiniert. Motiviert ist der Ansatz durch drei Schwächen rein parametrischer Sprachmodelle: Ihr Wissen lässt sich nicht ohne Weiteres erweitern oder korrigieren, ihre Vorhersagen sind nur eingeschränkt nachvollziehbar, und sie neigen zu Halluzinationen \autocite[1]{Lewis.2020}. Die im ursprünglichen Aufbau vorgeschlagene Referenzarchitektur nutzt einen vortrainierten seq2seq-Transformer als parametrischen Speicher und einen dichten Vektorindex über Wikipedia als nicht-parametrischen Speicher, auf den ein neuronaler Retriever zugreift \autocite[2]{Lewis.2020}. Nachfolgende Übersichtsarbeiten rahmen RAG breiter als Antwort auf Halluzinationen, veraltetes Wissen und intransparente Schlussfolgerungsprozesse großer Sprachmodelle \autocite[1]{Gao.2024}.
+Der Begriff \textit{Retrieval-Augmented Generation} geht auf \textcite[1]{Lewis.2020} zurück, die ein allgemeines Fine-Tuning-Verfahren einführen, das vortrainiertes parametrisches Wissen mit einem nicht-para\-metrischen Speicher zur Sprachgenerierung kombiniert. Motiviert ist der Ansatz durch drei Schwächen rein parametrischer Sprachmodelle: Ihr Wissen lässt sich nicht ohne Weiteres erweitern oder korrigieren, ihre Vorhersagen sind nur eingeschränkt nachvollziehbar, und sie neigen zu Halluzinationen \autocite[1]{Lewis.2020}. Die im ursprünglichen Aufbau vorgeschlagene Referenzarchitektur nutzt einen vortrainierten seq2\-seq-Transformer als parametrischen Speicher und einen dichten Vektorindex über Wikipedia als nicht-parametrischen Speicher, auf den ein neuronaler Retriever zugreift \autocite[2]{Lewis.2020}. Nachfolgende Übersichtsarbeiten rahmen RAG breiter als Antwort auf Halluzinationen, veraltetes Wissen und intransparente Schlussfolgerungsprozesse großer Sprachmodelle \autocite[1]{Gao.2024}.
 
 \subsection{Architekturelle Komponenten}
 \label{sec:rag-komponenten}
 
-Ein RAG-System besteht typischerweise aus drei Komponenten -- Retriever, Index bzw. Vektordatenbank und Generator --, die in einer Pipeline zusammenwirken.
+Ein RAG-System besteht typischerweise aus den Komponenten Retriever, Index bzw. Vektordatenbank und Generator, die in einer Pipeline zusammenwirken.
 
 \subsubsection{Retriever}
 \label{sec:rag-retriever}
 
-Der Retriever hat die Aufgabe, zu einer gegebenen Anfrage die relevantesten Dokumente aus der Wissensbasis auszuwählen. \textcite[3]{Lewis.2020} verwenden hierfür einen Bi-Encoder nach dem \textit{Dense Passage Retrieval}-Paradigma (DPR): Anfrage und Dokumente werden getrennt in einen gemeinsamen Vektorraum eingebettet, in dem die Ähnlichkeit anschließend über Skalarprodukte berechnet wird. Der Survey von \textcite[8f.]{Gao.2024} unterscheidet allgemeiner zwischen \textit{sparse} und \textit{dense} Encodern -- konkret zwischen klassischen Verfahren wie BM25 und BERT-basierten dichten Retrievern -- und beschreibt die Suche als Ähnlichkeitsberechnung (etwa via Kosinus-Ähnlichkeit) zwischen den Einbettungen von Anfrage und Dokument-Chunks.
+Der Retriever hat die Aufgabe, zu einer gegebenen Anfrage die relevantesten Dokumente aus der Wissensbasis auszuwählen. \textcite[3]{Lewis.2020} verwenden hierfür einen Bi-Encoder nach dem \textit{Dense Passage Retrieval}-Paradigma (DPR): Anfrage und Dokumente werden getrennt in einen gemeinsamen Vektorraum eingebettet, in dem die Ähnlichkeit anschließend über Skalarprodukte berechnet wird. Die Studie von \textcite[8f.]{Gao.2024} unterscheidet allgemeiner zwischen sparse und dense Encodern (konkret zwischen klassischen Verfahren wie BM25 und BERT-basierten dichten Retrievern) und beschreibt die Suche als Ähnlichkeitsberechnung, etwa via Kosinus-Ähnlichkeit, zwischen den Einbettungen von Anfrage und Dokument-Chunks.
 
 \subsubsection{Vektordatenbank und Index}
 \label{sec:rag-index}
 
-Die Wissensbasis wird nicht als Ganzes indexiert, sondern in kleinere Einheiten (\textit{Chunks}) zerlegt und in einem Vektorindex vorgehalten. Übliche Chunk-Größen liegen bei einer festen Zahl an Tokens, häufig 100, 256 oder 512 \autocite[8]{Gao.2024}. Die Wahl der Chunk-Größe stellt einen direkten Zielkonflikt her: Größere Chunks fangen mehr Kontext ein, transportieren aber auch mehr Rauschen; kleinere Chunks reduzieren Rauschen, können den benötigten Kontext jedoch unvollständig abbilden \autocite[8]{Gao.2024}.
+Die Wissensbasis wird nicht als Ganzes indexiert, sondern in kleinere Einheiten (\textit{Chunks}) zerlegt und in einem Vektorindex vorgehalten. Übliche Chunk-Größen liegen bei einer festen Zahl an Tokens, häufig 100, 256 oder 512 \autocite[8]{Gao.2024}. Die Wahl der Chunk-Größe stellt einen direkten Zielkonflikt her. Größere Chunks fangen mehr Kontext ein, transportieren aber auch mehr Rauschen. Kleinere Chunks hingegen reduzieren Rauschen, können den benötigten Kontext jedoch unvollständig abbilden \autocite[8]{Gao.2024}.
 
 \subsubsection{Generator}
 \label{sec:rag-generator}
