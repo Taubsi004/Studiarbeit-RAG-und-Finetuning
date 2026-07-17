@@ -1,21 +1,82 @@
+% =====================================================================
+% Kapitel 3 Retrieval-Augmented Generation (RAG)
+% Studienarbeit: RAG vs. Fine-Tuning - Ein konzeptioneller Kriterienkatalog
+% Autor: Tobias Weigold
+%
+% Zielumfang: ca. 3 Seiten (inkl. eingebetteter Grafik in 3.3)
+% Zitierkonvention: \autocite[Seite]{Name.Jahr} am Satzende;
+%                    \textcite[Seite]{Name.Jahr} nur bei aktiver
+%                    Autorennennung im Satz. Deutsche Paraphrasen,
+%                    keine englischen Wortzitate.
+% =====================================================================
+
 \section{Retrieval-Augmented Generation (RAG)}
+\label{sec:rag}
+
 \subsection{Definition und Ursprung}
-% Lewis et al. 2020
+\label{sec:rag-definition}
+
+Der Begriff \textit{Retrieval-Augmented Generation} geht auf \textcite[1]{Lewis.2020} zurück, die ein allgemeines Fine-Tuning-Verfahren einführen, das vortrainiertes parametrisches Wissen mit einem nicht-parametrischen Speicher zur Sprachgenerierung kombiniert. Motiviert ist der Ansatz durch drei Schwächen rein parametrischer Sprachmodelle: Ihr Wissen lässt sich nicht ohne Weiteres erweitern oder korrigieren, ihre Vorhersagen sind nur eingeschränkt nachvollziehbar, und sie neigen zu Halluzinationen \autocite[1]{Lewis.2020}. Die im ursprünglichen Aufbau vorgeschlagene Referenzarchitektur nutzt einen vortrainierten seq2seq-Transformer als parametrischen Speicher und einen dichten Vektorindex über Wikipedia als nicht-parametrischen Speicher, auf den ein neuronaler Retriever zugreift \autocite[2]{Lewis.2020}. Nachfolgende Übersichtsarbeiten rahmen RAG breiter als Antwort auf Halluzinationen, veraltetes Wissen und intransparente Schlussfolgerungsprozesse großer Sprachmodelle \autocite[1]{Gao.2024}.
 
 \subsection{Architekturelle Komponenten}
-\subsubsection{Retriever (Dense/Sparse, Embedding-Modelle)}
+\label{sec:rag-komponenten}
 
-\subsubsection{Vektordatenbank/Index}
+Ein RAG-System besteht typischerweise aus drei Komponenten -- Retriever, Index bzw. Vektordatenbank und Generator --, die in einer Pipeline zusammenwirken.
 
-\subsubsection{Generator (LLM)}
+\subsubsection{Retriever}
+\label{sec:rag-retriever}
+
+Der Retriever hat die Aufgabe, zu einer gegebenen Anfrage die relevantesten Dokumente aus der Wissensbasis auszuwählen. \textcite[3]{Lewis.2020} verwenden hierfür einen Bi-Encoder nach dem \textit{Dense Passage Retrieval}-Paradigma (DPR): Anfrage und Dokumente werden getrennt in einen gemeinsamen Vektorraum eingebettet, in dem die Ähnlichkeit anschließend über Skalarprodukte berechnet wird. Der Survey von \textcite[8f.]{Gao.2024} unterscheidet allgemeiner zwischen \textit{sparse} und \textit{dense} Encodern -- konkret zwischen klassischen Verfahren wie BM25 und BERT-basierten dichten Retrievern -- und beschreibt die Suche als Ähnlichkeitsberechnung (etwa via Kosinus-Ähnlichkeit) zwischen den Einbettungen von Anfrage und Dokument-Chunks.
+
+\subsubsection{Vektordatenbank und Index}
+\label{sec:rag-index}
+
+Die Wissensbasis wird nicht als Ganzes indexiert, sondern in kleinere Einheiten (\textit{Chunks}) zerlegt und in einem Vektorindex vorgehalten. Übliche Chunk-Größen liegen bei einer festen Zahl an Tokens, häufig 100, 256 oder 512 \autocite[8]{Gao.2024}. Die Wahl der Chunk-Größe stellt einen direkten Zielkonflikt her: Größere Chunks fangen mehr Kontext ein, transportieren aber auch mehr Rauschen; kleinere Chunks reduzieren Rauschen, können den benötigten Kontext jedoch unvollständig abbilden \autocite[8]{Gao.2024}.
+
+\subsubsection{Generator}
+\label{sec:rag-generator}
+
+Der Generator ist ein Sprachmodell, das aus der ursprünglichen Anfrage und den vom Retriever bereitgestellten Textpassagen die Antwort erzeugt. Im Originalvorschlag von \textcite[3]{Lewis.2020} wird hierfür ein vortrainierter seq2seq-Transformer (BART-large) verwendet; Anfrage und abgerufene Passagen werden schlicht konkateniert und gemeinsam an den Generator übergeben. In neueren, LLM-basierten Umsetzungen tritt dieselbe Aufgabe an den Prompt-Kontext eines instruktionsoptimierten Sprachmodells. \textcite[9f.]{Gao.2024} weisen jedoch darauf hin, dass redundante oder übermäßig lange Kontexte die Generierungsqualität beeinträchtigen und das sogenannte \textit{Lost-in-the-Middle}-Phänomen auslösen können; eine gezielte Kuration des Kontexts wird deshalb Teil der Generatorstufe.
 
 \subsection{RAG-Paradigmen}
-% nach Gao et al. (2024)
-\subsubsection{Naive RAG}
+\label{sec:rag-paradigmen}
 
-\subsubsection{Advanced RAG (Pre-/Post-Retrieval-Optimierungen)}
+\textcite[3ff.]{Gao.2024} systematisieren den Forschungsstand entlang dreier aufeinander aufbauender Paradigmen (siehe Abb.~\ref{fig:rag-paradigmen}).
+
+% ---------------------------------------------------------------------
+% Platzhalter für Grafik der drei RAG-Paradigmen
+% (eigene Darstellung nach Gao.2024, S. 3-5)
+% ---------------------------------------------------------------------
+\begin{figure}[htbp]
+  \centering
+  % \includegraphics[width=0.95\textwidth]{abbildungen/rag_paradigmen.pdf}
+  \fbox{\parbox{0.9\textwidth}{\centering\vspace{2em}[Platzhalter: Abbildung ,,Naive RAG $\rightarrow$ Advanced RAG $\rightarrow$ Modular RAG'']\vspace{2em}}}
+  \caption[RAG-Paradigmen nach Gao et al.]{Die drei RAG-Paradigmen im Überblick. Eigene Darstellung nach \textcite[3ff.]{Gao.2024}.}
+  \label{fig:rag-paradigmen}
+\end{figure}
+
+\subsubsection{Naive RAG}
+\label{sec:naive-rag}
+
+Naive RAG folgt einem klassischen \textit{Retrieve-Read}-Ablauf aus Indexierung, Retrieval und Generierung \autocite[3]{Gao.2024}. Trotz seiner Einfachheit weist dieses Paradigma drei zentrale Schwächen auf: Die Retrieval-Stufe leidet regelmäßig unter unzureichender Precision und Recall, sodass irrelevante Passagen zurückgegeben oder entscheidende Informationen übersehen werden \autocite[3]{Gao.2024}. In der Generierungsstufe kann das Modell weiterhin halluzinieren, also Aussagen produzieren, die durch den abgerufenen Kontext gerade nicht gestützt werden \autocite[3]{Gao.2024}. Schließlich entsteht Redundanz, wenn ähnliche Informationen aus mehreren Quellen abgerufen werden und sich in der Antwort wiederholen \autocite[3]{Gao.2024}.
+
+\subsubsection{Advanced RAG}
+\label{sec:advanced-rag}
+
+Advanced RAG adressiert diese Schwächen durch gezielte Pre- und Post-Retrieval-Optimierungen \autocite[3f.]{Gao.2024}. Auf der Pre-Retrieval-Seite werden Datengranularität und Indexstruktur verbessert, Metadaten ergänzt sowie die Nutzeranfrage selbst optimiert, etwa durch Query-Rewriting, Query-Transformation oder Query-Expansion \autocite[4]{Gao.2024}. Auf der Post-Retrieval-Seite werden die abgerufenen Chunks neu geordnet (\textit{Reranking}) und der resultierende Kontext komprimiert, bevor er an den Generator übergeben wird \autocite[4]{Gao.2024}.
 
 \subsubsection{Modular RAG}
+\label{sec:modular-rag}
+
+Modular RAG geht über die feste Pipeline der ersten beiden Paradigmen hinaus und lässt sich als Baukasten funktionaler Module beschreiben \autocite[4]{Gao.2024}. \textcite[4f.]{Gao.2024} unterscheiden unter anderem ein \textit{Search}-Modul für die gezielte Suche in unterschiedlichen Datenquellen wie Suchmaschinen, Datenbanken oder Wissensgraphen, ein \textit{Fusion}-Modul zur Kombination mehrerer Abfragen (RAG-Fusion), ein \textit{Memory}-Modul, das den Modellspeicher zur Steuerung des Retrievals nutzt, sowie \textit{Routing}-, \textit{Predict}- und \textit{Task-Adapter}-Module. Der zentrale Unterschied zu Advanced RAG liegt in der freien Kombinier- und Austauschbarkeit dieser Module -- Modular RAG ist damit weniger eine feste Architektur als ein Gestaltungsrahmen für RAG-Systeme.
 
 \subsection{Stärken und Schwächen}
-% Theoretisch hergeleitet
+\label{sec:rag-swot}
+
+Aus den in Abschnitt~\ref{sec:rag-komponenten} und~\ref{sec:rag-paradigmen} beschriebenen Eigenschaften lassen sich, ohne eigene empirische Erhebung, zentrale Stärken und Schwächen von RAG ableiten, die im Kriterienkatalog in Kapitel~5 wieder aufgegriffen werden.
+
+Als \textbf{Stärken} lassen sich vier Punkte festhalten. \textit{Erstens} entkoppelt RAG die Wissensbasis von den Modellgewichten. \textcite[7]{Lewis.2020} betonen, dass sich nicht-parametrische Speicher zur Testzeit aktualisieren lassen, während rein parametrische Modelle für vergleichbare Änderungen nachtrainiert werden müssten. \textcite[3]{Karakurt.2025} beschreiben diese Entkopplung als spezifische Antwort auf statische Trainings-Cut-offs und den Bedarf nach aktuellem, proprietärem Wissen im Enterprise-Kontext. \textit{Zweitens} adressiert RAG Halluzinationen und mangelndes Domänenwissen, indem es die Antwort an externe Belege bindet; \textcite[1]{Ovadia.2024} finden empirisch, dass RAG unsupervised Fine-Tuning bei der Einbringung neuen Wissens konsistent übertrifft, und \textcite[1f.]{Soudani.2024} berichten für Long-Tail-Wissen einen deutlichen Vorsprung von RAG gegenüber Fine-Tuning. \textit{Drittens} bietet RAG Nachvollziehbarkeit: Die abgerufenen Passagen lassen sich als Quellen ausweisen, während reine Long-Context-Ansätze eine Black Box bleiben \autocite[14]{Gao.2024}. Für regulierte Branchen ist gerade diese Auditierbarkeit ein zentrales Argument \autocite[20]{Karakurt.2025}. \textit{Viertens} ist der initiale Aufwand vergleichsweise gering, da lediglich Embeddings erzeugt werden müssen und kein Training des Sprachmodells erforderlich ist \autocite[29]{Balaguer.2024}.
+
+Diesen Stärken stehen strukturelle \textbf{Schwächen} gegenüber. \textit{Erstens} ist die Antwortqualität durch die Retrieval-Stufe gedeckelt: Fehlgeleitete oder irrelevante Chunks können nicht in der Generierung kompensiert werden \autocite[3]{Gao.2024}. Verrauschter oder widersprüchlicher Kontext kann die Ausgabe sogar verschlechtern \autocite[14]{Gao.2024}. Zudem sinkt die Retriever-Leistung gerade bei seltenem, wenig repräsentiertem Wissen -- also dort, wo RAG konzeptionell besonders benötigt wird \autocite[2]{Soudani.2024}. \textit{Zweitens} verursacht die Retrieval-Stufe zusätzliche Latenz, die im Enterprise-Betrieb harte Grenzen erreichen kann; \textcite[20]{Karakurt.2025} verweisen auf typische Antwortzeit-Budgets von unter 200~ms, die den Einsatz aufwendiger Reranker einschränken. \textit{Drittens} ist die verfügbare Kontextlänge des Generators eine harte Ressource: Übermäßig lange Kontexte führen zu Effizienzverlusten und dem bereits genannten \textit{Lost-in-the-Middle}-Effekt \autocite[9f.]{Gao.2024}. \textit{Viertens} bleibt die Chunk-Strategie ein Zielkonflikt zwischen Kontexterhalt und Rauschminimierung, der pro Anwendungsfall austariert werden muss \autocite[8]{Gao.2024}.
+
+Damit ist RAG kein universeller Ersatz für Fine-Tuning, sondern ein Ansatz mit einem klar umrissenen Stärke-Schwäche-Profil, das im nächsten Kapitel dem Fine-Tuning-Paradigma gegenübergestellt wird.
