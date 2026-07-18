@@ -60,12 +60,12 @@ Naive RAG folgt einem klassischen \textit{Retrieve-Read}-Ablauf aus Indexierung,
 \subsubsection{Advanced RAG}
 \label{sec:advanced-rag}
 
-Advanced RAG adressiert diese Schwächen durch gezielte Pre- und Post-Retrieval-Optimierungen \autocite[3f.]{Gao.2024}. Auf der Pre-Retrieval-Seite werden Datengranularität und Indexstruktur verbessert, Metadaten ergänzt sowie die Nutzeranfrage selbst optimiert, etwa durch Query-Rewriting, Query-Transformation oder Query-Expansion \autocite[4]{Gao.2024}. Auf der Post-Retrieval-Seite werden die abgerufenen Chunks neu geordnet (\textit{Reranking}) und der resultierende Kontext komprimiert, bevor er an den Generator übergeben wird \autocite[4]{Gao.2024}.
+Advanced RAG adressiert diese Schwächen durch gezielte Pre- und Post-Retrieval-Optimierungen \autocite[3f.]{Gao.2024}. Auf der Pre-Retrieval-Seite werden Datengranularität und Indexstruktur verbessert, Metadaten ergänzt sowie die Nutzeranfrage selbst optimiert, etwa durch Query-Rewriting, Query-Trans\-formation oder Query-Expansion \autocite[4]{Gao.2024}. Auf der Post-Retrieval-Seite werden die abgerufenen Chunks neu geordnet (\textit{Reranking}) und der resultierende Kontext komprimiert, bevor er an den Generator übergeben wird \autocite[4]{Gao.2024}.
 
 \subsubsection{Modular RAG}
 \label{sec:modular-rag}
 
-Modular RAG geht über die feste Pipeline der ersten beiden Paradigmen hinaus und lässt sich als Baukasten funktionaler Module beschreiben \autocite[4]{Gao.2024}. \textcite[4f.]{Gao.2024} unterscheiden unter anderem ein \textit{Search}-Modul für die gezielte Suche in unterschiedlichen Datenquellen wie Suchmaschinen, Datenbanken oder Wissensgraphen, ein \textit{Fusion}-Modul zur Kombination mehrerer Abfragen (RAG-Fusion), ein \textit{Memory}-Modul, das den Modellspeicher zur Steuerung des Retrievals nutzt, sowie \textit{Routing}-, \textit{Predict}- und \textit{Task-Adapter}-Module. Der zentrale Unterschied zu Advanced RAG liegt in der freien Kombinier- und Austauschbarkeit dieser Module -- Modular RAG ist damit weniger eine feste Architektur als ein Gestaltungsrahmen für RAG-Systeme.
+Modular RAG geht über die feste Pipeline der ersten beiden Paradigmen hinaus und lässt sich als Baukasten funktionaler Module beschreiben \autocite[4]{Gao.2024}. \textcite[4f.]{Gao.2024} unterscheiden unter anderem ein \textit{Search}-Modul für die gezielte Suche in unterschiedlichen Datenquellen wie Suchmaschinen, Datenbanken oder Wissensgraphen, ein \textit{Fusion}-Modul zur Kombination mehrerer Abfragen (RAG-Fusion), ein \textit{Memory}-Modul, das den Modellspeicher zur Steuerung des Retrievals nutzt, sowie \textit{Routing}-, \textit{Predict}- und \textit{Task-Adapter}-Module. Der zentrale Unterschied zu Advanced RAG liegt in der freien Kombinier- und Austauschbarkeit dieser Module. Somit ist Modular RAG weniger eine feste Architektur als ein Gestaltungsrahmen für RAG-Systeme.
 
 \subsection{Stärken und Schwächen}
 \label{sec:rag-swot}
