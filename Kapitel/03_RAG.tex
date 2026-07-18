@@ -36,24 +36,21 @@ Die Wissensbasis wird nicht als Ganzes indexiert, sondern in kleinere Einheiten 
 \subsubsection{Generator}
 \label{sec:rag-generator}
 
-Der Generator ist ein Sprachmodell, das aus der ursprünglichen Anfrage und den vom Retriever bereitgestellten Textpassagen die Antwort erzeugt. Im Originalvorschlag von \textcite[3]{Lewis.2020} wird hierfür ein vortrainierter seq2seq-Transformer (BART-large) verwendet; Anfrage und abgerufene Passagen werden schlicht konkateniert und gemeinsam an den Generator übergeben. In neueren, LLM-basierten Umsetzungen tritt dieselbe Aufgabe an den Prompt-Kontext eines instruktionsoptimierten Sprachmodells. \textcite[9f.]{Gao.2024} weisen jedoch darauf hin, dass redundante oder übermäßig lange Kontexte die Generierungsqualität beeinträchtigen und das sogenannte \textit{Lost-in-the-Middle}-Phänomen auslösen können; eine gezielte Kuration des Kontexts wird deshalb Teil der Generatorstufe.
+Der Generator ist ein Sprachmodell, das aus der ursprünglichen Anfrage und den vom Retriever bereitgestellten Textpassagen die Antwort erzeugt. \textcite[3]{Lewis.2020} verwendet hierfür einen vortrainierter seq2seq-Transformer (BART-large). Die Anfrage und abgerufene Passagen werden schlicht zuzsammengefügt an den Generator übergeben. 
+In aktuellen KI-Systemen wird diese Aufgabe nun direkt über den Kontext-Prompt des Sprachmodells gesteuert. Redundante oder übermäßig lange Kontexte beeinträchtigen jedoch die Generierungsqualität und können das sogenannte \textit{Lost-in-the-Middle}-Phänomen auslösen \autocite[10]{Gao.2024}. Eine gezielte Auswahl und Aufbereitung des Kontexts wird deshalb zu einem wichtigen Bestandteil der Generatorstufe.
 
 \subsection{RAG-Paradigmen}
 \label{sec:rag-paradigmen}
 
 \textcite[3ff.]{Gao.2024} systematisieren den Forschungsstand entlang dreier aufeinander aufbauender Paradigmen (siehe Abb.~\ref{fig:rag-paradigmen}).
 
-% ---------------------------------------------------------------------
-% Platzhalter für Grafik der drei RAG-Paradigmen
-% (eigene Darstellung nach Gao.2024, S. 3-5)
-% ---------------------------------------------------------------------
 \begin{figure}[htbp]
-  \centering
-  % \includegraphics[width=0.95\textwidth]{abbildungen/rag_paradigmen.pdf}
-  \fbox{\parbox{0.9\textwidth}{\centering\vspace{2em}[Platzhalter: Abbildung ,,Naive RAG $\rightarrow$ Advanced RAG $\rightarrow$ Modular RAG'']\vspace{2em}}}
-  \caption[RAG-Paradigmen nach Gao et al.]{Die drei RAG-Paradigmen im Überblick. Eigene Darstellung nach \textcite[3ff.]{Gao.2024}.}
-  \label{fig:rag-paradigmen}
+	\centering
+	\resizebox{\textwidth}{!}{\input{assets/03_RAG/RAG_Paradigm.tex}}
+	\caption{Die drei RAG-Paradigmen nach Gao\,et\,al.}
+	\label{fig:rag-paradigmen}
 \end{figure}
+
 
 \subsubsection{Naive RAG}
 \label{sec:naive-rag}
