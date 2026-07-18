@@ -15,3 +15,6 @@ main.synctex(busy)
 
 # VS Code
 .vscode/
+
+main.bbl-SAVE-ERROR
+main.xdv
