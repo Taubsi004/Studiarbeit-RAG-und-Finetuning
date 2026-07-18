@@ -7,11 +7,7 @@
 \RequirePackage[onehalfspacing]{setspace}
 
 \RequirePackage{xltxtra}
-\IfFontExistsTF{Liberation Sans Narrow}{%
-    \setsansfont{Liberation Sans Narrow}%
-}{%
-    \setsansfont{TeX Gyre Heros}%
-}
+\setsansfont{Liberation Sans Narrow}
 \renewcommand{\familydefault}{\sfdefault}
 
 \RequirePackage{amsmath}
