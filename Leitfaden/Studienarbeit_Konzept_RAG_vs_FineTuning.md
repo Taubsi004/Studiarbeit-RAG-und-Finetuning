@@ -74,7 +74,7 @@ Hier leitest du systematisch jedes Kriterium aus der Literatur ab. Jedes Kriteri
   - K10: Wartung und Betriebskosten (TCO)
   - K11: Latenz und Performance
 - 5.4 **Organisatorische und regulatorische Kriterien**
-  - K12: Datenschutz, DSGVO, vertrauliche Daten, wichtig: EU AI Act mit einbeziehen, auch als Quelle einbeziehen, auch: 
+  - K12: Datenschutz, DSGVO, vertrauliche Daten, wichtig: EU AI Act mit einbeziehen, auch als Quelle einbeziehen, auch: wann wird man Anbiete? Nachteil Finetuning.
   - K13: Auditierbarkeit und Erklärbarkeit
   - K14: Verfügbarkeit von Fachexpertise im Unternehmen
   - K15: Vendor Lock-in und Modellzugang (Open vs. Closed)
