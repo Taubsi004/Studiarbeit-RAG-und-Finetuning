@@ -6,6 +6,22 @@
 
 \usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
 
+\usepackage{xcolor} % Ermöglicht eigene Farbdefinitionen
+
+% Definition einer edlen Farbe für den Bildschirm (z.B. ein dezentes Anthrazit/Dunkelgrau)
+% 1. Eigene Farbe für den Bildschirm definieren
+\usepackage{xcolor} 
+\definecolor{screenlink}{HTML}{4A4A4A} % Edles Dunkelgrau
+
+% 2. Das Zusatzpaket für den unsichtbaren Druck laden
+\usepackage[ocgcolorlinks]{ocgx2}
+
+% 3. Hyperref nachträglich konfigurieren
+\hypersetup{
+    colorlinks=true,
+    allcolors=screenlink
+}
+
 \usepackage{amssymb}
 
 \usepackage{tikz}
