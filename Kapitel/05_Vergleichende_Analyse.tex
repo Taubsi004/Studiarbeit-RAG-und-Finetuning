@@ -63,7 +63,8 @@ Für rein proprietäre Terminologie liegt damit ein Anwendungsfall vor, bei dem 
 \label{sec:krit-ressourcen}
 
 \paragraph{K8 -- Rechenressourcen.}
-Full Fine-Tuning ist ressourcenintensiv \autocite[1f.]{Soudani.2024}. Parameter-effiziente Verfahren wie LoRA reduzieren zwar den Speicher- und Rechenaufwand erheblich, indem sie im Fall von GPT-3 die Zahl trainierbarer Parameter um den Faktor 10.000 und den GPU-Speicherbedarf um den Faktor 3 senken \autocite[1]{Hu.2022}. Dennoch bleibt der Initialaufwand für Datenaufbereitung, Training und Modellverwaltung deutlich über dem Aufwand, den die reine Erzeugung von Embeddings für RAG erfordert \autocite[29]{Balaguer.2024}.
+Full Fine-Tuning ist ressourcenintensiv \autocite[1f.]{Soudani.2024}. Parameter-effiziente Verfahren wie LoRA reduzieren zwar den Speicher- und Rechenaufwand erheblich, indem sie im Fall von GPT-3 die Zahl trainierbarer Parameter um den Faktor 10.000 und den GPU-Speicherbedarf um den Faktor 3 senken \autocite[1]{Hu.2022}.
+Dennoch bleibt der Initialaufwand für Datenaufbereitung, Training und Modellverwaltung deutlich über dem Aufwand, den die reine Erzeugung von Embeddings für RAG erfordert \autocite[29]{Balaguer.2024}.
 Für Unternehmen mit begrenzten GPU-Kapazitäten bietet RAG daher den wirtschaftlicheren Einstieg, während PEFT-Verfahren als Standardoption für ein zwingend notwendiges modellinternes Training verbleiben.
 
 \paragraph{K9 -- Datenaufwand.}
@@ -72,10 +73,16 @@ Bei überwachtem Fine-Tuning kommt die Generierung von Frage-Antwort-Paaren hinz
 Für RAG genügt hingegen die Indexierung der Rohdokumente. Je knapper die Datenaufbereitungskapazität, desto stärker spricht dies für einen retrieval-basierten Ansatz.
 
 \paragraph{K10 -- Wartung und Betriebskosten.}
-Die laufenden Betriebskosten unterscheiden sich strukturell. Fine -Tuning erzeugt laut \textcite[3f.]{Song.2025} hohe Update-Kosten, weil jede Änderung der Wissensbasis ein erneutes Training erfordert. \textcite[17f., 23]{Karakurt.2026} verweisen in diesem Zusammenhang auf die Notwendigkeit einer kontinuierlichen Modellpflege inklusive inkrementellem, kosteneffizientem Fine\--Tuning und einer geeigneten \textit{Lifecycle Governance}. RAG erlaubt dagegen Aktualisierungen zur Testzeit ohne Modell-Retraining \autocite[5]{Gao.2024}. Die Gesamtbetriebskosten (TCO) werden damit stark durch die Änderungsfrequenz des Wissens bestimmt und schließen inhaltlich unmittelbar an K1 an.
+Die laufenden Betriebskosten unterscheiden sich strukturell. Fine -Tuning erzeugt hohe Update-Kosten, weil jede Änderung der Wissensbasis ein erneutes Training erfordert \autocite[3f.]{Song.2025}.
+\textcite[17f., 23]{Karakurt.2026} verweisen in diesem Zusammenhang auf die Notwendigkeit einer kontinuierlichen Modellpflege inklusive inkrementellem, kosteneffizientem Fine\--Tuning und einer geeigneten \textit{Lifecycle Governance}.
+RAG erlaubt dagegen Aktualisierungen zur Testzeit ohne Modell-Retraining \autocite[5]{Gao.2024}.
+Die Gesamtbetriebskosten (TCO) werden damit stark durch die Änderungsfrequenz des Wissens bestimmt und schließen inhaltlich unmittelbar an K1 an.
 
 \paragraph{K11 -- Latenz und Performance.}
-Fine-Tuning erzeugt bei PEFT-Verfahren wie LoRA zur Inferenzzeit keinen zusätzlichen Aufwand, weil die trainierten Matrizen vor dem Deployment in die Basisgewichte zurückgeführt werden können \autocite[4]{Hu.2022}. RAG bringt dagegen einen Retrieval-Schritt und einen erweiterten Kontext mit sich, was sowohl die Latenz als auch das \textit{Lost-in-the-Middle}-Risiko erhöht \autocite[10, 14]{Gao.2024}. \textcite[20]{Karakurt.2026} verweisen für die Dokumentenautomatisierung im Enterprise-Betrieb auf typische Latenzbudgets unter 200~ms, die den Einsatz aufwendiger Reranker praktisch einschränken. Für latenzkritische Anwendungen mit stabilem Wissen spricht dieses Kriterium für Fine-Tuning, für dynamisches Wissen bleibt RAG trotz höherer Latenz die Referenzarchitektur.
+Fine-Tuning erzeugt bei PEFT-Verfahren wie LoRA zur Inferenzzeit keinen zusätzlichen Aufwand, weil die trainierten Matrizen vor dem Deployment in die Basisgewichte zurückgeführt werden können \autocite[4]{Hu.2022}.
+RAG bringt dagegen einen Retrieval-Schritt und einen erweiterten Kontext mit sich, was sowohl die Latenz als auch das \textit{Lost-in-the-Middle}-Risiko erhöht \autocite[10]{Gao.2024}.
+Latenzbudgets für die Dokumentenautomatisierung von unter 200~ms sind üblich im Enterprise-Betrieb, was den Einsatz aufwendiger Reranker praktisch einschränkt \autocite[20]{Karakurt.2026}.
+Für latenzkritische Anwendungen mit stabilem Wissen spricht dieses Kriterium für Fine-Tuning, für dynamisches Wissen bleibt RAG trotz höherer Latenz die Referenzarchitektur.
 
 \subsection{Organisatorische und regulatorische Kriterien}
 \label{sec:krit-regulatorisch}
