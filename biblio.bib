@@ -6,6 +6,16 @@
 }
 
 
+@misc{Touvron.2023,
+ abstract = {In this work, we develop and release Llama 2, a collection of pretrained and fine-tuned large language models (LLMs) ranging in scale from 7 billion to 70 billion parameters. Our fine-tuned LLMs, called Llama 2-Chat, are optimized for dialogue use cases. Our models outperform open-source chat models on most benchmarks we tested, and based on our human evaluations for helpfulness and safety, may be a suitable substitute for closed-source models. We provide a detailed description of our approach to fine-tuning and safety improvements of Llama 2-Chat in order to enable the community to build on our work and contribute to the responsible development of LLMs.},
+ author = {Touvron, Hugo and Martin, Louis and Stone, Kevin and Albert, Peter and Almahairi, Amjad and Babaei, Yasmine and Bashlykov, Nikolay and Batra, Soumya and Bhargava, Prajjwal and Bhosale, Shruti and Bikel, Dan and Blecher, Lukas and Ferrer, Cristian Canton and Chen, Moya and Cucurull, Guillem and Esiobu, David and Fernandes, Jude and Fu, Jeremy and Fu, Wenyin and Fuller, Brian and Gao, Cynthia and Goswami, Vedanuj and Goyal, Naman and Hartshorn, Anthony and Hosseini, Saghar and Hou, Rui and Inan, Hakan and Kardas, Marcin and Kerkez, Viktor and Khabsa, Madian and Kloumann, Isabel and Korenev, Artem and Koura, Punit Singh and Lachaux, Marie-Anne and Lavril, Thibaut and Lee, Jenya and Liskovich, Diana and Lu, Yinghai and Mao, Yuning and Martinet, Xavier and Mihaylov, Todor and Mishra, Pushkar and Molybog, Igor and Nie, Yixin and Poulton, Andrew and Reizenstein, Jeremy and Rungta, Rashi and Saladi, Kalyan and Schelten, Alan and Silva, Ruan and Smith, Eric Michael and Subramanian, Ranjan and Tan, Xiaoqing Ellen and Tang, Binh and Taylor, Ross and Williams, Adina and Kuan, Jian Xiang and Xu, Puxin and Yan, Zheng and Zarov, Iliyan and Zhang, Yuchen and Fan, Angela and Kambadur, Melanie and Narang, Sharan and Rodriguez, Aurelien and Stojnic, Robert and Edunov, Sergey and Scialom, Thomas},
+ date = {2023},
+ title = {Llama 2: Open Foundation and Fine-Tuned Chat Models},
+ url = {https://arxiv.org/pdf/2307.09288},
+ file = {Touvron, Martin et al. 2023 - Llama 2 Open Foundation (2):Attachments/Touvron, Martin et al. 2023 - Llama 2 Open Foundation (2).pdf:application/pdf}
+}
+
+
 @article{Soudani.2024,
  abstract = {Language Models (LMs) memorize a vast amount of factual knowledge, exhibiting strong performance across diverse tasks and domains. However, it has been observed that the performance diminishes when dealing with less-popular or low-frequency concepts and entities, for example in domain specific applications. The two prominent approaches to enhance the performance of LMs on low-frequent topics are: Retrieval Augmented Generation (RAG) and fine-tuning (FT) over synthetic data. This paper explores and evaluates the impact of RAG and FT on customizing LMs in handling low-frequency entities on question answering tasks. We conduct extensive experiments on twelve LMs of varying size and type and different fine tuning, data augmentation, and retrieval models. Our findings indicate that while FT boosts the performance across entities of varying popularity, RAG surpasses FT by a large margin particularly for least popular factual knowledge. Additionally, the success of both RAG and FT approaches is amplified by improving retrieval and data augmentation techniques. Fine tuning, while beneficial for small LMs, requires extensive resources. To address this issue, we propose the new Stimulus RAG approach that surpasses the effectiveness of fine tuning based approaches, thereby eliminating the need for the costly data augmentation and fine tuning step for enriching LMs with less popular factual knowledge. The code is available at \url{https://github.com/informagi/RAGvsFT}.},
  author = {Soudani, Heydar and Kanoulas, Evangelos and Hasibi, Faegheh},
@@ -41,6 +51,15 @@ EMNLP 2025 findings},
  journal = {arXiv preprint},
  doi = {10.48550/arXiv.2312.05934},
  file = {ovadia:Attachments/ovadia.pdf:application/pdf}
+}
+
+
+@misc{OpenAI.2026,
+ author = {OpenAI},
+ year = {2026},
+ title = {Supervised fine-tuning - OpenAI Developer Platform},
+ urldate = {2026-07-20},
+ file = {openai:Attachments/openai.pdf:application/pdf}
 }
 
 
@@ -86,6 +105,14 @@ Accepted at NeurIPS 2020},
 }
 
 
+@article{HugoTouvron.2023,
+ author = {{Hugo Touvron} and {Louis Martin} and {Kevin Stone} and {Peter Albert} and {Amjad Almahairi} and {Yasmine Babaei} and {Nikolay Bashlykov} and {Soumya Batra} and {Prajjwal Bhargava} and {Shruti Bhosale} and others},
+ year = {2023},
+ title = {Llama 2: Open Foundation and Fine-Tuned Chat Models},
+ journal = {arXiv preprint arXiv:2307.09288}
+}
+
+
 @article{Huang.2024,
  author = {Huang, Lei and Yu, Weijiang and Ma, Weitao and Zhong, Weihong and Feng, Zhangyin and Wang, Haotian and Chen, Qianglong and Peng, Weihua and Feng, Xiaocheng and Qin, Bing and Liu, Ting},
  year = {2024},
@@ -121,20 +148,6 @@ Draft V2 includes better baselines, experiments on GLUE, and more on adapter lat
 }
 
 
-@inproceedings{Vaswani.2017,
- abstract = {The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.
-
-15 pages, 5 figures},
- author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N. and Kaiser, Lukasz and Polosukhin, Illia},
- title = {Attention Is All You Need},
- volume = {30},
- booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
- year = {2017},
- doi = {10.48550/arXiv.1706.03762},
- file = {Vaswani:Attachments/Vaswani.pdf:application/pdf}
-}
-
-
 @article{Gao.2024,
  abstract = {Large Language Models (LLMs) showcase impressive capabilities but encounter challenges like hallucination, outdated knowledge, and non-transparent, untraceable reasoning processes. Retrieval-Augmented Generation (RAG) has emerged as a promising solution by incorporating knowledge from external databases. This enhances the accuracy and credibility of the generation, particularly for knowledge-intensive tasks, and allows for continuous knowledge updates and integration of domain-specific information. RAG synergistically merges LLMs' intrinsic knowledge with the vast, dynamic repositories of external databases. This comprehensive review paper offers a detailed examination of the progression of RAG paradigms, encompassing the Naive RAG, the Advanced RAG, and the Modular RAG. It meticulously scrutinizes the tripartite foundation of RAG frameworks, which includes the retrieval, the generation and the augmentation techniques. The paper highlights the state-of-the-art technologies embedded in each of these critical components, providing a profound understanding of the advancements in RAG systems. Furthermore, this paper introduces up-to-date evaluation framework and benchmark. At the end, this article delineates the challenges currently faced and points out prospective avenues for research and development.
 
@@ -146,6 +159,15 @@ Ongoing Work},
  journal = {arXiv preprint},
  doi = {10.48550/arXiv.2312.10997},
  file = {gao yufan:Attachments/gao yufan.pdf:application/pdf}
+}
+
+
+@misc{Endal.2025,
+ author = {Endal, {\O}ystein and Vcric, Andrea and Nag, Sidsel and Malter, Nick and Araz, Daylan},
+ year = {2025},
+ title = {Modifying AI Under the EU AI Act: Lessons from Practice on GPAI Model Modifications},
+ url = {https://artificialintelligenceact.eu/modifying-ai-under-the-eu-ai-act/},
+ file = {fli artikel:Attachments/fli artikel.pdf:application/pdf}
 }
 
 
@@ -230,12 +252,17 @@ Ongoing Work},
 }
 
 
-@misc{Endal.2025,
- author = {Endal, {\O}ystein and Vcric, Andrea and Nag, Sidsel and Malter, Nick and Araz, Daylan},
- year = {2025},
- title = {Modifying AI Under the EU AI Act: Lessons from Practice on GPAI Model Modifications},
- url = {https://artificialintelligenceact.eu/modifying-ai-under-the-eu-ai-act/},
- file = {fli artikel:Attachments/fli artikel.pdf:application/pdf}
+@inproceedings{Vaswani.2017,
+ abstract = {The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.
+
+15 pages, 5 figures},
+ author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N. and Kaiser, Lukasz and Polosukhin, Illia},
+ title = {Attention Is All You Need},
+ volume = {30},
+ booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+ year = {2017},
+ doi = {10.48550/arXiv.1706.03762},
+ file = {Vaswani:Attachments/Vaswani.pdf:application/pdf}
 }
 
 
