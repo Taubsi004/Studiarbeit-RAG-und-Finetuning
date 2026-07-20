@@ -91,6 +91,8 @@ Hier leitest du systematisch jedes Kriterium aus der Literatur ab. Jedes Kriteri
   - Case B: Stilistisch konsistenter interner Schreibassistent → Fine-Tuning
   - Case C: Komplexer Support-Agent mit Compliance-Anforderungen → Hybrid
 
+kleine Notizen: hochrisiko? gegen Finetuning, insbesondere bei Faktenwissen wegen Intransparenz
+
 ### 7. Diskussion und Limitationen (~1 Seite)
 - 7.1 Reflexion der Matrix-Validität
 - 7.2 Grenzen der konzeptionellen Methodik (keine empirische Validierung)
