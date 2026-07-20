@@ -1,30 +1,84 @@
+% =====================================================================
+% Kapitel 5 Vergleichende Analyse: Kriterienableitung
+% Studienarbeit: RAG vs. Fine-Tuning - Ein konzeptioneller Kriterienkatalog
+% Autor: Tobias Weigold
+%
+% Zielumfang: ca. 4 Seiten (Kern der Arbeit)
+% Zitierkonvention: \autocite[Seite]{Name.Jahr} am Satzende;
+%                    \textcite[Seite]{Name.Jahr} nur bei aktiver
+%                    Autorennennung im Satz. Deutsche Paraphrasen,
+%                    keine englischen Wortzitate. Keine em dashes.
+%                    Doppelpunkte sparsam.
+% Für EU-Rechtsquellen: \autocite[Art./Abs./Nr.]{Bibkey}
+% =====================================================================
+
 \section{Vergleichende Analyse: Kriterienableitung}
-% Kern der Arbeit. Hier leitest du systematisch jedes Kriterium aus der Literatur ab.
-faithfullness und factuality berücksichtigen wie in grundlagen gesagt
-3.4 aufgreifen
+\label{sec:kriterien}
+
+Auf Basis der in den Kapiteln~\ref{sec:rag} und~\ref{sec:finetuning} dargestellten Stärke-Schwäche-Profile werden im Folgenden fünfzehn Kriterien für die Architekturauswahl abgeleitet. Jedes Kriterium ist aus der Literatur begründet und wird im nachfolgenden Katalog (Kapitel~\ref{sec:katalog}) zu einer Bewertungsmatrix zusammengeführt. Die Systematik folgt vier Dimensionen (wissensbezogen, aufgabenbezogen, ressourcenbezogen, organisatorisch-regulatorisch) sowie einer abschließenden Betrachtung hybrider Ansätze.
 
 \subsection{Wissensbezogene Kriterien}
-% K1: Aktualität/Dynamik des Wissens (statisch vs. häufige Updates)
-% K2: Wissensvolumen und Skalierbarkeit der Knowledge Base
-% K3: Strukturgrad des Wissens (Dokumente vs. tabellarisch vs. Code)
-% K4: Notwendigkeit von Faktentreue und Quellennachweis (Provenance)
+\label{sec:krit-wissen}
+
+\paragraph{K1 -- Aktualität und Dynamik des Wissens.}
+Die Update-Frequenz der Wissensbasis wirkt sich direkt auf die Wahl des Architekturansatzes aus. \textcite[5]{Gao.2024} beschreiben Fine-Tuning als vergleichsweise statisch und für Änderungen retraining-pflichtig, während RAG Wissensaktualisierungen in Echtzeit unterstützt. \textcite[1]{Ovadia.2024} bestätigen empirisch, dass Sprachmodelle über unüberwachtes Fine-Tuning nur schwer neue Fakten lernen. Aus Unternehmenssicht ist zusätzlich der von \textcite[17f., 23]{Karakurt.2026} beschriebene \textit{Concept Drift} zu berücksichtigen. \textcite[1]{Cheng.2024} zeigen zudem, dass der tatsächliche Wissensstand eines Modells je nach Ressource variiert und häufig vor dem offiziellen Cut-off-Datum liegt. Je häufiger sich das interne Wissen ändert, desto stärker spricht dies für einen retrieval-basierten Ansatz.
+
+\paragraph{K2 -- Wissensvolumen und Skalierbarkeit.}
+Fine-Tuning skaliert schlecht mit dem Datenvolumen. \textcite[3f.]{Song.2025} betonen für das \textit{Static Knowledge Embedding} explizit hohe Update-Kosten und Skalierungsprobleme, weil das Einbetten großer oder häufig veränderter Wissensbestände erhebliche Rechenressourcen erfordert. RAG entkoppelt das Volumen dagegen vom Modell, indem Dokumente in Chunks (typisch 100, 256 oder 512 Tokens) segmentiert und im Vektorindex vorgehalten werden \autocite[8]{Gao.2024}. Für interne Wissensbestände in Größenordnungen von Millionen Dokumenten ist der Skalierungsvorteil damit strukturell bei RAG.
+
+\paragraph{K3 -- Strukturgrad des Wissens.}
+Unternehmenswissen liegt in strukturierter (Datenbanken, Wissensgraphen), semistrukturierter (Tickets, Wikis) und unstrukturierter Form (PDFs, Handbücher) vor \autocite[1]{Karakurt.2026}. \textcite[17]{Karakurt.2026} zeigen empirisch, dass strukturiertes Wissen den unstrukturierten Abruf gerade bei zusammenfassenden Aufgaben wirkungsvoll ergänzt und hybride Retrieval-Strategien aus dichten Vektoren und Wissensgraphen bei strukturierten Aufgaben spürbare Leistungssteigerungen erzielen. Für die Architekturauswahl folgt daraus, dass der dominierende Strukturgrad ein eigenständiges Kriterium bildet.
+
+\paragraph{K4 -- Faktentreue und Provenance.}
+\textcite[14]{Gao.2024} betonen, dass RAG-basierte Antworten die zugrundeliegenden Referenzen unmittelbar auffindbar machen, während reine Long-Context-Ansätze eine Black Box bleiben. \textcite[7]{Lewis.2020} rahmen diese Eigenschaft bereits im Ursprungspapier als grundsätzlichen Vorteil nicht-parametrischer Speicher. In regulierten Branchen ist die manuelle Auditierbarkeit des abgerufenen Kontexts laut \textcite[20]{Karakurt.2026} sogar Voraussetzung für die praktische Zulassung. Wo Faktentreue und Nachweispflicht essenziell sind, spricht dieses Kriterium eindeutig für RAG.
 
 \subsection{Aufgabenbezogene Kriterien}
-% K5: Art der Aufgabe (Faktenabruf vs. Stil/Format vs. Reasoning)
-% K6: Multi-Hop-Reasoning-Anforderungen
-% K7: Notwendigkeit domänenspezifischer Sprache/Terminologie
+\label{sec:krit-aufgabe}
+
+\paragraph{K5 -- Art der Aufgabe.}
+\textcite[4f.]{Gao.2024} bilden den Unterschied plastisch ab. RAG entspricht dem gezielten Nachschlagen in einem maßgeschneiderten Lehrbuch und eignet sich vor allem für präzise Informationsabrufe, Fine-Tuning entspricht dem längeren Verinnerlichen und ist geeignet, wenn Struktur, Stil oder Format konsequent reproduziert werden sollen. \textcite[10]{Gao.2024} bestätigen dies mit dem Hinweis, dass Fine-Tuning die Anpassung an spezifische Datenformate und Ausdrucksweisen ermöglicht. Für den reinen Wissensabruf zeigen \textcite[6]{Ovadia.2024}, dass RAG in allen untersuchten Konstellationen besser abschneidet als reines Fine-Tuning.
+
+\paragraph{K6 -- Multi-Hop-Reasoning.}
+{\emergencystretch=1em
+Für Aufgaben, die mehrere Wissenselemente miteinander verknüpfen müssen, reicht ein einmaliges Retrieval häufig nicht aus. \textcite[10f.]{Gao.2024} beschreiben, dass eine einzelne Retrieval-Runde für komplexe, mehrschrittige Fragestellungen typischerweise unzureichend ist. Iteratives Retrieval durchsucht die Wissensbasis wiederholt auf Basis der bereits generierten Zwischenantwort, während rekursives und multi-hop Retrieval speziell auf graph-strukturierte Daten und miteinander verknüpfte Informationen ausgerichtet sind \autocite[11]{Gao.2024}. Advanced-RAG-Strategien wie Query-Rewriting und Query-Expansion ergänzen dies auf der Pre-Retrieval-Seite \autocite[4]{Gao.2024}. Multi-Hop-Anforderungen sprechen damit weniger für oder gegen RAG grundsätzlich als für den Einsatz eines fortgeschrittenen RAG-Paradigmas.
+\par}
+
+\paragraph{K7 -- Domänenspezifische Sprache und Terminologie.}
+Für domänenspezifische Sprache und selten vorkommende Fachbegriffe gilt zunächst der bereits in Abschnitt~\ref{sec:domaenenwissen} eingeführte Long-tail-Befund. \textcite[1f.]{Soudani.2024} zeigen, dass proprietäre Terminologie und wissensarme Long-Tail-Domänen für Retrieval eine Herausforderung sind. Gleichzeitig heben \textcite[10]{Gao.2024} hervor, dass zielgerichtetes Fine-Tuning gerade dann bessere Ergebnisse liefert, wenn spezifische Domänencharakteristika berücksichtigt werden können. Für rein proprietäre Terminologie liegt damit ein Anwendungsfall vor, bei dem die Kombination beider Ansätze näher liegt als die Entscheidung für ein einzelnes Paradigma. Auf diese Kombination geht Abschnitt~\ref{sec:krit-hybrid} vertiefend ein.
 
 \subsection{Ressourcen- und Kostenkriterien}
-% K8: Rechenressourcen (Training vs. Inferenz)
-% K9: Datenaufwand (Trainingsdaten-Qualität und -Menge)
-% K10: Wartung und Betriebskosten (TCO)
-% K11: Latenz und Performance
+\label{sec:krit-ressourcen}
+
+\paragraph{K8 -- Rechenressourcen.}
+Full Fine-Tuning ist ressourcenintensiv \autocite[1f.]{Soudani.2024}. Parameter-effiziente Verfahren wie LoRA reduzieren zwar den Speicher- und Rechenaufwand erheblich, indem sie im Fall von GPT-3 die Zahl trainierbarer Parameter um den Faktor 10.000 und den GPU-Speicherbedarf um den Faktor 3 senken \autocite[1]{Hu.2022}. Dennoch bleibt der Initialaufwand für Datenaufbereitung, Training und Modellverwaltung deutlich über dem Aufwand, den die reine Erzeugung von Embeddings für RAG erfordert \autocite[28]{Balaguer.2024}. Für Unternehmen mit begrenzten GPU-Kapazitäten spricht das Kriterium primär für RAG oder, falls Fine-Tuning unvermeidbar ist, für PEFT-Verfahren.
+
+\paragraph{K9 -- Datenaufwand.}
+Über den reinen Rechenaufwand hinaus ist der Aufwand für die Erstellung geeigneter Trainingsdaten zu berücksichtigen. \textcite[1]{Ovadia.2024} zeigen, dass neues Faktenwissen dem Modell in zahlreichen paraphrasierten Varianten präsentiert werden muss, damit es überhaupt gelernt wird. Bei überwachtem Fine-Tuning kommt die Generierung von Frage-Antwort-Paaren hinzu, wie sie \textcite[10]{Balaguer.2024} exemplarisch anhand einer PDF-basierten Pipeline dokumentieren. Für RAG genügt demgegenüber die Indexierung der Rohdokumente. Je knapper die Datenaufbereitungskapazität, desto stärker spricht dies für einen retrieval-basierten Ansatz.
+
+\paragraph{K10 -- Wartung und Betriebskosten.}
+Die laufenden Betriebskosten unterscheiden sich strukturell. Fine -Tuning erzeugt laut \textcite[3f.]{Song.2025} hohe Update-Kosten, weil jede Änderung der Wissensbasis ein erneutes Training erfordert. \textcite[17f., 23]{Karakurt.2026} verweisen in diesem Zusammenhang auf die Notwendigkeit einer kontinuierlichen Modellpflege inklusive inkrementellem, kosteneffizientem Fine\--Tuning und einer geeigneten \textit{Lifecycle Governance}. RAG erlaubt dagegen Aktualisierungen zur Testzeit ohne Modell-Retraining \autocite[5]{Gao.2024}. Die Gesamtbetriebskosten (TCO) werden damit stark durch die Änderungsfrequenz des Wissens bestimmt und schließen inhaltlich unmittelbar an K1 an.
+
+\paragraph{K11 -- Latenz und Performance.}
+Fine-Tuning erzeugt bei PEFT-Verfahren wie LoRA zur Inferenzzeit keinen zusätzlichen Aufwand, weil die trainierten Matrizen vor dem Deployment in die Basisgewichte zurückgeführt werden können \autocite[4]{Hu.2022}. RAG bringt dagegen einen Retrieval-Schritt und einen erweiterten Kontext mit sich, was sowohl die Latenz als auch das \textit{Lost-in-the-Middle}-Risiko erhöht \autocite[10, 14]{Gao.2024}. \textcite[20]{Karakurt.2026} verweisen für die Dokumentenautomatisierung im Enterprise-Betrieb auf typische Latenzbudgets unter 200~ms, die den Einsatz aufwendiger Reranker praktisch einschränken. Für latenzkritische Anwendungen mit stabilem Wissen spricht dieses Kriterium für Fine-Tuning, für dynamisches Wissen bleibt RAG trotz höherer Latenz die Referenzarchitektur.
 
 \subsection{Organisatorische und regulatorische Kriterien}
-% K12: Datenschutz, DSGVO, vertrauliche Daten
-% K13: Auditierbarkeit und Erklärbarkeit
-% K14: Verfügbarkeit von Fachexpertise im Unternehmen
-% K15: Vendor Lock-in und Modellzugang (Open vs. Closed)
+\label{sec:krit-regulatorisch}
+
+\paragraph{K12 -- Datenschutz, DSGVO und EU AI Act.}
+Aus datenschutzrechtlicher Sicht ist zunächst Artikel~17 DSGVO maßgeblich, der ein Recht auf Löschung personenbezogener Daten normiert \autocite[Art.~17]{EuropaischesParlamentundRat.2016}. Ergänzend verpflichtet Artikel~25 DSGVO die Verantwortlichen zu \textit{Privacy by Design}, also zu geeigneten technischen und organisatorischen Maßnahmen, die die Datenschutzgrundsätze wie Datenminimierung wirksam umsetzen \autocite[Art.~25]{EuropaischesParlamentundRat.2016}. Fine-Tuning verteilt personenbezogene Daten diffus auf die Modellgewichte, sodass ein gezieltes Löschen einzelner Datensätze im Sinne des Artikels 17 nach Abschluss des Trainings praktisch nur durch ein vollständiges Neu-Training möglich ist. RAG hält personenbezogene Daten dagegen in einem externen, adressierbaren Index vor \autocite[7]{Lewis.2020}, wodurch einzelne Dokumente gelöscht werden können, ohne die Modellgewichte selbst zu verändern. Für die Umsetzung der DSGVO ist RAG damit strukturell im Vorteil.
+
+Aus dem Blickwinkel des EU AI Act stellt sich zusätzlich die Frage, ob ein Unternehmen durch Fine-Tuning zum \textit{Anbieter} einer KI wird. Artikel~3 Nr.~3 AI Act definiert den Anbieter als die Stelle, die ein KI-System oder GPAI-Modell entwickelt oder entwickeln lässt und unter eigenem Namen in Verkehr bringt oder in Betrieb nimmt \autocite[Art.~3 Nr.~3]{EuropaischesParlamentundRat.2024}. Nach Artikel~25 Absatz~1 gelten Betreiber selbst dann als Anbieter, wenn sie ein bereits in Verkehr gebrachtes System unter ihrem Namen versehen (lit.~a), wenn sie eine wesentliche Veränderung eines Hochrisiko-KI-Systems vornehmen (lit.~b) oder wenn sie durch Zweckänderung ein bislang nicht-hochriskantes System in ein Hochrisiko-KI-System überführen (lit.~c) \autocite[Art.~25 Abs.~1]{EuropaischesParlamentundRat.2024}. Für GPAI-Modelle stellt Erwägungsgrund~97 zudem klar, dass diese durch Feinabstimmung weiter geändert oder in neue Modelle überführt werden können \autocite[Erwägungsgrund~97]{EuropaischesParlamentundRat.2024}. Erwägungsgrund~109 präzisiert, dass die Anbieterpflichten im Fall einer Änderung oder Feinabstimmung eines GPAI-Modells auf ebendiese Änderung beschränkt bleiben, unter anderem in Form ergänzender technischer Dokumentation zu neuen Trainingsdatenquellen \autocite[Erwägungsgrund~109]{EuropaischesParlamentundRat.2024}. Nach der Analyse offizieller GPAI-Leitlinien durch \textcite{AIAct-Guidance.2025} kann Fine-Tuning eines GPAI-Modells eine substantielle Modifikation begründen, insbesondere wenn dabei mindestens ein Drittel der ursprünglich für das Training benötigten Rechenleistung eingesetzt wird. Für den in dieser Arbeit betrachteten Anwendungsfall bedeutet dies, dass ein Unternehmen durch Fine-Tuning eines Standard-GPAI-Modells nicht automatisch, aber in Abhängigkeit von Modellgröße, Trainingsumfang, Verwendungszweck und Vermarktungsform Anbieterpflichten übernehmen kann. RAG lässt dagegen die Modellparameter unangetastet und verändert lediglich den Prompt-Kontext, weshalb dieser Auslösetatbestand strukturell nicht greift. Aus regulatorischer Sicht ist RAG damit der risikoärmere Weg, insbesondere in stark regulierten Sektoren, in denen \textcite[20]{Karakurt.2026} DSGVO, CCPA und HIPAA explizit als maßgebliche Rahmenbedingungen nennen.
+
+\paragraph{K13 -- Auditierbarkeit und Erklärbarkeit.}
+Über die Datenschutzdimension hinaus ist die Nachweisführung selbst regulatorisch verankert. Artikel~12 AI Act verlangt für Hochrisiko-KI-Systeme eine automatische Protokollierung während des gesamten Lebenszyklus, um die Rückverfolgbarkeit zu gewährleisten \autocite[Art.~12]{EuropaischesParlamentundRat.2024}. Artikel~13 verpflichtet Anbieter zu einer hinreichend transparenten Systemgestaltung, damit Betreiber die Ausgaben angemessen interpretieren können \autocite[Art.~13]{EuropaischesParlamentundRat.2024}. RAG erfüllt diese Anforderungen strukturell, indem die abgerufenen Passagen als Quellen ausgewiesen werden können \autocite[14]{Gao.2024}. \textcite[20]{Karakurt.2026} beschreiben denselben Zusammenhang aus Enterprise-Perspektive, wonach in regulierten Branchen wie Finanzen und Gesundheitswesen End-to-End-neuronale Ansätze zugunsten modularer, auditierbarer Pipelines abgelehnt werden.
+
+\paragraph{K14 -- Verfügbarkeit von Fachexpertise.}
+Fine-Tuning-Pipelines sind personell aufwendig. Bereits die von \textcite[10]{Balaguer.2024} dokumentierte SFT-Pipeline verlangt die Generierung, Qualitätssicherung und iterative Erweiterung eines Frage-Antwort-Datensatzes, die Auswahl geeigneter PEFT-Verfahren sowie die kontinuierliche Bewertung der Modellqualität. Für die vorhandenen Quellen liegt kein wörtlicher Beleg zu „notwendigem Fachpersonal\grqq{} vor. Ableitbar ist jedoch, dass die von \textcite[3]{Balaguer.2024} beschriebenen erheblichen Anfangsaufwände und die von \textcite[14]{Karakurt.2026} betonte hohe Rechenlast des Fine-Tunings mit einer entsprechenden Fachexpertise für ML-Ops, Data Engineering und Modellbewertung einhergehen. In Unternehmen ohne eigenes ML-Team ist RAG damit der pragmatischere Einstiegspfad.
+
+\paragraph{K15 -- Vendor Lock-in und Modellzugang.}
+RAG ist gegenüber dem zugrundeliegenden Generator weitgehend agnostisch, weil parametrischer und nicht-parametrischer Speicher architektonisch getrennt sind \autocite[2]{Lewis.2020}. Der Generator lässt sich austauschen, ohne die aufgebaute Wissensbasis zu verlieren, was auch \textcite[4f.]{Gao.2024} in ihrer Textbook-Analogie implizit voraussetzen. Fine-Tuning bindet die Anpassung dagegen an das jeweilige Basismodell und ist bei Closed-Source-Angeboten wie GPT-4 an die APIs des Herstellers gekoppelt, wie sich in der Studie von \textcite[21]{Balaguer.2024} zeigt, in der die Feinabstimmung von GPT-4 explizit über eine Hersteller-Schnittstelle mittels LoRA erfolgt. Wo Unabhängigkeit vom Modellanbieter Priorität hat, spricht das Kriterium damit für RAG oder für Fine-Tuning offener Modelle.
 
 \subsection{Hybride Ansätze}
-% RAFT, fine-tuned RAG, Knowledge Injection via Distillation
+\label{sec:krit-hybrid}
+
+Die dargestellten Kriterien führen in der Praxis selten zu einer eindeutigen Präferenz für eines der beiden Paradigmen. \textcite[6]{Gao.2024} halten explizit fest, dass Modular RAG zunehmend mit Fine-Tuning-Techniken integriert wird, während \textcite[3, 4f.]{Song.2025} \textit{Modular Knowledge Adapters} als eigenständiges Paradigma neben Static und Dynamic Knowledge Injection einordnen und dadurch Kombinationen aus Adapter-Tuning und Retrieval systematisch zulassen. Empirisch berichten \textcite[2]{Soudani.2024}, dass fine-getunte Modelle in Verbindung mit RAG in fast allen untersuchten Fällen mit reinen RAG-Modellen konkurrieren oder sie übertreffen. \textcite[10, 21]{Balaguer.2024} setzen diesen Ansatz praktisch um, indem sie GPT-4 und Llama2 mittels LoRA feinabstimmen und in eine gemeinsame RAG-Pipeline einbetten. Diese Kombination liefert in ihrer Auswertung eine spürbar höhere Ähnlichkeit zwischen Modell- und Referenzantworten als das reine Basismodell \autocite[28]{Balaguer.2024}. \textcite[6]{Ovadia.2024} finden allerdings, dass der Zusatznutzen der Kombination nicht konsistent auftritt, und interpretieren dies als Ausdruck einer inhärenten Instabilität des Fine-Tunings. Ergänzend erwähnen \textcite[2]{Soudani.2024} das Verfahren \textit{RAFT}, das Modelle darauf trainiert, für die Fragebeantwortung nicht hilfreiche Dokumente aktiv zu ignorieren und damit gezielt für domänenspezifisches RAG anzupassen. RAFT wird in der einschlägigen Literatur allerdings nur am Rand referenziert. Für den Kriterienkatalog folgt daraus, dass Hybridansätze insbesondere bei stark ausgeprägter Domänensprache (K7), gleichzeitig hoher Faktentreueanforderung (K4) und ausreichenden Ressourcen (K8, K10) sinnvoll sind. Der explizite Auswahlpfad zwischen den drei Optionen (reines RAG, reines Fine-Tuning und Hybrid) wird in Kapitel~\ref{sec:katalog} entlang der hier abgeleiteten Kriterien konsolidiert.
