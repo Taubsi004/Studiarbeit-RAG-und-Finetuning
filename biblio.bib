@@ -1,24 +1,162 @@
-﻿% This file was created with Citavi 7.0.9.1
+﻿% This file was created with Citavi 7.3.1.30
 
-@proceedings{.2020,
- year = {2020},
+@proceedings{.2017,
+ year = {2017},
  title = {Advances in Neural Information Processing Systems (NeurIPS)}
 }
 
 
-@proceedings{.2022,
- year = {2022},
- title = {International Conference on Learning Representations (ICLR)}
+@article{Soudani.2024,
+ abstract = {Language Models (LMs) memorize a vast amount of factual knowledge, exhibiting strong performance across diverse tasks and domains. However, it has been observed that the performance diminishes when dealing with less-popular or low-frequency concepts and entities, for example in domain specific applications. The two prominent approaches to enhance the performance of LMs on low-frequent topics are: Retrieval Augmented Generation (RAG) and fine-tuning (FT) over synthetic data. This paper explores and evaluates the impact of RAG and FT on customizing LMs in handling low-frequency entities on question answering tasks. We conduct extensive experiments on twelve LMs of varying size and type and different fine tuning, data augmentation, and retrieval models. Our findings indicate that while FT boosts the performance across entities of varying popularity, RAG surpasses FT by a large margin particularly for least popular factual knowledge. Additionally, the success of both RAG and FT approaches is amplified by improving retrieval and data augmentation techniques. Fine tuning, while beneficial for small LMs, requires extensive resources. To address this issue, we propose the new Stimulus RAG approach that surpasses the effectiveness of fine tuning based approaches, thereby eliminating the need for the costly data augmentation and fine tuning step for enriching LMs with less popular factual knowledge. The code is available at \url{https://github.com/informagi/RAGvsFT}.},
+ author = {Soudani, Heydar and Kanoulas, Evangelos and Hasibi, Faegheh},
+ year = {2024},
+ title = {Fine Tuning vs. Retrieval Augmented Generation for Less Popular Knowledge},
+ volume = {abs/2403.01432},
+ journal = {arXiv preprint},
+ doi = {10.48550/arXiv.2403.01432},
+ file = {soudani:Attachments/soudani.pdf:application/pdf}
 }
 
 
-@article{Balaguer.2024,
- author = {Balaguer, Angels and Benara, Vinamra and de {Freitas Cunha}, Renato Luiz and {Estev{\~a}o Filho, Roberto de M.} and Hendry, Todd and Holstein, Daniel and Marsman, Jennifer and Mecklenburg, Nick and Malvar, Sara and Nunes, Leonardo O. and Padilha, Rafael and Sharp, Morris and Silva, Bruno and Sharma, Swati and Aski, Vijay and Chandra, Ranveer},
- year = {2024},
- title = {RAG vs Fine-tuning: Pipelines, Tradeoffs, and a Case Study on Agriculture},
- volume = {abs/2401.08406},
+@article{Song.2025,
+ abstract = {Large Language Models (LLMs) have demonstrated remarkable success in various tasks such as natural language understanding, text summarization, and machine translation. However, their general-purpose nature often limits their effectiveness in domain-specific applications that require specialized knowledge, such as healthcare, chemistry, or legal analysis. To address this, researchers have explored diverse methods to enhance LLMs by integrating domain-specific knowledge. In this survey, we provide a comprehensive overview of these methods, which we categorize into four key approaches: dynamic knowledge injection, static knowledge embedding, modular adapters, and prompt optimization. Each approach offers unique mechanisms to equip LLMs with domain expertise, balancing trade-offs between flexibility, scalability, and efficiency. We discuss how these methods enable LLMs to tackle specialized tasks, compare their advantages and disadvantages, evaluate domain-specific LLMs against general LLMs, and highlight the challenges and opportunities in this emerging field. For those interested in delving deeper into this area, we also summarize the commonly used datasets and benchmarks. To keep researchers updated on the latest studies, we maintain an open-source at: https://github.com/abilliyb/Knowledge{\_}Injection{\_}Survey{\_}Papers, dedicated to documenting research in the field of specialized LLM.
+
+EMNLP 2025 findings},
+ author = {Song, Zirui and Yan, Bin and Liu, Yuhan and Fang, Miao and Li, Mingzhe and Yan, Rui and Chen, Xiuying},
+ year = {2025},
+ title = {Injecting Domain-Specific Knowledge into Large Language Models: A Comprehensive Survey},
+ volume = {abs/2502.10708},
  journal = {arXiv preprint},
- doi = {10.48550/arXiv.2401.08406}
+ doi = {10.48550/arXiv.2502.10708},
+ file = {song:Attachments/song.pdf:application/pdf}
+}
+
+
+@article{Ovadia.2024,
+ abstract = {Large language models (LLMs) encapsulate a vast amount of factual information within their pre-trained weights, as evidenced by their ability to answer diverse questions across different domains. However, this knowledge is inherently limited, relying heavily on the characteristics of the training data. Consequently, using external datasets to incorporate new information or refine the capabilities of LLMs on previously seen information poses a significant challenge. In this study, we compare two common approaches: unsupervised fine-tuning and retrieval-augmented generation (RAG). We evaluate both approaches on a variety of knowledge-intensive tasks across different topics. Our findings reveal that while unsupervised fine-tuning offers some improvement, RAG consistently outperforms it, both for existing knowledge encountered during training and entirely new knowledge. Moreover, we find that LLMs struggle to learn new factual information through unsupervised fine-tuning, and that exposing them to numerous variations of the same fact during training could alleviate this problem.},
+ author = {Ovadia, Oded and Brief, Menachem and Mishaeli, Moshik and Elisha, Oren},
+ year = {2024},
+ title = {Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs},
+ volume = {abs/2312.05934},
+ journal = {arXiv preprint},
+ doi = {10.48550/arXiv.2312.05934},
+ file = {ovadia:Attachments/ovadia.pdf:application/pdf}
+}
+
+
+@article{OLeary.2024,
+ author = {O'Leary, Daniel E.},
+ year = {2024},
+ title = {Large Language Models and Applications: The Rebirth of Enterprise Knowledge Management and the Rise of Prompt Libraries},
+ volume = {39},
+ number = {2},
+ journal = {IEEE Intelligent Systems},
+ doi = {10.1109/MIS.2024.3366648},
+ file = {e loeary:Attachments/e loeary.pdf:application/pdf}
+}
+
+
+@inproceedings{Lewis.2020,
+ abstract = {Large pre-trained language models have been shown to store factual knowledge in their parameters, and achieve state-of-the-art results when fine-tuned on downstream NLP tasks. However, their ability to access and precisely manipulate knowledge is still limited, and hence on knowledge-intensive tasks, their performance lags behind task-specific architectures. Additionally, providing provenance for their decisions and updating their world knowledge remain open research problems. Pre-trained models with a differentiable access mechanism to explicit non-parametric memory can overcome this issue, but have so far been only investigated for extractive downstream tasks. We explore a general-purpose fine-tuning recipe for retrieval-augmented generation (RAG) -- models which combine pre-trained parametric and non-parametric memory for language generation. We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever. We compare two RAG formulations, one which conditions on the same retrieved passages across the whole generated sequence, the other can use different passages per token. We fine-tune and evaluate our models on a wide range of knowledge-intensive NLP tasks and set the state-of-the-art on three open domain QA tasks, outperforming parametric seq2seq models and task-specific retrieve-and-extract architectures. For language generation tasks, we find that RAG models generate more specific, diverse and factual language than a state-of-the-art parametric-only seq2seq baseline.
+
+Accepted at NeurIPS 2020},
+ author = {Lewis, Patrick and Perez, Ethan and Piktus, Aleksandra and Petroni, Fabio and Karpukhin, Vladimir and Goyal, Naman and K{\"u}ttler, Heinrich and Lewis, Mike and Yih, Wen-tau and Rockt{\"a}schel, Tim and Riedel, Sebastian and Kiela, Douwe},
+ title = {Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks},
+ pages = {9459--9474},
+ volume = {33},
+ publisher = {{Curran Associates, Inc}},
+ editor = {{H. Larochelle} and {M. Ranzato} and {R. Hadsell} and {M.F. Balcan} and {H. Lin}},
+ booktitle = {Advances in Neural Information Processing Systems},
+ year = {2020},
+ doi = {10.48550/arXiv.2005.11401},
+ file = {Lewis, Perez et al 2020 - Retrieval-Augmented Generation for Knowledge-Intensive NLP (2):Attachments/Lewis, Perez et al 2020 - Retrieval-Augmented Generation for Knowledge-Intensive NLP (2).pdf:application/pdf}
+}
+
+
+@article{Karakurt.2026,
+ author = {Karakurt, Ehlullah and Akbulut, Akhan},
+ year = {2026},
+ title = {Retrieval-Augmented Generation (RAG) and Large Language Models (LLMs) for Enterprise Knowledge Management and Document Automation: A Systematic Literature Review},
+ pages = {368},
+ volume = {16},
+ number = {1},
+ journal = {Applied Sciences},
+ doi = {10.3390/app16010368},
+ file = {applsci-16-00368-v2:Attachments/applsci-16-00368-v2.pdf:application/pdf}
+}
+
+
+@article{Huang.2024,
+ author = {Huang, Lei and Yu, Weijiang and Ma, Weitao and Zhong, Weihong and Feng, Zhangyin and Wang, Haotian and Chen, Qianglong and Peng, Weihua and Feng, Xiaocheng and Qin, Bing and Liu, Ting},
+ year = {2024},
+ title = {A Survey on Hallucination in Large Language Models: Principles, Taxonomy, Challenges, and Open Questions},
+ pages = {1--55},
+ volume = {43},
+ number = {2},
+ issn = {1046-8188},
+ journal = {ACM Transactions on Information Systems},
+ doi = {10.1145/3703155},
+ file = {huang lei:Attachments/huang lei.pdf:application/pdf}
+}
+
+
+@inproceedings{Hu.2022,
+ abstract = {An important paradigm of natural language processing consists of large-scale pre-training on general domain data and adaptation to particular tasks or domains. As we pre-train larger models, full fine-tuning, which retrains all model parameters, becomes less feasible. Using GPT-3 175B as an example -- deploying independent instances of fine-tuned models, each with 175B parameters, is prohibitively expensive. We propose Low-Rank Adaptation, or LoRA, which freezes the pre-trained model weights and injects trainable rank decomposition matrices into each layer of the Transformer architecture, greatly reducing the number of trainable parameters for downstream tasks. Compared to GPT-3 175B fine-tuned with Adam, LoRA can reduce the number of trainable parameters by 10,000 times and the GPU memory requirement by 3 times. LoRA performs on-par or better than fine-tuning in model quality on RoBERTa, DeBERTa, GPT-2, and GPT-3, despite having fewer trainable parameters, a higher training throughput, and, unlike adapters, no additional inference latency. We also provide an empirical investigation into rank-deficiency in language model adaptation, which sheds light on the efficacy of LoRA. We release a package that facilitates the integration of LoRA with PyTorch models and provide our implementations and model checkpoints for RoBERTa, DeBERTa, and GPT-2 at https://github.com/microsoft/LoRA.
+
+Draft V2 includes better baselines, experiments on GLUE, and more on adapter latency},
+ author = {Hu, Edward J. and Shen, Yelong and Wallis, Phillip and Allen-Zhu, Zeyuan and Li, Yuanzhi and Wang, Shean and Wang, Lu and Chen, Weizhu},
+ title = {LoRA: Low-Rank Adaptation of Large Language Models},
+ booktitle = {International Conference on Learning Representations (ICLR)},
+ year = {2022},
+ doi = {10.48550/arXiv.2106.09685},
+ file = {Hu Edward:Attachments/Hu Edward.pdf:application/pdf}
+}
+
+
+@proceedings{H.Larochelle.2020,
+ year = {2020},
+ title = {Advances in Neural Information Processing Systems},
+ publisher = {{Curran Associates, Inc}},
+ editor = {{H. Larochelle} and {M. Ranzato} and {R. Hadsell} and {M.F. Balcan} and {H. Lin}}
+}
+
+
+@article{Gao.2024,
+ abstract = {Large Language Models (LLMs) showcase impressive capabilities but encounter challenges like hallucination, outdated knowledge, and non-transparent, untraceable reasoning processes. Retrieval-Augmented Generation (RAG) has emerged as a promising solution by incorporating knowledge from external databases. This enhances the accuracy and credibility of the generation, particularly for knowledge-intensive tasks, and allows for continuous knowledge updates and integration of domain-specific information. RAG synergistically merges LLMs' intrinsic knowledge with the vast, dynamic repositories of external databases. This comprehensive review paper offers a detailed examination of the progression of RAG paradigms, encompassing the Naive RAG, the Advanced RAG, and the Modular RAG. It meticulously scrutinizes the tripartite foundation of RAG frameworks, which includes the retrieval, the generation and the augmentation techniques. The paper highlights the state-of-the-art technologies embedded in each of these critical components, providing a profound understanding of the advancements in RAG systems. Furthermore, this paper introduces up-to-date evaluation framework and benchmark. At the end, this article delineates the challenges currently faced and points out prospective avenues for research and development.
+
+Ongoing Work},
+ author = {Gao, Yunfan and Xiong, Yun and Gao, Xinyu and Jia, Kangxiang and Pan, Jinliu and Bi, Yuxi and Dai, Yi and Sun, Jiawei and Wang, Meng and Wang, Haofen},
+ year = {2024},
+ title = {Retrieval-Augmented Generation for Large Language Models: A Survey},
+ volume = {abs/2312.10997},
+ journal = {arXiv preprint},
+ doi = {10.48550/arXiv.2312.10997},
+ file = {gao yufan:Attachments/gao yufan.pdf:application/pdf}
+}
+
+
+@misc{FutureofLifeInstitute.2025,
+ author = {{Future of Life Institute}},
+ year = {2025},
+ title = {Modifying AI Under the EU AI Act: Lessons from Practice on GPAI Model Modifications},
+ url = {https://artificialintelligenceact.eu/modifying-ai-under-the-eu-ai-act/},
+ file = {fli artikel:Attachments/fli artikel.pdf:application/pdf}
+}
+
+
+@misc{EuropaischesParlamentundRat.2024,
+ author = {{Europ{\"a}isches Parlament und Rat}},
+ year = {2024},
+ title = {Verordnung (EU) 2024/1689 des Europ{\"a}ischen Parlaments und des Rates vom 13.~Juni 2024 zur Festlegung harmonisierter Vorschriften f{\"u}r k{\"u}nstliche Intelligenz (KI-Verordnung)},
+ file = {OJ{\_}L{\_}202401689{\_}DE{\_}TXT:Attachments/OJ{\_}L{\_}202401689{\_}DE{\_}TXT.pdf:application/pdf}
+}
+
+
+@misc{EuropaischesParlamentundRat.2016,
+ author = {{Europ{\"a}isches Parlament und Rat}},
+ year = {2016},
+ title = {Verordnung (EU) 2016/679 des Europ{\"a}ischen Parlaments und des Rates vom 27.~April 2016 zum Schutz nat{\"u}rlicher Personen bei der Verarbeitung personenbezogener Daten, zum freien Datenverkehr und zur Aufhebung der Richtlinie 95/46/EG (Datenschutz-Grundverordnung)},
+ file = {CELEX{\_}02016R0679-20160504{\_}DE{\_}TXT:Attachments/CELEX{\_}02016R0679-20160504{\_}DE{\_}TXT.pdf:application/pdf}
 }
 
 
@@ -32,137 +170,74 @@
 }
 
 
-@article{Gao.2024,
- author = {Gao, Yunfan and Xiong, Yun and Gao, Xinyu and Jia, Kangxiang and Pan, Jinliu and Bi, Yuxi and Dai, Yi and Sun, Jiawei and Wang, Meng and Wang, Haofen},
- year = {2024},
- title = {Retrieval-Augmented Generation for Large Language Models: A Survey},
- volume = {abs/2312.10997},
- journal = {arXiv preprint},
- doi = {10.48550/arXiv.2312.10997}
-}
+@inproceedings{Brown.2020,
+ abstract = {Recent work has demonstrated substantial gains on many NLP tasks and benchmarks by pre-training on a large corpus of text followed by fine-tuning on a specific task. While typically task-agnostic in architecture, this method still requires task-specific fine-tuning datasets of thousands or tens of thousands of examples. By contrast, humans can generally perform a new language task from only a few examples or from simple instructions - something which current NLP systems still largely struggle to do. Here we show that scaling up language models greatly improves task-agnostic, few-shot performance, sometimes even reaching competitiveness with prior state-of-the-art fine-tuning approaches. Specifically, we train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting. For all tasks, GPT-3 is applied without any gradient updates or fine-tuning, with tasks and few-shot demonstrations specified purely via text interaction with the model. GPT-3 achieves strong performance on many NLP datasets, including translation, question-answering, and cloze tasks, as well as several tasks that require on-the-fly reasoning or domain adaptation, such as unscrambling words, using a novel word in a sentence, or performing 3-digit arithmetic. At the same time, we also identify some datasets where GPT-3's few-shot learning still struggles, as well as some datasets where GPT-3 faces methodological issues related to training on large web corpora. Finally, we find that GPT-3 can generate samples of news articles which human evaluators have difficulty distinguishing from articles written by humans. We discuss broader societal impacts of this finding and of GPT-3 in general.
 
-
-@inproceedings{Hu.2022,
- author = {Hu, Edward J. and Shen, Yelong and Wallis, Phillip and Allen-Zhu, Zeyuan and Li, Yuanzhi and Wang, Shean and Wang, Lu and Chen, Weizhu},
- title = {LoRA: Low-Rank Adaptation of Large Language Models},
- booktitle = {International Conference on Learning Representations (ICLR)},
- year = {2022},
- doi = {10.48550/arXiv.2106.09685}
-}
-
-
-@article{Huang.2024,
- author = {Huang, Lei and Yu, Weijiang and Ma, Weitao and Zhong, Weihong and Feng, Zhangyin and Wang, Haotian and Chen, Qianglong and Peng, Weihua and Feng, Xiaocheng and Qin, Bing and Liu, Ting},
- year = {2024},
- title = {A Survey on Hallucination in Large Language Models: Principles, Taxonomy, Challenges, and Open Questions},
- journal = {ACM Transactions on Information Systems},
- doi = {10.1145/3703155}
-}
-
-
-@article{Karakurt.2025,
- author = {Karakurt, Emre and Akbulut, Akhan},
- year = {2025},
- title = {Retrieval-Augmented Generation (RAG) and Large Language Models (LLMs) for Enterprise Knowledge Management and Document Automation: A Systematic Literature Review},
- url = {https://www.mdpi.com/2076-3417/16/1/368},
- pages = {368},
- volume = {16},
- number = {1},
- journal = {Applied Sciences},
- doi = {10.3390/app16010368}
-}
-
-
-@inproceedings{Lewis.2020,
- author = {Lewis, Patrick and Perez, Ethan and Piktus, Aleksandra and Petroni, Fabio and Karpukhin, Vladimir and Goyal, Naman and K{\"u}ttler, Heinrich and Lewis, Mike and Yih, Wen-tau and Rockt{\"a}schel, Tim and Riedel, Sebastian and Kiela, Douwe},
- title = {Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks},
- pages = {9459--9474},
+40+32 pages},
+ author = {Brown, Tom B. and Mann, Benjamin and Ryder, Nick and Subbiah, Melanie and Kaplan, Jared and Dhariwal, Prafulla and Neelakantan, Arvind and Shyam, Pranav and Sastry, Girish and Askell, Amanda and Agarwal, Sandhini and Herbert-Voss, Ariel and Krueger, Gretchen and Henighan, Tom and Child, Rewon and Ramesh, Aditya and Ziegler, Daniel M. and Wu, Jeffrey and Winter, Clemens and Hesse, Christopher and Chen, Mark and Sigler, Eric and Litwin, Mateusz and Gray, Scott and Chess, Benjamin and Clark, Jack and Berner, Christopher and McCandlish, Sam and Radford, Alec and Sutskever, Ilya and Amodei, Dario},
+ title = {Language Models are Few-Shot Learners},
+ pages = {1877--1901},
  volume = {33},
  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
  year = {2020},
- doi = {10.48550/arXiv.2005.11401}
+ doi = {10.48550/arXiv.2005.14165},
+ file = {brown tom:Attachments/brown tom.pdf:application/pdf}
 }
 
 
-@misc{Lewis.2020b,
- abstract = {Large pre-trained language models have been shown to store factual knowledge in their parameters, and achieve state-of-the-art results when fine-tuned on downstream NLP tasks. However, their ability to access and precisely manipulate knowledge is still limited, and hence on knowledge-intensive tasks, their performance lags behind task-specific architectures. Additionally, providing provenance for their decisions and updating their world knowledge remain open research problems. Pre-trained models with a differentiable access mechanism to explicit non-parametric memory can overcome this issue, but have so far been only investigated for extractive downstream tasks. We explore a general-purpose fine-tuning recipe for retrieval-augmented generation (RAG) -- models which combine pre-trained parametric and non-parametric memory for language generation. We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever. We compare two RAG formulations, one which conditions on the same retrieved passages across the whole generated sequence, the other can use different passages per token. We fine-tune and evaluate our models on a wide range of knowledge-intensive NLP tasks and set the state-of-the-art on three open domain QA tasks, outperforming parametric seq2seq models and task-specific retrieve-and-extract architectures. For language generation tasks, we find that RAG models generate more specific, diverse and factual language than a state-of-the-art parametric-only seq2seq baseline.},
- author = {Lewis, Patrick and Perez, Ethan and Piktus, Aleksandra and Petroni, Fabio and Karpukhin, Vladimir and Goyal, Naman and K{\"u}ttler, Heinrich and Lewis, Mike and Yih, Wen-tau and Rockt{\"a}schel, Tim and Riedel, Sebastian and Kiela, Douwe},
- date = {2020},
- title = {Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks},
- file = {Lewis, Perez et al. 2020 - Retrieval-Augmented Generation for Knowledge-Intensive NLP (2):Attachments/Lewis, Perez et al. 2020 - Retrieval-Augmented Generation for Knowledge-Intensive NLP (2).pdf:application/pdf}
-}
-
-
-@article{OLeary.2024,
- author = {O'Leary, Daniel E.},
+@article{Balaguer.2024,
+ abstract = {There are two common ways in which developers are incorporating proprietary and domain-specific data when building applications of Large Language Models (LLMs): Retrieval-Augmented Generation (RAG) and Fine-Tuning. RAG augments the prompt with the external data, while fine-Tuning incorporates the additional knowledge into the model itself. However, the pros and cons of both approaches are not well understood. In this paper, we propose a pipeline for fine-tuning and RAG, and present the tradeoffs of both for multiple popular LLMs, including Llama2-13B, GPT-3.5, and GPT-4. Our pipeline consists of multiple stages, including extracting information from PDFs, generating questions and answers, using them for fine-tuning, and leveraging GPT-4 for evaluating the results. We propose metrics to assess the performance of different stages of the RAG and fine-Tuning pipeline. We conduct an in-depth study on an agricultural dataset. Agriculture as an industry has not seen much penetration of AI, and we study a potentially disruptive application - what if we could provide location-specific insights to a farmer? Our results show the effectiveness of our dataset generation pipeline in capturing geographic-specific knowledge, and the quantitative and qualitative benefits of RAG and fine-tuning. We see an accuracy increase of over 6 p.p. when fine-tuning the model and this is cumulative with RAG, which increases accuracy by 5 p.p. further. In one particular experiment, we also demonstrate that the fine-tuned model leverages information from across geographies to answer specific questions, increasing answer similarity from 47{\%} to 72{\%}. Overall, the results point to how systems built using LLMs can be adapted to respond and incorporate knowledge across a dimension that is critical for a specific industry, paving the way for further applications of LLMs in other industrial domains.},
+ author = {Balaguer, Angels and Benara, Vinamra and {Cunha, Renato Luiz de Freitas} and {Filho, Roberto de M. Estev{\~a}o} and Hendry, Todd and Holstein, Daniel and Marsman, Jennifer and Mecklenburg, Nick and Malvar, Sara and Nunes, Leonardo O. and Padilha, Rafael and Sharp, Morris and Silva, Bruno and Sharma, Swati and Aski, Vijay and Chandra, Ranveer},
  year = {2024},
- title = {Large Language Models and Applications: The Rebirth of Enterprise Knowledge Management and the Rise of Prompt Libraries},
- url = {https://ieeexplore.ieee.org/document/10510615/},
- volume = {39},
- number = {2},
- journal = {IEEE Intelligent Systems},
- doi = {10.1109/MIS.2024.3366648}
+ title = {RAG vs Fine-tuning: Pipelines, Tradeoffs, and a Case Study on Agriculture},
+ volume = {abs/2401.08406},
+ journal = {arXiv preprint},
+ doi = {10.48550/arXiv.2401.08406},
+ file = {balaguer:Attachments/balaguer.pdf:application/pdf}
 }
 
 
-@article{Ovadia.2024,
- author = {Ovadia, Oded and Brief, Menachem and Mishaeli, Moshik and Elisha, Oren},
- year = {2024},
- title = {Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs},
- volume = {abs/2312.05934},
- journal = {arXiv preprint},
- doi = {10.48550/arXiv.2312.05934}
+@proceedings{.2022,
+ year = {2022},
+ title = {International Conference on Learning Representations (ICLR)}
 }
 
 
-@article{Song.2025,
- author = {Song, Zirui and Yan, Bin and Liu, Yuhan and Fang, Miao and Li, Mingzhe and Yan, Rui and Chen, Xiuying},
- year = {2025},
- title = {Injecting Domain-Specific Knowledge into Large Language Models: A Comprehensive Survey},
- volume = {abs/2502.10708},
- journal = {arXiv preprint},
- doi = {10.48550/arXiv.2502.10708}
+@proceedings{.2020,
+ year = {2020},
+ title = {Advances in Neural Information Processing Systems (NeurIPS)}
 }
 
 
-@article{Soudani.2024,
- author = {Soudani, Heydar and Kanoulas, Evangelos and Hasibi, Faegheh},
- year = {2024},
- title = {Fine Tuning vs. Retrieval Augmented Generation for Less Popular Knowledge},
- volume = {abs/2403.01432},
- journal = {arXiv preprint},
- doi = {10.48550/arXiv.2403.01432}
+@proceedings{.2020b,
+ year = {2020},
+ title = {Advances in Neural Information Processing Systems (NeurIPS)}
+}
+
+
+@inproceedings{Vaswani.2017,
+ abstract = {The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.
+
+15 pages, 5 figures},
+ author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N. and Kaiser, Lukasz and Polosukhin, Illia},
+ title = {Attention Is All You Need},
+ volume = {30},
+ booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+ year = {2017},
+ doi = {10.48550/arXiv.1706.03762},
+ file = {Vaswani:Attachments/Vaswani.pdf:application/pdf}
 }
 
 
 @article{Xu.2025,
+ abstract = {Hallucination has been widely recognized to be a significant drawback for large language models (LLMs). There have been many works that attempt to reduce the extent of hallucination. These efforts have mostly been empirical so far, which cannot answer the fundamental question whether it can be completely eliminated. In this paper, we formalize the problem and show that it is impossible to eliminate hallucination in LLMs. Specifically, we define a formal world where hallucination is defined as inconsistencies between a computable LLM and a computable ground truth function. By employing results from learning theory, we show that LLMs cannot learn all the computable functions and will therefore inevitably hallucinate if used as general problem solvers. Since the formal world is a part of the real world which is much more complicated, hallucinations are also inevitable for real world LLMs. Furthermore, for real world LLMs constrained by provable time complexity, we describe the hallucination-prone tasks and empirically validate our claims. Finally, using the formal world framework, we discuss the possible mechanisms and efficacies of existing hallucination mitigators as well as the practical implications on the safe deployment of LLMs.},
  author = {Xu, Ziwei and Jain, Sanjay and Kankanhalli, Mohan},
  year = {2025},
  title = {Hallucination is Inevitable: An Innate Limitation of Large Language Models},
  volume = {abs/2401.11817},
  journal = {arXiv preprint},
- doi = {10.48550/arXiv.2401.11817}
-}
-
-@inproceedings{Vaswani.2017,
-  author       = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N. and Kaiser, {\L}ukasz and Polosukhin, Illia},
-  title        = {Attention Is All You Need},
-  booktitle    = {Advances in Neural Information Processing Systems (NeurIPS)},
-  volume       = {30},
-  year         = {2017},
-  url          = {https://arxiv.org/abs/1706.03762},
-  doi          = {10.48550/arXiv.1706.03762}
-}
-
-@inproceedings{Brown.2020,
-  author       = {Brown, Tom B. and Mann, Benjamin and Ryder, Nick and Subbiah, Melanie and Kaplan, Jared and Dhariwal, Prafulla and Neelakantan, Arvind and Shyam, Pranav and Sastry, Girish and Askell, Amanda and others},
-  title        = {Language Models are Few-Shot Learners},
-  booktitle    = {Advances in Neural Information Processing Systems (NeurIPS)},
-  volume       = {33},
-  year         = {2020},
-  pages        = {1877--1901},
-  url          = {https://arxiv.org/abs/2005.14165},
-  doi          = {10.48550/arXiv.2005.14165}
+ doi = {10.48550/arXiv.2401.11817},
+ file = {xu ziwei:Attachments/xu ziwei.pdf:application/pdf}
 }
 
 
