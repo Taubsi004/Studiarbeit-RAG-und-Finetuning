@@ -15,7 +15,19 @@
 \RequirePackage{graphicx}
 
 \RequirePackage[hyphens]{url}
+
+% --- Farb- und Linkkonfiguration ---
+\RequirePackage{xcolor} 
+\definecolor{screenlink}{HTML}{1A1A1A} % Edles Dunkelgrau
+
 \RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    allcolors=screenlink
+}
+
+% Option [ocgcolorlinks] entfernt, um Farb-Konflikt zu vermeiden
+\RequirePackage{ocgx2}
 
 \RequirePackage[backend=biber,style=authoryear]{biblatex}
 \RequirePackage{csquotes}
@@ -38,6 +50,9 @@
 \newcommand{\course}[1]{\def\@course{#1}}
 
 \renewcommand{\HyOrg@maketitle}{
+    % HIER IST DER FIX: Deaktiviert die Hyperref-Anker für die Titelseite
+    \hypersetup{pageanchor=false}
+    
     \begin{titlepage}
         \let \footnotesize \small
         \let \footnoterule \relax
@@ -67,6 +82,10 @@
         \vfil
         \null
     \end{titlepage}
+    
+    % HIER IST DER FIX: Aktiviert die Anker für den Rest des Dokuments wieder
+    \hypersetup{pageanchor=true}
+    
     \setcounter{footnote}{0}
     \global \let \thanks \relax
     \global \let \maketitle \relax
