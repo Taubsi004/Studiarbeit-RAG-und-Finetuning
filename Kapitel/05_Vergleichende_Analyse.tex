@@ -15,16 +15,22 @@
 \section{Vergleichende Analyse: Kriterienableitung}
 \label{sec:kriterien}
 
-Auf Basis der in den Kapiteln~\ref{sec:rag} und~\ref{sec:finetuning} dargestellten Stärke-Schwäche-Profile werden im Folgenden fünfzehn Kriterien für die Architekturauswahl abgeleitet. Jedes Kriterium ist aus der Literatur begründet und wird im nachfolgenden Katalog (Kapitel~\ref{sec:katalog}) zu einer Bewertungsmatrix zusammengeführt. Die Systematik folgt vier Dimensionen (wissensbezogen, aufgabenbezogen, ressourcenbezogen, organisatorisch-regulatorisch) sowie einer abschließenden Betrachtung hybrider Ansätze.
+Auf Basis der in den Kapiteln~\ref{sec:rag} und~\ref{sec:finetuning} dargestellten Stärke-Schwäche-Profile werden im Folgenden fünfzehn Kriterien für die Architekturauswahl abgeleitet. Jedes Kriterium ist aus der Literatur begründet und wird im nachfolgenden Katalog (Kapitel~\ref{sec:katalog}) zu einer Bewertungsmatrix zusammengeführt. Die Systematik folgt vier Dimensionen (wissensbezogen, aufgabenbezogen, ressourcenbezogen, organisatorisch-re\-gu\-la\-to\-risch) sowie einer abschließenden Betrachtung hybrider Ansätze.
 
 \subsection{Wissensbezogene Kriterien}
 \label{sec:krit-wissen}
 
 \paragraph{K1 -- Aktualität und Dynamik des Wissens.}
-Die Update-Frequenz der Wissensbasis wirkt sich direkt auf die Wahl des Architekturansatzes aus. \textcite[5]{Gao.2024} beschreiben Fine-Tuning als vergleichsweise statisch und für Änderungen retraining-pflichtig, während RAG Wissensaktualisierungen in Echtzeit unterstützt. \textcite[1]{Ovadia.2024} bestätigen empirisch, dass Sprachmodelle über unüberwachtes Fine-Tuning nur schwer neue Fakten lernen. Aus Unternehmenssicht ist zusätzlich der von \textcite[17f., 23]{Karakurt.2026} beschriebene \textit{Concept Drift} zu berücksichtigen. \textcite[1]{Cheng.2024} zeigen zudem, dass der tatsächliche Wissensstand eines Modells je nach Ressource variiert und häufig vor dem offiziellen Cut-off-Datum liegt. Je häufiger sich das interne Wissen ändert, desto stärker spricht dies für einen retrieval-basierten Ansatz.
+Die Update-Frequenz der Wissensbasis wirkt sich direkt auf die Wahl des Architekturansatzes aus. \textcite[5]{Gao.2024} beschreiben Fine-Tuning als vergleichsweise statisch und für Änderungen retraining-pflichtig, während RAG Wissensaktualisierungen in Echtzeit unterstützt.
+Empirische Untersuchungen bestätigen, dass Sprachmodelle über unüberwachtes Fine-Tuning nur schwer neue Fakten lernen \autocite[1]{Ovadia.2024}.
+Aus Unternehmenssicht ist zusätzlich der \textit{Concept Drift} zu berücksichtigen \autocite[17f., 23]{Karakurt.2026}.
+Je häufiger sich das interne Wissen ändert, desto stärker spricht dies für einen retrieval-basierten Ansatz.
 
 \paragraph{K2 -- Wissensvolumen und Skalierbarkeit.}
-Fine-Tuning skaliert schlecht mit dem Datenvolumen. \textcite[3f.]{Song.2025} betonen für das \textit{Static Knowledge Embedding} explizit hohe Update-Kosten und Skalierungsprobleme, weil das Einbetten großer oder häufig veränderter Wissensbestände erhebliche Rechenressourcen erfordert. RAG entkoppelt das Volumen dagegen vom Modell, indem Dokumente in Chunks (typisch 100, 256 oder 512 Tokens) segmentiert und im Vektorindex vorgehalten werden \autocite[8]{Gao.2024}. Für interne Wissensbestände in Größenordnungen von Millionen Dokumenten ist der Skalierungsvorteil damit strukturell bei RAG.
+Fine-Tuning skaliert schlecht mit dem Datenvolumen.
+\textcite[4]{Song.2025} betonen für das \textit{Static Knowledge Embedding} explizit hohe Update-Kosten und Skalierungsprobleme, weil das Einbetten großer oder häufig veränderter Wissensbestände erhebliche Rechenressourcen erfordert.
+RAG entkoppelt das Volumen dagegen vom Modell, indem Dokumente in Chunks (typisch 100, 256 oder 512 Tokens) segmentiert und im Vektorindex vorgehalten werden \autocite[8]{Gao.2024}.
+Für interne Wissensbestände in Größenordnungen von Millionen Dokumenten ist der Skalierungsvorteil damit strukturell bei RAG.
 
 \paragraph{K3 -- Strukturgrad des Wissens.}
 Unternehmenswissen liegt in strukturierter (Datenbanken, Wissensgraphen), semistrukturierter (Tickets, Wikis) und unstrukturierter Form (PDFs, Handbücher) vor \autocite[1]{Karakurt.2026}. \textcite[17]{Karakurt.2026} zeigen empirisch, dass strukturiertes Wissen den unstrukturierten Abruf gerade bei zusammenfassenden Aufgaben wirkungsvoll ergänzt und hybride Retrieval-Strategien aus dichten Vektoren und Wissensgraphen bei strukturierten Aufgaben spürbare Leistungssteigerungen erzielen. Für die Architekturauswahl folgt daraus, dass der dominierende Strukturgrad ein eigenständiges Kriterium bildet.
