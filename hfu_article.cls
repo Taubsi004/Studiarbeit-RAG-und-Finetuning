@@ -58,7 +58,7 @@
         \let \footnoterule \relax
         \let \footnote \thanks
         \null
-        {\raggedleft \includegraphics[width=6cm]{Logo_HFU_CMYK_Anthrazit_Gruen.eps} \par}
+        {\raggedleft \includegraphics[width=6cm]{assets/00_Deckblatt/Logo_HFU_CMYK_Anthrazit_Gruen.eps} \par}
         \vfil
         \vskip 60\p@
         \begin{center}

@@ -24,8 +24,15 @@
 
 \maketitle
 
+% --- NEU: Zählweise für das Inhaltsverzeichnis ---
+\pagenumbering{Roman} % Nutzt römische Zahlen (I, II, III...) für das Verzeichnis
+% \pagestyle{empty} % (Optional einkommentieren, falls die römischen Zahlen komplett unsichtbar sein sollen)
+
 \tableofcontents
 \clearpage
+
+% --- NEU: Zählweise für den Hauptteil ---
+\pagenumbering{arabic} % Nutzt arabische Zahlen (1, 2, 3...) und beginnt automatisch bei 1!
 
 \input{Kapitel/01_Einleitung}
 \clearpage
