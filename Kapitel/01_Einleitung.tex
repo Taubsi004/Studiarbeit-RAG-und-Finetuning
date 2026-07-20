@@ -17,24 +17,21 @@ Unternehmenssystemen besteht (\textit{lab-to-market gap}) \autocite[1]{Karakurt.
 Diese Erwartung steht jedoch in Spannung zu den strukturellen Eigenschaften vortrainierter 
 LLMs. Erstens leiden Sprachmodelle systematisch unter sogenannten Halluzinationen, 
 die im Bereich des \textit{Natural Language Processing} definiert werden als ein Phänomen,
- ,,in which the generated content appears nonsensical or unfaithful to the provided 
- source content'' \autocite[1:5]{Huang.2024}. 
- Diese Eigenschaft ist nicht nur ein praktisches Qualitätsproblem, sondern auch ein 
- theoretisches: \textcite[1]{Xu.2025} zeigen formal, dass Halluzinationen eine 
- \textit{innate limitation} von LLMs darstellen und ,,it is impossible to eliminate 
- hallucination in LLMs'' -- unabhängig von Modellarchitektur, Trainingsverfahren oder 
- Prompting-Techniken. Für Unternehmen sind unvollständige oder fabrizierte Antworten ein 
- erhebliches Risiko, da sie unmittelbar Entscheidungen beeinflussen und Schaden 
- verursachen können \autocite[1:2]{Huang.2024}.
+,,in which the generated content appears nonsensical or unfaithful to the provided 
+source content'' \autocite[1:5]{Huang.2024}. 
+Diese Eigenschaft ist nicht nur ein praktisches Qualitätsproblem, sondern auch ein 
+theoretisches: \textcite[1]{Xu.2025} zeigen formal, dass Halluzinationen eine 
+\textit{innate limitation} von LLMs darstellen und ,,it is impossible to eliminate 
+hallucination in LLMs'' -- unabhängig von Modellarchitektur, Trainingsverfahren oder 
+Prompting-Techniken. Für Unternehmen sind unvollständige oder fabrizierte Antworten ein 
+erhebliches Risiko, da sie unmittelbar Entscheidungen beeinflussen und Schaden verursachen können \autocite[1:2]{Huang.2024}.
 
 Zweitens verfügen LLMs lediglich über parametrisches Wissen, das durch den Zeitpunkt ihres 
 Trainings begrenzt ist (\textit{knowledge cut-off}). \textcite[1]{Cheng.2024} zeigen 
 empirisch, dass der von Modellanbietern angegebene Cut-off nur an der Oberfläche 
 greift und der tatsächliche, sogenannte \textit{effective cutoff} zwischen einzelnen 
-Wissensressourcen abweichen kann. Die Autoren belegen zudem, dass selbst bei 
-aktuelleren Trainingsdaten ein erheblicher Anteil des Modellwissens auf ältere 
-Versionen zurückgeht: In einem untersuchten Fall stammten über 80\,\% der aus Wikipedia
- gelernten Dokumente aus Versionen vor 2023 \autocite[9 f.]{Cheng.2024}. Für Unternehmen, deren interne Wissensbestände kontinuierlich evolvieren -- etwa durch neue Produkte, geänderte Prozesse oder regulatorische Anpassungen -- ist diese statische Wissensbasis unzureichend.
+Wissensressourcen abweichen kann. Die Autoren belegen zudem, dass selbst bei aktuelleren Trainingsdaten ein erheblicher Anteil des Modellwissens auf ältere Versionen zurückgeht: In einem untersuchten Fall stammten über 80\,\% der aus Wikipedia
+gelernten Dokumente aus Versionen vor 2023 \autocite[9 f.]{Cheng.2024}. Für Unternehmen, deren interne Wissensbestände kontinuierlich evolvieren -- etwa durch neue Produkte, geänderte Prozesse oder regulatorische Anpassungen -- ist diese statische Wissensbasis unzureichend.
 
 Drittens sind allgemein vortrainierte LLMs aufgrund ihrer Konzeption primär auf 
 öffentlich zugängliche Daten beschränkt. Proprietäre, stark domänenspezifische 
