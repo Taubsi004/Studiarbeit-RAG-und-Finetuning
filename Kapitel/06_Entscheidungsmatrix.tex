@@ -1,16 +1,95 @@
+% =====================================================================
+% Kapitel 6 Entscheidungsmatrix und Anwendung
+% Studienarbeit: RAG vs. Fine-Tuning - Ein konzeptioneller Kriterienkatalog
+% Autor: Tobias Weigold
+%
+% Zielumfang: 3 Seiten (hart)
+% Aufbau:
+%   6.1 Konstruktionslogik    (~0,5 S., knapp)
+%   6.2 Entscheidungsmatrix   (~1,0 S., Tabelle + kurzer Fließtext)
+%   6.3 Anwendungsleitfaden   (~0,75 S., 5 Schritte)
+%   6.4 Anwendungsszenarien   (~0,75 S., drei kompakte Cases)
+%
+% Konventionen wie Kap 5: \autocite[Seite]{Name.Jahr} am Satzende;
+%   \textcite nur bei aktivem Autorenbezug. Keine em dashes.
+%   Doppelpunkte sparsam.
+% =====================================================================
+
 \section{Entscheidungsmatrix und Anwendung}
 \label{sec:katalog}
-% Hauptergebnis
 
-\subsection{Konstruktionslogik der Matrix}
+Die in Kapitel~\ref{sec:kriterien} abgeleiteten fünfzehn Kriterien werden nun in einer Entscheidungsmatrix zusammengefasst. Ziel ist ein für Enterprise-Anwendungen belastbares, gleichzeitig praktisch handhabbares Werkzeug zur Auswahl zwischen RAG, Fine-Tuning und einem hybriden Ansatz.
 
-\subsection{Die Matrix: Kriterium \texorpdfstring{$\times$}{x} Architekturoption}
-% Bewertungsskala (z. B. ++/+/o/−/−−) oder Punkteskala, Optional: Gewichtung der Kriterien
+\subsection{Konstruktionslogik}
+\label{sec:matrix-logik}
+
+Die Matrix stellt jedem Kriterium eine ordinale Bewertung der drei Architekturoptionen gegenüber. Verwendet wird eine fünfstufige Skala von $++$ (deutlicher Vorteil) über $+$, $\circ$ (neutral bzw. abhängig von der konkreten Ausgestaltung) und $-$ bis $--$ (deutlicher Nachteil). Die Bewertungen sind aus den Belegen in Kapitel~\ref{sec:kriterien} unmittelbar abgeleitet. Auf eine geschlossene Punktesumme wird bewusst verzichtet, weil die Kriterien nicht kommensurabel sind und ihre Relevanz stark vom Anwendungsfall abhängt. Stattdessen weist Spalte Gewicht(„Gew.\grqq{}) eine dreistufige Anwendungsrelevanz (H, M, N) für den in dieser Arbeit adressierten Enterprise-Kontext aus. Regulatorische Kriterien (K12, K13) sind als K.-o.-Kriterien markiert (Symbol $\ast$), wenn eine Hochrisiko-Anwendung im Sinne von Anhang~III des AI Act vorliegt \autocite[Art.~6]{EuropaischesParlamentundRat.2024}.
+
+\subsection{Die Matrix}
+\label{sec:matrix}
+
+\begin{table}[ht]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.15}
+  \caption{Entscheidungsmatrix RAG vs. Fine-Tuning vs. Hybrid.}
+  \label{tab:entscheidungsmatrix}
+  \begin{tabular}{@{}p{0.32\linewidth} c c c c@{}}
+    \toprule
+    \textbf{Kriterium} & \textbf{RAG} & \textbf{FT} & \textbf{Hybrid} & \textbf{Gew.} \\
+    \midrule
+    \multicolumn{5}{@{}l}{\textit{Wissensbezogen}} \\
+    K1 Aktualität und Dynamik            & $++$    & $--$    & $+$     & H \\
+    K2 Wissensvolumen                    & $++$    & $-$     & $+$     & H \\
+    K3 Strukturgrad des Wissens          & $+$     & $\circ$ & $+$     & M \\
+    K4 Faktentreue                       & $++$    & $--$    & $+$     & H \\
+    \midrule
+    \multicolumn{5}{@{}l}{\textit{Aufgabenbezogen}} \\
+    K5 Art der Aufgabe (Abruf vs. Stil)  & $++$    & $++$    & $++$    & H \\
+    K6 Multi-Hop-Reasoning               & $+$     & $\circ$ & $+$     & M \\
+    K7 Domänenspezifische Sprache        & $\circ$ & $+$     & $++$    & M \\
+    \midrule
+    \multicolumn{5}{@{}l}{\textit{Ressourcen und Kosten}} \\
+    K8 Rechenressourcen                  & $++$    & $-$     & $\circ$ & H \\
+    K9 Datenaufwand                      & $++$    & $-$     & $\circ$ & M \\
+    K10 Wartung und TCO                  & $++$    & $-$     & $\circ$ & H \\
+    K11 Latenz                           & $\circ$ & $++$    & $+$     & M \\
+    \midrule
+    \multicolumn{5}{@{}l}{\textit{Organisatorisch und regulatorisch}} \\
+    K12 DSGVO und AI Act$^{\ast}$        & $++$    & $--$    & $\circ$ & H \\
+    K13 Auditierbarkeit$^{\ast}$         & $++$    & $-$     & $+$     & H \\
+    K14 Fachexpertise                    & $+$     & $--$    & $-$     & M \\
+    K15 Vendor Lock-in                   & $++$    & $-$     & $+$     & M \\
+    \bottomrule
+  \end{tabular}\par\smallskip
+  \footnotesize Skala: $++$ deutlicher Vorteil, $+$ Vorteil, $\circ$ neutral oder abhängig, $-$ Nachteil, $--$ deutlicher Nachteil. Gewichtung: H hoch, M mittel, N niedrig. $^{\ast}$~K.-o.-Kriterium bei Hochrisiko-Anwendungen.
+\end{table}
+
+Das Bild ist konsistent mit den Kapiteln~\ref{sec:rag} und~\ref{sec:finetuning}. RAG dominiert überall dort, wo Aktualität, Volumen, Nachweisführung und regulatorische Anforderungen zusammentreffen. Fine-Tuning behält seinen strukturellen Vorteil bei stilistischer und formatbezogener Aufgabenanpassung sowie bei latenzkritischen Einsätzen mit stabilem Wissensbestand. Der hybride Ansatz erreicht bei den meisten Kriterien nicht die Bestwerte einer der beiden Reinformen, kombiniert dafür deren Stärken bei ausreichender Ressourcenlage und ist damit vor allem für anspruchsvolle Domänen mit fachsprachlicher Prägung interessant.
 
 \subsection{Anwendungsleitfaden}
-% Schritt-für-Schritt-Vorgehen
+\label{sec:leitfaden}
+
+Der folgende Fünf-Schritte-Leitfaden übersetzt die Matrix in ein handhabbares Vorgehen. Er ist bewusst sequentiell aufgebaut, um Ausschlusskriterien früh wirksam werden zu lassen.
+
+\begin{enumerate}
+  \item \textbf{Regulatorischer Vorab-Filter.} Prüfung, ob eine Hochrisiko-Anwendung nach Anhang~III des AI Act vorliegt \autocite[Art.~6]{EuropaischesParlamentundRat.2024}. Falls ja, sind K12 und K13 K.-o.-Kriterien. Fine-Tuning wird nur dann in Betracht gezogen, wenn die aus Artikel~25 Absatz~1 resultierenden Anbieterpflichten organisatorisch getragen werden können \autocite[Art.~25 Abs.~1]{EuropaischesParlamentundRat.2024}. Für personenbezogene Daten ist zusätzlich Artikel~17 DSGVO zu berücksichtigen \autocite[Art.~17]{EuropaischesParlamentundRat.2016}.
+  \item \textbf{Aufgabenklassifikation.} Charakterisierung der Aufgabe anhand von K5 nach überwiegendem Wissensabruf, überwiegender Stil- oder Formatanpassung oder Mischcharakter. \textcite[4f., 10]{Gao.2024} liefern hierfür die grundlegende Unterscheidung.
+  \item \textbf{Wissensprofil.} Ermittlung von Aktualisierungsfrequenz (K1), Volumen (K2), Strukturgrad (K3) und Nachweispflicht (K4). Bei hoher Dynamik oder starker Nachweispflicht wird RAG voreingestellt \autocite[5, 14]{Gao.2024}.
+  \item \textbf{Ressourcen-Check.} Abgleich der verfügbaren Rechen-, Daten- und Personenkapazitäten (K8 bis K10, K14). Ist Fine-Tuning trotz Bevorzugung aus Schritt~3 nicht tragbar, wird auf RAG zurückgefallen. Umgekehrt bleibt Fine-Tuning nur dann Option, wenn parameter-effiziente Verfahren wie LoRA den Aufwand vertretbar halten \autocite[1]{Hu.2022}.
+  \item \textbf{Hybrid-Prüfung.} Wenn K4 und K7 gleichzeitig hoch bewertet sind und die Ressourcen aus Schritt~4 tragen, wird ein hybrider Ansatz aus domänenspezifischem Fine-Tuning und RAG in Betracht gezogen \autocite[2]{Soudani.2024}. Andernfalls bleibt die aus Schritt~3 abgeleitete Reinform.
+\end{enumerate}
+
+Die K.-o.-Rolle des ersten Schritts spiegelt die Erfahrung wider, dass in regulierten Sektoren End-to-End-neuronale Ansätze zugunsten modularer, auditierbarer Pipelines abgelehnt werden \autocite[20]{Karakurt.2026}.
 
 \subsection{Illustrative Anwendungsszenarien}
-% Case A: Interne FAQ/Wissensdatenbank mit häufigen Updates -> RAG
-% Case B: Stilistisch konsistenter interner Schreibassistent -> Fine-Tuning
-% Case C: Komplexer Support-Agent mit Compliance-Anforderungen -> Hybrid
+\label{sec:cases}
+
+\paragraph{Case A: FAQ-Assistent mit häufigen Updates.}
+Ein internes Support-Team betreibt einen Assistenten für eine mehrsprachige Wissensbasis mit wöchentlichen Aktualisierungen und Anforderungen an Quellenbelege im Antwortartefakt. K1, K2 und K4 sind hoch gewichtet, K11 unkritisch. Die Matrix führt eindeutig zu RAG. Fine-Tuning wäre wegen K1 und K10 wirtschaftlich unattraktiv und wegen K13 gegenüber der Nachweispflicht schwächer. Ein hybrider Ansatz bietet keinen zusätzlichen Nutzen, weil weder K7 noch K5 stilistisch fordernd sind.
+
+\paragraph{Case B: Interner Schreibassistent mit konsistenter Corporate-Stimme.}
+Eine Marketingabteilung benötigt einen Assistenten, der ein enges stilistisches Register und wiederkehrende Textformate reproduziert. Wissensinhalte sind stabil und öffentlich, K1 niedrig, K5 stark stil- und formatgetrieben. Die Matrix zeigt Vorteile für Fine-Tuning bei K5 und K11. Regulatorisch ist die Anwendung nicht Hochrisiko im Sinne des Anhangs~III \autocite[Art.~6]{EuropaischesParlamentundRat.2024}, K12 damit nachrangig. Empfohlen wird parameter-effizientes Fine-Tuning eines offenen Basismodells \autocite[1]{Hu.2022}, um K15 zu begrenzen.
+
+\paragraph{Case C: Compliance-nahe Beratung mit fachsprachlicher Prägung.}
+Ein Support-Agent im regulierten Finanzsektor beantwortet komplexe Fragen anhand einer proprietären Regelwerkbasis, muss Fachterminologie sicher beherrschen und Quellen belegen. K4, K7, K12 und K13 sind gleichermaßen hoch. Die Matrix führt zum hybriden Ansatz. Domänenspezifisches, parameter-effizientes Fine-Tuning wird mit RAG kombiniert, um sowohl den terminologischen Vorsprung als auch die Nachweispflicht zu erfüllen \autocite[2]{Soudani.2024}. Um die Anbieterschwelle nach Artikel~25 Absatz~1 lit.~b nicht zu überschreiten, bleibt die Feinabstimmung im Umfang begrenzt und auf ein offenes Basismodell fokussiert \autocite[Art.~25 Abs.~1]{EuropaischesParlamentundRat.2024}, um Compliance und Vendor-Lock-in-Risiken zusammen zu minimieren.
