@@ -58,6 +58,7 @@ EMNLP 2025 findings},
  author = {OpenAI},
  year = {2026},
  title = {Supervised fine-tuning - OpenAI Developer Platform},
+ url = {https://developers.openai.com/api/docs/guides/model-optimization},
  urldate = {2026-07-20},
  file = {openai:Attachments/openai.pdf:application/pdf}
 }
@@ -171,27 +172,24 @@ Ongoing Work},
 }
 
 
-@misc{EuropeanCommission.2025,
+@book{EuropeanCommission.2025,
  author = {{European Commission} and {European AI Office}},
- date = {2025},
+ year = {2025},
  title = {Guidelines for providers of general-purpose AI models: Guidelines},
  url = {https://digital-strategy.ec.europa.eu/en/library/guidelines-scope-obligations-providers-general-purpose-ai-models-under-ai-act},
- institution = {{European Commission}},
  file = {Guidelines{\_}on{\_}the{\_}scope{\_}of{\_}the{\_}obligations{\_}for{\_}generalpurpose{\_}AI{\_}models{\_}established{\_}by{\_}AI{\_}Act{\_}German{\_}WwiwvFhWWCtW6eioTVzJsOA3ms{\_}127089:Attachments/Guidelines{\_}on{\_}the{\_}scope{\_}of{\_}the{\_}obligations{\_}for{\_}generalpurpose{\_}AI{\_}models{\_}established{\_}by{\_}AI{\_}Act{\_}German{\_}WwiwvFhWWCtW6eioTVzJsOA3ms{\_}127089.PDF:application/pdf}
 }
 
 
 @misc{EuropaischesParlamentundRat.2024,
- author = {{Europ{\"a}isches Parlament und Rat}},
- year = {2024},
+ author = {EuropaischesParlamentundRat},
  title = {Verordnung (EU) 2024/1689 des Europ{\"a}ischen Parlaments und des Rates vom 13.~Juni 2024 zur Festlegung harmonisierter Vorschriften f{\"u}r k{\"u}nstliche Intelligenz (KI-Verordnung)},
  file = {OJ{\_}L{\_}202401689{\_}DE{\_}TXT:Attachments/OJ{\_}L{\_}202401689{\_}DE{\_}TXT.pdf:application/pdf}
 }
 
 
 @misc{EuropaischesParlamentundRat.2016,
- author = {{Europ{\"a}isches Parlament und Rat}},
- year = {2016},
+ author = {EuropaischesParlamentundRat},
  title = {Verordnung (EU) 2016/679 des Europ{\"a}ischen Parlaments und des Rates vom 27.~April 2016 zum Schutz nat{\"u}rlicher Personen bei der Verarbeitung personenbezogener Daten, zum freien Datenverkehr und zur Aufhebung der Richtlinie 95/46/EG (Datenschutz-Grundverordnung)},
  file = {CELEX{\_}02016R0679-20160504{\_}DE{\_}TXT:Attachments/CELEX{\_}02016R0679-20160504{\_}DE{\_}TXT.pdf:application/pdf}
 }
@@ -207,16 +205,15 @@ Ongoing Work},
 }
 
 
-@inproceedings{Brown.2020,
+@article{Brown.2020,
  abstract = {Recent work has demonstrated substantial gains on many NLP tasks and benchmarks by pre-training on a large corpus of text followed by fine-tuning on a specific task. While typically task-agnostic in architecture, this method still requires task-specific fine-tuning datasets of thousands or tens of thousands of examples. By contrast, humans can generally perform a new language task from only a few examples or from simple instructions - something which current NLP systems still largely struggle to do. Here we show that scaling up language models greatly improves task-agnostic, few-shot performance, sometimes even reaching competitiveness with prior state-of-the-art fine-tuning approaches. Specifically, we train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting. For all tasks, GPT-3 is applied without any gradient updates or fine-tuning, with tasks and few-shot demonstrations specified purely via text interaction with the model. GPT-3 achieves strong performance on many NLP datasets, including translation, question-answering, and cloze tasks, as well as several tasks that require on-the-fly reasoning or domain adaptation, such as unscrambling words, using a novel word in a sentence, or performing 3-digit arithmetic. At the same time, we also identify some datasets where GPT-3's few-shot learning still struggles, as well as some datasets where GPT-3 faces methodological issues related to training on large web corpora. Finally, we find that GPT-3 can generate samples of news articles which human evaluators have difficulty distinguishing from articles written by humans. We discuss broader societal impacts of this finding and of GPT-3 in general.
 
 40+32 pages},
  author = {Brown, Tom B. and Mann, Benjamin and Ryder, Nick and Subbiah, Melanie and Kaplan, Jared and Dhariwal, Prafulla and Neelakantan, Arvind and Shyam, Pranav and Sastry, Girish and Askell, Amanda and Agarwal, Sandhini and Herbert-Voss, Ariel and Krueger, Gretchen and Henighan, Tom and Child, Rewon and Ramesh, Aditya and Ziegler, Daniel M. and Wu, Jeffrey and Winter, Clemens and Hesse, Christopher and Chen, Mark and Sigler, Eric and Litwin, Mateusz and Gray, Scott and Chess, Benjamin and Clark, Jack and Berner, Christopher and McCandlish, Sam and Radford, Alec and Sutskever, Ilya and Amodei, Dario},
+ year = {2020},
  title = {Language Models are Few-Shot Learners},
  pages = {1877--1901},
  volume = {33},
- booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
- year = {2020},
  doi = {10.48550/arXiv.2005.14165},
  file = {brown tom:Attachments/brown tom.pdf:application/pdf}
 }
