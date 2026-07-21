@@ -1,11 +1,40 @@
+% =====================================================================
+% Kapitel 7 Diskussion und Limitationen
+% Studienarbeit: RAG vs. Fine-Tuning - Ein konzeptioneller Kriterienkatalog
+% Autor: Tobias Weigold
+%
+% Zielumfang: ca. 2 Seiten
+% Aufbau (wie in deinem Stub angelegt):
+%   7.1 Reflexion der Matrix-Validität
+%   7.2 Grenzen der konzeptionellen Methodik
+%   7.3 Übertragbarkeit auf andere Domänen
+% =====================================================================
+
 \section{Diskussion und Limitationen}
 \label{sec:diskussion}
-limitation nicht vergessen mit fine tuning dass man Modellanbieter ist, je nachdem ob behandelt oder nicht (falls beuandelt eu ai act einbeziehen)
-limitation falls nicht behandelt: keine empirische validierung, nur konzeptionell, keine übertragbarkeit auf andere domänen, keine validierung der matrix
-evtl vendor lock-in bei proprietären Modellen und fine tuning
+
+Die entwickelte Entscheidungsmatrix und der zugehörige Anwendungsleitfaden liefern einen strukturierten Zugang zur Auswahl zwischen RAG, Fine-Tuning und hybriden Ansätzen. Bevor die Ergebnisse im Fazit gebündelt werden, sind die Belastbarkeit der Matrix, die methodischen Grenzen der konzeptionellen Vorgehensweise und die Übertragbarkeit auf andere Anwendungsdomänen kritisch zu reflektieren.
+
 \subsection{Reflexion der Matrix-Validität}
 
+Die Bewertungen in Tabelle~\ref{tab:entscheidungsmatrix} sind ordinal aus der in Kapitel~\ref{sec:kriterien} referenzierten Literatur abgeleitet. Sie erheben keinen Anspruch auf statistische Optimalität, weil die zugrundeliegenden Kriterien nicht kommensurabel sind und eine additive Verrechnung zu einer geschlossenen Punktesumme methodisch nicht tragfähig wäre.
+
+Innerhalb der Matrix bleiben mehrere Bewertungen anfechtbar. Erstens ist die Einordnung von K7 (domänenspezifische Sprache) für Fine-Tuning mit $++$ angesetzt, obwohl der zitierte Befund von \textcite[10, 26]{Balaguer.2024} zeigt, dass zu limitiertes Fine-Tuning bei kleineren Open-Source-Modellen zu einem Genauigkeitseinbruch führen kann. Die Bewertung ist daher als Potenzialaussage bei sachgerechter Umsetzung zu lesen, nicht als Garantie. Zweitens ist die Neutraleinstufung des Hybrid-Ansatzes bei den Ressourcenkriterien K8 bis K10 ($\circ$) eine bewusste Vereinfachung. In der Praxis liegen die Ressourcenkosten eines Hybrids nahe an den Fine-Tuning-Kosten, weil die Modellanpassung ohnehin durchgeführt werden muss und der Retrieval-Layer additiv hinzukommt. Drittens sind K12 und K13 als K.-o.-Kriterien modelliert, obwohl Anbieterpflichten nach Artikel~25 Absatz~1 lit.~b in der Praxis abstufbar bleiben \autocite[Erwägungsgrund~109]{EuropaischesParlamentundRat.2024}. Die K.-o.-Modellierung ist damit eine konservative Design-Entscheidung zugunsten regulatorischer Sicherheit, kein zwingender Rechtsschluss.
+
+Eine empirische Validierung der Matrix, etwa durch retrospektive Anwendung auf abgeschlossene Enterprise-Projekte oder durch strukturierte Experteninterviews, war im Umfang der vorliegenden Arbeit nicht leistbar und bleibt zukünftiger Forschung vorbehalten.
+
 \subsection{Grenzen der konzeptionellen Methodik}
-% Keine empirische Validierung
+
+Der methodische Zuschnitt der Arbeit als theoretisch abgeleitete konzeptionelle Analyse impliziert drei strukturelle Grenzen. Erstens fehlt eine eigene empirische Validierung. Die Kriterien und Bewertungen stützen sich vollständig auf publizierte Studien, wobei die dort berichteten Effekte je nach Modellfamilie, Datensatz und Aufgabenprofil variieren. Insbesondere die Befunde von \textcite[7]{Ovadia.2024} zur inhärenten Instabilität des Fine-Tunings sowie der von \textcite[26]{Balaguer.2024} dokumentierte Genauigkeitseinbruch bei Llama2 zeigen, dass punktuelle empirische Ergebnisse nicht durchgängig generalisierbar sind.
+
+Zweitens bildet die Arbeit den Stand der Literatur zu einem konkreten Zeitpunkt ab. Sowohl das Feld der RAG-Paradigmen \autocite[6]{Gao.2024} als auch die parameter-effizienten Fine-Tuning-Verfahren entwickeln sich schnell weiter, und die regulatorischen Rahmenbedingungen des EU AI Act werden durch Leitlinien der Europäischen Kommission fortlaufend konkretisiert \autocite[Rn.~61]{EuropeanCommission.2025}. Die in Kapitel~\ref{sec:kriterien} abgeleiteten Wirkrichtungen sind damit belastbar, aber nicht statisch. Die genauen Schwellenwerte und Bewertungen sind bei einer späteren Anwendung an den dann gültigen Stand anzupassen.
+
+Drittens ist der Fokus auf das Enterprise-Wissensmanagement mit einer klaren Randbedingung verknüpft. Kriterien wie K12 und K13 wurden vor dem Hintergrund datenintensiver, regulierungsnaher Anwendungsfälle gewichtet. In anderen Enterprise-Kontexten, etwa bei rein internen, nicht-regulierten Assistenzsystemen, würden die K.-o.-Kriterien der Stufe~1 seltener greifen, was die praktische Bedeutung von Fine-Tuning tendenziell erhöht.
 
 \subsection{Übertragbarkeit auf andere Domänen}
+
+Die entwickelte Matrix ist bewusst auf den Enterprise-Kontext zugeschnitten, ihre Grundstruktur lässt sich jedoch auf andere Domänen übertragen. Für Anwendungen im Consumer-Bereich wären regulatorische Kriterien tendenziell schwächer zu gewichten, während Latenz (K11) und Vendor Lock-in (K15) wegen der Skalen an Bedeutung gewinnen können. Für wissenschaftliche oder medizinische Anwendungen käme die Anforderung an Nachvollziehbarkeit einzelner Quellen (K4) und die formale Auditierbarkeit (K13) noch stärker zum Tragen, sodass RAG dort tendenziell noch klarer bevorzugt würde.
+
+Zwei Übertragungspfade sind besonders relevant. Für stark strukturierte Wissensbestände, etwa im industriellen Anlagenkontext, ist der in K3 aufgegriffene Befund zu graphbasierten Retrieval-Strategien einschlägig \autocite[17]{Karakurt.2026}. In derartigen Domänen kann die K6-Erweiterung um explizite Wissensgraph-Integration ergänzt werden. Für sicherheitskritische Domänen, in denen Halluzinationen einen unmittelbaren Schaden verursachen, bleibt die theoretische Unvermeidbarkeit von Halluzinationen \autocite[1]{Xu.2025} eine harte Grenze, die durch keinen der beiden Ansätze aufgehoben wird. Die Matrix leistet in solchen Fällen die Auswahl zwischen Architekturoptionen, sie ersetzt aber nicht die aus dem AI Act resultierende Risikoanalyse.
+
+Die konzeptionelle Übertragbarkeit ist damit gegeben, die konkrete Gewichtung und die zulässige Ausgestaltung der Optionen sind jedoch domänenspezifisch neu zu prüfen.
