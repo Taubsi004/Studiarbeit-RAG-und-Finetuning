@@ -29,7 +29,7 @@
 % Option [ocgcolorlinks] entfernt, um Farb-Konflikt zu vermeiden
 \RequirePackage{ocgx2}
 
-\RequirePackage[backend=biber,style=authoryear]{biblatex}
+\RequirePackage[backend=biber,style=ieee]{biblatex}
 \RequirePackage{csquotes}
 
 \RequirePackage{dblfnote}
