@@ -6,44 +6,20 @@ die das Fundament für eine neue Generation von Anwendungen und Diensten bildet 
 Insbesondere im Bereich des betrieblichen Wissensmanagements (\textit{enterprise knowledge management}) 
 fungieren sie als Katalysator für eine strukturelle Neuausrichtung, indem sie interne 
 Wissensbestände über natürliche Sprache zugänglich machen und Wissensarbeit unterstützen 
-\autocite[72]{OLeary.2024}. Damit verbunden ist die Erwartung, organisationsinternes Wissen, das bislang in heterogenen 
-Dokumenten, Wikis, Tickets und Datenbanken verteilt ist, über natürliche Sprache zugänglich 
-und nutzbar zu machen. 
-Empirische Erhebungen zeigen jedoch, dass sich ein Großteil 
-der Unternehmensimplementierungen weiterhin in einer experimentellen Phase befindet 
-und ein signifikanter Abstand zwischen akademischen Prototypen und produktiven 
-Unternehmenssystemen besteht (\textit{lab-to-market gap}) \autocite[1]{Karakurt.2026}.
+\autocite[72]{OLeary.2024}. Damit verbunden ist die Erwartung, organisationsinternes Wissen, das bislang in heterogenen Dokumenten, Wikis, Tickets und Datenbanken verteilt ist, über natürliche Sprache zugänglich und nutzbar zu machen. Empirische Erhebungen zeigen jedoch, dass sich ein Großteil der Unternehmensimplementierungen weiterhin in einer experimentellen Phase befindet und ein signifikanter Abstand zwischen akademischen Prototypen und produktiven Unternehmenssystemen besteht (\textit{lab-to-market gap}) \autocite[1]{Karakurt.2026}.
 
 Diese Erwartung steht jedoch in Spannung zu den strukturellen Eigenschaften vortrainierter 
 LLMs. Erstens leiden Sprachmodelle systematisch unter sogenannten Halluzinationen, 
-die im Bereich des \textit{Natural Language Processing} definiert werden als ein Phänomen,
-,,in which the generated content appears nonsensical or unfaithful to the provided 
-source content'' \autocite[1:5]{Huang.2024}. 
-Diese Eigenschaft ist nicht nur ein praktisches Qualitätsproblem, sondern auch ein 
-theoretisches: \textcite[1]{Xu.2025} zeigen formal, dass Halluzinationen eine 
-\textit{innate limitation} von LLMs darstellen und ,,it is impossible to eliminate 
-hallucination in LLMs'' -- unabhängig von Modellarchitektur, Trainingsverfahren oder 
-Prompting-Techniken. Für Unternehmen sind unvollständige oder fabrizierte Antworten ein 
-erhebliches Risiko, da sie unmittelbar Entscheidungen beeinflussen und Schaden verursachen können \autocite[1:2]{Huang.2024}.
+die im Bereich des \textit{Natural Language Processing} definiert werden als ein Phänomen, bei dem der generierte Inhalt sinnlos oder unglaubwürdig erscheint in Bezug auf die Qelle \autocite[1:5]{Huang.2024}. 
+Diese Eigenschaft ist nicht nur ein praktisches Qualitätsproblem, sondern auch ein  theoretisches: \textcite[1]{Xu.2025} zeigen formal, dass Halluzinationen eine 
+Limitation von LLMs darstellen und es unmöglich ist, Halluzinationen zu verhindern, unabhängig von Modellarchitektur, Trainingsverfahren oder Prompting-Techniken. Für Unternehmen sind unvollständige oder erfundene Antworten ein erhebliches Risiko, da sie unmittelbar Entscheidungen beeinflussen und Schaden verursachen können \autocite[1:2]{Huang.2024}.
 
-Zweitens verfügen LLMs lediglich über parametrisches Wissen, das durch den Zeitpunkt ihres 
-Trainings begrenzt ist (\textit{knowledge cut-off}). \textcite[1]{Cheng.2024} zeigen 
-empirisch, dass der von Modellanbietern angegebene Cut-off nur an der Oberfläche 
-greift und der tatsächliche, sogenannte \textit{effective cutoff} zwischen einzelnen 
-Wissensressourcen abweichen kann. Die Autoren belegen zudem, dass selbst bei aktuelleren Trainingsdaten ein erheblicher Anteil des Modellwissens auf ältere Versionen zurückgeht: In einem untersuchten Fall stammten über 80\,\% der aus Wikipedia
-gelernten Dokumente aus Versionen vor 2023 \autocite[9 f.]{Cheng.2024}. Für Unternehmen, deren interne Wissensbestände kontinuierlich evolvieren -- etwa durch neue Produkte, geänderte Prozesse oder regulatorische Anpassungen -- ist diese statische Wissensbasis unzureichend.
+Zweitens verfügen LLMs lediglich über parametrisches Wissen, das durch den Zeitpunkt ihres  Trainings begrenzt ist (\textit{knowledge cut-off}). \textcite[1]{Cheng.2024} zeigen empirisch, dass der von Modellanbietern angegebene Cut-off nur an der Oberfläche greift und der tatsächliche, sogenannte \textit{effective cutoff} zwischen einzelnen Wissensressourcen abweichen kann. Die Autoren belegen zudem, dass selbst bei aktuelleren Trainingsdaten ein erheblicher Anteil des Modellwissens auf ältere Versionen zurückgeht: In einem untersuchten Fall stammten über 80\,\% der aus Wikipedia
+gelernten Dokumente aus Versionen vor 2023 \autocite[9 f.]{Cheng.2024}. Für Unternehmen, deren interne Wissensbestände sich kontinuierlich ändern, etwa durch neue Produkte, geänderte Prozesse oder regulatorische Anpassungen, ist diese statische Wissensbasis unzureichend.
 
-Drittens sind allgemein vortrainierte LLMs aufgrund ihrer Konzeption primär auf 
-öffentlich zugängliche Daten beschränkt. Proprietäre, stark domänenspezifische 
-oder organisationsinterne Wissensbestände sind in der standardmäßigen Wissensbasis meist 
-nicht abgebildet. 
-Um solche spezialisierten Informationen verlässlich in den Antwortprozess einzubinden, 
-bedarf es gesonderter technischer Anpassungsverfahren wie Fine-Tuning oder 
-Retrieval-Augmented Generation (RAG). 
+Drittens sind allgemein vortrainierte LLMs aufgrund ihrer Konzeption primär auf öffentlich zugängliche Daten beschränkt. Proprietäre, stark domänenspezifische oder organisationsinterne Wissensbestände sind in der standardmäßigen Wissensbasis meist nicht abgebildet. Um diese spezialisierten Informationen verlässlich in den Antwortprozess einzubinden, werden gesonderter technischer Anpassungsverfahren wie Fine-Tuning oder Re\-trie\-val-Augmented Generation (RAG) benötigt.
 Dies betrifft beispielsweise interne Prozessrichtlinien oder standortspezifische Fachdaten. \autocite[vgl.][1]{Balaguer.2024}. 
-Hinzu kommt, dass organisationsinternes Wissen in der 
-Regel besonderen Anforderungen an Vertraulichkeit, Datenschutz und Auditierbarkeit 
-unterliegt, die einer unkontrollierten Übertragung an externe Modellanbieter entgegenstehen.
+Hinzu kommt, dass organisationsinternes Wissen in der Regel besonderen Anforderungen an Vertraulichkeit, Datenschutz und Auditierbarkeit unterliegt, die einer unkontrollierten Übertragung an externe Modellanbieter entgegenstehen.
 
 {\emergencystretch=1em
 Zur Adressierung dieser Defizite haben sich in Forschung und Praxis zwei do\-mi\-nan\-te 
@@ -63,37 +39,14 @@ jedoch grundlegend in ihren technischen, organisatorischen und ökonomischen
 Implikationen \autocite[vgl.][29]{Balaguer.2024}.
 \par}
 
-Trotz einer wachsenden Zahl vergleichender Studien fehlt in der Literatur eine 
-konsolidierte Entscheidungsgrundlage, die es der Praxis erlaubt, für das interne 
-Wissensmanagement systematisch zwischen RAG, Fine-Tuning oder hybriden Ansätzen 
-zu wählen. Bisherige Arbeiten fokussieren meist auf technische Einzelaspekte: So 
-evaluieren \textcite{Soudani.2024} die Modelle primär empirisch anhand seltener 
-Entitäten, während sich andere die reine Antwortgenauigkeit fokussieren. \autocite[vgl.][2]{Ovadia.2024}
-Es bleiben 
-organisatorische, wirtschaftliche und insbesondere juristische Dimensionen weitgehend 
+Trotz einer wachsenden Zahl vergleichender Studien fehlt in der Literatur eine zusammengefasste Entscheidungsgrundlage, die es der Praxis erlaubt, für das interne Wissensmanagement systematisch zwischen RAG, Fine-Tuning oder hybriden Ansätzen zu wählen. Bisherige Arbeiten fokussieren meist auf technische Einzelaspekte: So evaluieren \textcite{Soudani.2024} die Modelle primär empirisch anhand seltener Entitäten, während sich andere die reine Antwortgenauigkeit fokussieren. \autocite[vgl.][2]{Ovadia.2024}
+Es bleiben organisatorische, wirtschaftliche und insbesondere juristische Dimensionen weitgehend 
 unbeachtet.
 
-Aus dieser Lücke ergibt sich der Bedarf nach einem konzeptionellen Kriterienkatalog, 
-der die relevanten Bewertungsdimensionen aus der wissenschaftlichen Literatur ableitet 
-und in eine praxistaugliche Entscheidungsmatrix überführt. Eine solche Matrix soll keine 
-universelle Antwort liefern, sondern den Entscheidungsprozess strukturieren und damit dazu 
-beitragen, dass Unternehmen ihre internen Wissensressourcen architektonisch fundiert und 
-ressourcenschonend für den Einsatz mit LLMs nutzbar machen können.
+Aus dieser Lücke ergibt sich der Bedarf nach einem konzeptionellen Kriterienkatalog, der die relevanten Bewertungsdimensionen aus der wissenschaftlichen Literatur ableitet und in eine praxistaugliche Entscheidungsmatrix überführt. Eine solche Matrix soll keine universelle Antwort liefern, sondern den Entscheidungsprozess strukturieren und damit dazu beitragen, dass Unternehmen ihre internen Wissensressourcen architektonisch fundiert und ressourcenschonend für den Einsatz mit LLMs nutzbar machen können.
 
-Um dieses Ziel zu erreichen, geht die Arbeit der zentralen Forschungsfrage nach, 
-anhand welcher technischen, organisatorischen und speziell durch den neuen EU AI 
-Act geprägten juristischen Kriterien Unternehmen fundiert zwischen RAG und Fine-Tuning 
-für ihr internes Wissensmanagement abwägen können.
+Um dieses Ziel zu erreichen, geht die Arbeit der zentralen Forschungsfrage nach, anhand welcher technischen, organisatorischen und speziell durch den neuen EU AI Act geprägten juristischen Kriterien Unternehmen fundiert zwischen RAG und Fine-Tuning für ihr internes Wissensmanagement abwägen können.
 
-Methodisch nähert sich die Arbeit dieser Fragestellung durch eine theoriegeleitete 
-konzeptionelle Analyse. Zunächst werden in den Kapiteln~\ref{sec:grundlagen} bis~\ref{sec:finetuning} die 
-technischen Grundlagen von LLMs, RAG und Fine-Tuning sowie deren jeweilige 
-Funktionsweisen zur Wissensintegration skizziert. Darauf aufbauend erfolgt in 
-Kapitel~\ref{sec:kriterien} eine systematische Literatur- und Anforderungsanalyse, 
-um die relevanten Vergleichsdimensionen zu identifizieren, wobei der Fokus gezielt um die 
-bislang vernachlässigten regulatorischen Rahmenbedingungen erweitert wird. In 
-Kapitel~\ref{sec:katalog} werden diese Dimensionen synthetisiert und in die finale 
-Entscheidungsmatrix überführt. Die Arbeit reflektiert sich in Kapitel~\ref{sec:diskussion} 
-und stellt die Limitationen der Methodik und einen Ausblick auf zukünftige 
-Forschungsfragen dar. In Kapitel~\ref{sec:fazit} wird ein Fazit gezogen, das die 
-zentralen Ergebnisse zusammenfasst und die Implikationen für Forschung und Praxis aufzeigt.
+Methodisch nähert sich die Arbeit dieser Fragestellung durch eine theoretisch abgeleitete 
+konzeptionelle Analyse. Zunächst werden in den Kapiteln~\ref{sec:grundlagen} bis~\ref{sec:finetuning} die technischen Grundlagen von LLMs, RAG und Fine-Tuning sowie deren jeweilige 
+Funktionsweisen zur Wissensintegration skizziert. Darauf aufbauend erfolgt in Kapitel~\ref{sec:kriterien} eine systematische Literatur- und Anforderungsanalyse, um die relevanten Vergleichsdimensionen zu identifizieren, wobei der Fokus gezielt um die bislang vernachlässigten regulatorischen Rahmenbedingungen erweitert wird. In Kapitel~\ref{sec:katalog} werden diese Dimensionen synthetisiert und in die finale Entscheidungsmatrix überführt. Die Arbeit reflektiert sich in Kapitel~\ref{sec:diskussion} und stellt die Limitationen der Methodik und einen Ausblick auf zukünftige Forschungsfragen dar. In Kapitel~\ref{sec:fazit} wird ein Fazit gezogen, das die zentralen Ergebnisse zusammenfasst und die Implikationen für Forschung und Praxis aufzeigt.
