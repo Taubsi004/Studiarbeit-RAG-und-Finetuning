@@ -34,6 +34,17 @@
 
 \RequirePackage{dblfnote}
 
+% Paket für flexible Listenabstände laden
+\RequirePackage{enumitem}
+
+% Globale Einstellungen für alle itemize-Umgebungen
+\setlist[itemize]{
+    itemsep=0pt,      % Abstand ZWISCHEN den einzelnen Items
+    parsep=0pt,       % Abstand zwischen Absätzen innerhalb eines Items
+    topsep=2pt,       % Abstand vor und nach der gesamten Liste
+    partopsep=0pt     % Extra Abstand, wenn vor/nach der Liste eine Leerzeile steht
+}
+
 
 \RequirePackage[most]{tcolorbox}
 \definecolor{hfu-lightgray}{rgb}{0.85 0.86 0.86}
