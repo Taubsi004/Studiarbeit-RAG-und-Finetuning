@@ -8,6 +8,8 @@
 
 \usepackage{amssymb}
 \usepackage{booktabs}
+\usepackage{array}
+\usepackage{ragged2e} % Ermöglicht Silbentrennung bei Flattersatz
 
 \usepackage{tikz}
 \usetikzlibrary{mindmap, positioning, arrows.meta, shapes.geometric, fit, backgrounds, calc}
@@ -51,7 +53,8 @@
 \clearpage
 \input{Kapitel/08_Fazit}
 \clearpage
-
+\overfullrule=0pt
+\hfuzz=2pt
 \printbibliography{}
 
 \end{document}

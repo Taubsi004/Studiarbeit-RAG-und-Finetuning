@@ -27,7 +27,7 @@ Die fünfzehn Kriterien aus Kapitel~\ref{sec:kriterien} werden in diesem Kapitel
 \subsection{Konstruktionslogik}
 \label{sec:matrix-logik}
 
-Die fünfzehn Kriterien sind inkompatibel. Regulatorische Anforderungen wirken als harte Vorbedingungen, während die übrigen Kriterien eine graduelle Abwägung zulassen. K6 (Multi-Hop-Reasoning) unterscheidet zudem nicht zwischen RAG, Fine-Tuning und Hybrid, sondern zwischen einfachen und fortgeschrittenen RAG-Paradigmen \autocite[10f.]{Gao.2024}. Daraus folgt ein dreiteiliges Modell. Stufe~1 prüft die K.-o.-Kriterien K12 und K13, Stufe~2 bewertet die verbleibenden dreizehn Kriterien in einer fünfstufigen Ordinalmatrix. Fällt die Wahl auf RAG oder Hybrid, verfeinert K6 in einer Erweiterung das konkrete RAG-Paradigma. Eine Gewichtung wird als Anwendungsrelevanz (H, M) mitgeführt, aber nicht zu einer Punktesumme aggregiert, weil die Kriterien nicht additiv verrechenbar sind. Das Modell erhebt keinen Anspruch darauf, statistisch optimal zu sein.
+Die fünfzehn Kriterien sind inkompatibel. Regulatorische Anforderungen wirken als harte Vorbedingungen, während die übrigen Kriterien eine graduelle Abwägung zulassen. K6 (Multi-Hop-Reasoning) unterscheidet zudem nicht zwischen RAG, Fine-Tuning und Hybrid, sondern zwischen einfachen und fortgeschrittenen RAG-Pa\-ra\-dig\-men \autocite[10f.]{Gao.2024}. Daraus folgt ein dreiteiliges Modell. Stufe~1 prüft die K.-o.-Kriterien K12 und K13, Stufe~2 bewertet die verbleibenden dreizehn Kriterien in einer fünfstufigen Ordinalmatrix. Fällt die Wahl auf RAG oder Hybrid, verfeinert K6 in einer Erweiterung das konkrete RAG-Pa\-ra\-dig\-ma. Eine Gewichtung wird als Anwendungsrelevanz (H, M) mitgeführt, aber nicht zu einer Punktesumme aggregiert, weil die Kriterien nicht additiv verrechenbar sind. Das Modell erhebt keinen Anspruch darauf, statistisch optimal zu sein.
 
 \subsection{Stufe 1: Regulatorischer K.-o.-Filter}
 \label{sec:ko-filter}
@@ -86,12 +86,16 @@ Fällt die Wahl in Stufe~2 auf RAG oder Hybrid, ist zu prüfen, welches RAG-Para
   \renewcommand{\arraystretch}{1.15}
   \caption{RAG-Paradigmen nach Multi-Hop-Anforderung (K6).}
   \label{tab:rag-paradigmen}
-  \begin{tabular}{@{}p{0.30\linewidth} p{0.30\linewidth} p{0.32\linewidth}@{}}
+  \begin{tabular}{@{} >{\RaggedRight\arraybackslash}p{0.30\linewidth} 
+                      >{\RaggedRight\arraybackslash}p{0.30\linewidth} 
+                      >{\RaggedRight\arraybackslash}p{0.32\linewidth} @{}}
     \toprule
     \textbf{Anforderungsprofil} & \textbf{Empfohlenes Paradigma} & \textbf{Begründung} \\
     \midrule
-    Einfache Faktenfragen mit hoher Retrieval-Präzision & Naive RAG mit Query-Rewriting & einmaliger Abruf ausreichend, Vorverarbeitung reduziert Query-Ambiguität \autocite[4]{Gao.2024} \\
-    Mehrschrittige Fragen mit sequentiellen Abhängigkeiten & Advanced RAG mit iterativem Retrieval & wiederholter Abruf auf Basis der Zwischenantwort \autocite[11]{Gao.2024} \\
+    Einfache Faktenfragen mit hoher Retrieval-Präzision & Naive RAG mit Query-Rewriting & einmaliger Abruf ausreichend, Vorverarbeitung reduziert Query-Ambiguität \autocite[4]{Gao.2024} \\ 
+    \addlinespace
+    Mehrschrittige Fragen mit sequentiellen Abhängigkeiten & Advanced RAG mit iterativem Retrieval & wiederholter Abruf auf Basis der Zwischenantwort \autocite[11]{Gao.2024} \\ 
+    \addlinespace
     Verknüpfte oder graph-strukturierte Wissensbestände & Modular RAG mit Multi-Hop-Retrieval & auf verschachtelte, verknüpfte Informationen ausgelegt \autocite[11]{Gao.2024} \\
     \bottomrule
   \end{tabular}
