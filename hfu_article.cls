@@ -61,8 +61,6 @@
 \newcommand{\course}[1]{\def\@course{#1}}
 
 \renewcommand{\HyOrg@maketitle}{
-    % HIER IST DER FIX: Deaktiviert die Hyperref-Anker für die Titelseite
-    \hypersetup{pageanchor=false}
     
     \begin{titlepage}
         \let \footnotesize \small
@@ -93,9 +91,6 @@
         \vfil
         \null
     \end{titlepage}
-    
-    % HIER IST DER FIX: Aktiviert die Anker für den Rest des Dokuments wieder
-    \hypersetup{pageanchor=true}
     
     \setcounter{footnote}{0}
     \global \let \thanks \relax

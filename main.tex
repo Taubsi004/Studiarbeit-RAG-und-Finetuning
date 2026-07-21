@@ -1,9 +1,5 @@
 \documentclass{hfu_article}
 
-\hypersetup{
-    plainpages=false,
-    pdfpagelabels=true
-}
 
 \usepackage[ngerman]{babel}
 
@@ -31,10 +27,11 @@
 \overfullrule=5pt
 
 \begin{document}
+\hypersetup{pageanchor=false}
 
 \maketitle
 
-% --- NEU: Zählweise für das Inhaltsverzeichnis ---
+\hypersetup{pageanchor=true}
 \pagenumbering{Roman} % Nutzt römische Zahlen (I, II, III...) für das Verzeichnis
 % \pagestyle{empty} % (Optional einkommentieren, falls die römischen Zahlen komplett unsichtbar sein sollen)
 
