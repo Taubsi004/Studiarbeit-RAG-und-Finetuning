@@ -109,3 +109,9 @@
     \global \let \date \relax
     \global \let \and \relax
 }
+
+\AtBeginDocument{
+  \addto\captionsngerman{
+    \renewcommand{\abstractname}{Abstract}
+  }
+}
