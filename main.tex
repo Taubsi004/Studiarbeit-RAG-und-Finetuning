@@ -1,5 +1,10 @@
 \documentclass{hfu_article}
 
+\hypersetup{
+    plainpages=false,
+    pdfpagelabels=true
+}
+
 \usepackage[ngerman]{babel}
 
 \usepackage[left = \glqq{}, right = \grqq{}, leftsub = \glq{}, rightsub = \grq{}]{dirtytalk}
@@ -33,14 +38,15 @@
 \pagenumbering{Roman} % Nutzt römische Zahlen (I, II, III...) für das Verzeichnis
 % \pagestyle{empty} % (Optional einkommentieren, falls die römischen Zahlen komplett unsichtbar sein sollen)
 
+\input{Kapitel/00_Abstract}
+\clearpage
+
 \tableofcontents
 \clearpage
 
 % --- NEU: Zählweise für den Hauptteil ---
 \pagenumbering{arabic} % Nutzt arabische Zahlen (1, 2, 3...) und beginnt automatisch bei 1!
 
-\input{Kapitel/00_Abstract}
-\clearpage
 \input{Kapitel/01_Einleitung}
 \clearpage
 \input{Kapitel/02_Grundlagen}
