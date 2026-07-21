@@ -54,7 +54,7 @@
 \setcounter{biburllcpenalty}{9000}% Kleinbuchstaben
 \setcounter{biburlucpenalty}{9000}% Großbuchstaben
 
-\setlength{\parskip}{1ex}
+\setlength{\parskip}{0ex}
 \setlength{\parindent}{0em}
 
 \def\@course{}
@@ -109,4 +109,12 @@
   \addto\captionsngerman{
     \renewcommand{\abstractname}{Abstract}
   }
+}
+
+% Globale Einstellungen für alle enumerate-Umgebungen
+\setlist[enumerate]{
+    itemsep=2pt,      
+    parsep=0pt,       
+    topsep=2pt,       
+    partopsep=0pt     
 }
